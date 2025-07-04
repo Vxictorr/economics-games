@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Structures: Economic Theory Guide</title>
+    <style>
+        @media print {
+            body { margin: 0.5in; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+            background: white;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #007acc;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-left: 4px solid #007acc;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+        
+        .toc ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .toc a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007acc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .formula-box {
+            background: #f0f8f0;
+            border: 1px solid #90c695;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box {
+            background: #fff7e6;
+            border: 1px solid #ffb366;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .comparison-box {
+            background: #f8f0ff;
+            border: 1px solid #d1b3ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .print-instruction {
+            background: #fffbf0;
+            border: 2px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 40px 0;
+        }
+        
+        .key-takeaway {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .structure-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .structure-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .structure-card h4 {
+            color: #007acc;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-instruction no-print">
+        <h3>📄 How to Save as PDF:</h3>
+        <p><strong>1.</strong> Press <code>Ctrl+P</code> (Windows) or <code>Cmd+P</code> (Mac)</p>
+        <p><strong>2.</strong> Select "Save as PDF" as the destination</p>
+        <p><strong>3.</strong> Choose "More settings" and select "A4" paper size</p>
+        <p><strong>4.</strong> Click "Save" and choose your location</p>
+    </div>
+
+    <h1>Market Structures: Economic Theory Guide</h1>
+    <p><em>Understanding Competition, Market Power, and Economic Efficiency</em></p>
+    
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+            <li><a href="#introduction">1. Introduction to Market Structures</a></li>
+            <li><a href="#perfect-competition">2. Perfect Competition</a></li>
+            <li><a href="#monopolistic-competition">3. Monopolistic Competition</a></li>
+            <li><a href="#oligopoly">4. Oligopoly</a></li>
+            <li><a href="#monopoly">5. Monopoly</a></li>
+            <li><a href="#market-power">6. Market Power and Concentration</a></li>
+            <li><a href="#economic-efficiency">7. Economic Efficiency and Welfare</a></li>
+            <li><a href="#strategic-behavior">8. Strategic Behavior and Game Theory</a></li>
+            <li><a href="#real-world-examples">9. Real-World Examples</a></li>
+            <li><a href="#policy-implications">10. Policy Implications and Antitrust</a></li>
+            <li><a href="#simulator-mechanics">11. How the Simulator Works</a></li>
+        </ul>
+    </div>
+
+    <h2 id="introduction">1. Introduction to Market Structures</h2>
+
+    <h3>What are Market Structures?</h3>
+    <p><strong>Market structures</strong> refer to the organizational characteristics of markets that determine how firms compete, set prices, and interact with consumers. The structure of a market fundamentally affects economic outcomes including prices, innovation, efficiency, and consumer welfare.</p>
+
+    <h3>Why Market Structure Matters</h3>
+    <ul>
+        <li><strong>Pricing Power</strong>: Determines how much control firms have over prices</li>
+        <li><strong>Innovation Incentives</strong>: Affects R&D investment and technological progress</li>
+        <li><strong>Economic Efficiency</strong>: Influences resource allocation and social welfare</li>
+        <li><strong>Consumer Choice</strong>: Impacts product variety and quality</li>
+        <li><strong>Entry Barriers</strong>: Determines market accessibility for new firms</li>
+    </ul>
+
+    <h3>Key Characteristics That Define Market Structure</h3>
+    <ol>
+        <li><strong>Number of Firms</strong>: How many sellers operate in the market</li>
+        <li><strong>Product Differentiation</strong>: Whether products are identical or differentiated</li>
+        <li><strong>Barriers to Entry</strong>: How difficult it is for new firms to enter</li>
+        <li><strong>Information</strong>: Whether market participants have perfect information</li>
+        <li><strong>Market Power</strong>: Ability of firms to influence prices</li>
+    </ol>
+
+    <h3>The Four Main Market Structures</h3>
+    <div class="structure-grid">
+        <div class="structure-card">
+            <h4>Perfect Competition</h4>
+            <p>Many firms, identical products, no barriers to entry, no market power</p>
+        </div>
+        <div class="structure-card">
+            <h4>Monopolistic Competition</h4>
+            <p>Many firms, differentiated products, low barriers, limited market power</p>
+        </div>
+        <div class="structure-card">
+            <h4>Oligopoly</h4>
+            <p>Few firms, similar or differentiated products, high barriers, significant market power</p>
+        </div>
+        <div class="structure-card">
+            <h4>Monopoly</h4>
+            <p>Single firm, unique product, very high barriers, maximum market power</p>
+        </div>
+    </div>
+
+    <h2 id="perfect-competition">2. Perfect Competition</h2>
+
+    <h3>Characteristics of Perfect Competition</h3>
+    <ul>
+        <li><strong>Many Buyers and Sellers</strong>: No single participant can influence market price</li>
+        <li><strong>Homogeneous Products</strong>: Goods are identical across all firms</li>
+        <li><strong>Perfect Information</strong>: All participants know prices and quality</li>
+        <li><strong>Free Entry and Exit</strong>: No barriers prevent firms from entering or leaving</li>
+        <li><strong>Price Takers</strong>: Firms accept the market price, cannot set their own</li>
+    </ul>
+
+    <h3>Economic Outcomes in Perfect Competition</h3>
+
+    <h4>Short-Run Equilibrium</h4>
+    <div class="formula-box">
+        <strong>Profit Maximization Rule:</strong><br>
+        Marginal Revenue (MR) = Marginal Cost (MC)<br><br>
+        Since P = MR in perfect competition:<br>
+        <strong>Price = Marginal Cost (P = MC)</strong>
+    </div>
+
+    <h4>Long-Run Equilibrium</h4>
+    <ul>
+        <li><strong>Zero Economic Profit</strong>: Entry/exit ensures P = ATC</li>
+        <li><strong>Allocative Efficiency</strong>: P = MC (marginal benefit = marginal cost)</li>
+        <li><strong>Productive Efficiency</strong>: Production at minimum ATC</li>
+        <li><strong>Maximum Consumer Surplus</strong>: Lowest possible prices</li>
+    </ul>
+
+    <div class="example-box">
+        <h4>Real-World Examples of Near-Perfect Competition:</h4>
+        <ul>
+            <li><strong>Agricultural Markets</strong>: Wheat, corn, soybeans (commodity exchanges)</li>
+            <li><strong>Stock Markets</strong>: Individual stocks traded on exchanges</li>
+            <li><strong>Foreign Exchange</strong>: Currency trading markets</li>
+            <li><strong>Online Marketplaces</strong>: eBay auctions for identical items</li>
+        </ul>
+    </div>
+
+    <h3>Advantages and Disadvantages</h3>
+
+    <h4>Advantages</h4>
+    <ul>
+        <li>Maximum economic efficiency</li>
+        <li>Lowest prices for consumers</li>
+        <li>Optimal resource allocation</li>
+        <li>No deadweight loss</li>
+    </ul>
+
+    <h4>Disadvantages</h4>
+    <ul>
+        <li>Limited innovation incentives (no excess profits)</li>
+        <li>No product differentiation</li>
+        <li>Vulnerable to market failures</li>
+        <li>May not achieve economies of scale</li>
+    </ul>
+
+    <h2 id="monopolistic-competition">3. Monopolistic Competition</h2>
+
+    <h3>Characteristics of Monopolistic Competition</h3>
+    <ul>
+        <li><strong>Many Firms</strong>: Numerous competitors, but fewer than perfect competition</li>
+        <li><strong>Product Differentiation</strong>: Similar but not identical products</li>
+        <li><strong>Low Barriers to Entry</strong>: Relatively easy for new firms to enter</li>
+        <li><strong>Some Market Power</strong>: Firms can set prices above marginal cost</li>
+        <li><strong>Non-Price Competition</strong>: Emphasis on advertising, branding, quality</li>
+    </ul>
+
+    <h3>Sources of Product Differentiation</h3>
+    <ol>
+        <li><strong>Physical Differences</strong>: Features, quality, design</li>
+        <li><strong>Location</strong>: Convenience, accessibility</li>
+        <li><strong>Service</strong>: Customer service, warranties, support</li>
+        <li><strong>Brand Image</strong>: Reputation, marketing, perceived value</li>
+        <li><strong>Timing</strong>: Availability, delivery speed</li>
+    </ol>
+
+    <h3>Economic Outcomes</h3>
+
+    <h4>Short-Run</h4>
+    <ul>
+        <li>Firms can earn economic profits</li>
+        <li>Price > Marginal Cost (some market power)</li>
+        <li>Downward-sloping demand curve for each firm</li>
+    </ul>
+
+    <h4>Long-Run</h4>
+    <ul>
+        <li><strong>Zero Economic Profit</strong>: Entry eliminates excess profits</li>
+        <li><strong>Excess Capacity</strong>: Production below minimum efficient scale</li>
+        <li><strong>Price > MC</strong>: Some allocative inefficiency remains</li>
+    </ul>
+
+    <div class="formula-box">
+        <strong>Long-Run Equilibrium Conditions:</strong><br>
+        1. MR = MC (profit maximization)<br>
+        2. P = ATC (zero economic profit)<br>
+        3. P > MC (market power)<br>
+        4. ATC > minimum ATC (excess capacity)
+    </div>
+
+    <div class="example-box">
+        <h4>Real-World Examples:</h4>
+        <ul>
+            <li><strong>Restaurants</strong>: Many options, differentiated cuisine and atmosphere</li>
+            <li><strong>Clothing Stores</strong>: Different styles, brands, price points</li>
+            <li><strong>Hair Salons</strong>: Location, service quality, specialization</li>
+            <li><strong>Coffee Shops</strong>: Atmosphere, location, specialty drinks</li>
+            <li><strong>Smartphone Apps</strong>: Similar functions, different features/interfaces</li>
+        </ul>
+    </div>
+
+    <h3>Role of Advertising and Innovation</h3>
+    <ul>
+        <li><strong>Brand Building</strong>: Creates customer loyalty and differentiation</li>
+        <li><strong>Information Provision</strong>: Helps consumers make choices</li>
+        <li><strong>Market Creation</strong>: Can expand overall market demand</li>
+        <li><strong>Innovation Driver</strong>: Need to differentiate spurs R&D</li>
+    </ul>
+
+    <h2 id="oligopoly">4. Oligopoly</h2>
+
+    <h3>Characteristics of Oligopoly</h3>
+    <ul>
+        <li><strong>Few Large Firms</strong>: Typically 2-10 dominant firms</li>
+        <li><strong>High Market Concentration</strong>: Top firms control large market share</li>
+        <li><strong>Significant Barriers to Entry</strong>: Capital requirements, regulations, patents</li>
+        <li><strong>Strategic Interdependence</strong>: Firms must consider competitor reactions</li>
+        <li><strong>Price Makers</strong>: Substantial market power</li>
+    </ul>
+
+    <h3>Types of Oligopoly</h3>
+
+    <h4>Based on Product Type</h4>
+    <ul>
+        <li><strong>Pure Oligopoly</strong>: Homogeneous products (steel, oil)</li>
+        <li><strong>Differentiated Oligopoly</strong>: Differentiated products (automobiles, smartphones)</li>
+    </ul>
+
+    <h4>Based on Firm Behavior</h4>
+    <ul>
+        <li><strong>Collusive Oligopoly</strong>: Firms coordinate to maximize joint profits</li>
+        <li><strong>Non-Collusive Oligopoly</strong>: Firms compete independently</li>
+    </ul>
+
+    <h3>Strategic Behavior Models</h3>
+
+    <h4>Price Leadership</h4>
+    <ul>
+        <li><strong>Dominant Firm</strong>: Largest firm sets price, others follow</li>
+        <li><strong>Barometric Leadership</strong>: Recognized leader signals price changes</li>
+        <li><strong>Benefits</strong>: Reduces price competition, coordination without explicit collusion</li>
+    </ul>
+
+    <h4>Kinked Demand Curve</h4>
+    <ul>
+        <li><strong>Assumption</strong>: Competitors match price cuts but not price increases</li>
+        <li><strong>Result</strong>: Price rigidity, reluctance to change prices</li>
+        <li><strong>Criticism</strong>: Doesn't explain how initial price is determined</li>
+    </ul>
+
+    <h4>Game Theory Applications</h4>
+    <div class="formula-box">
+        <strong>Prisoner's Dilemma in Oligopoly:</strong><br>
+        Each firm faces choice: Compete vs. Cooperate<br>
+        Nash Equilibrium often leads to competitive outcome<br>
+        Even though cooperation would be mutually beneficial
+    </div>
+
+    <div class="example-box">
+        <h4>Real-World Examples:</h4>
+        <ul>
+            <li><strong>Airlines</strong>: Few major carriers dominate routes</li>
+            <li><strong>Telecommunications</strong>: Verizon, AT&T, T-Mobile</li>
+            <li><strong>Automobiles</strong>: GM, Ford, Toyota, Honda</li>
+            <li><strong>Big Tech</strong>: Google, Apple, Microsoft, Amazon</li>
+            <li><strong>Oil Companies</strong>: ExxonMobil, Shell, BP</li>
+        </ul>
+    </div>
+
+    <h3>Barriers to Entry in Oligopoly</h3>
+    <ol>
+        <li><strong>Economies of Scale</strong>: Large-scale production advantages</li>
+        <li><strong>Capital Requirements</strong>: High startup costs</li>
+        <li><strong>Product Differentiation</strong>: Established brand loyalty</li>
+        <li><strong>Access to Distribution</strong>: Control of retail channels</li>
+        <li><strong>Government Barriers</strong>: Licenses, regulations, patents</li>
+        <li><strong>Strategic Barriers</strong>: Predatory pricing, capacity expansion</li>
+    </ol>
+
+    <h2 id="monopoly">5. Monopoly</h2>
+
+    <h3>Characteristics of Monopoly</h3>
+    <ul>
+        <li><strong>Single Seller</strong>: Only one firm produces the good</li>
+        <li><strong>No Close Substitutes</strong>: Product has no readily available alternatives</li>
+        <li><strong>High Barriers to Entry</strong>: Prevent other firms from entering market</li>
+        <li><strong>Price Maker</strong>: Complete control over price (subject to demand)</li>
+        <li><strong>Market = Firm</strong>: Firm's demand curve is the market demand curve</li>
+    </ul>
+
+    <h3>Sources of Monopoly Power</h3>
+
+    <h4>Natural Monopoly</h4>
+    <ul>
+        <li><strong>Definition</strong>: Industry where one firm can supply entire market at lower cost than multiple firms</li>
+        <li><strong>Cause</strong>: Decreasing average costs over relevant output range</li>
+        <li><strong>Examples</strong>: Public utilities, water systems, electric grids</li>
+    </ul>
+
+    <h4>Legal Monopoly</h

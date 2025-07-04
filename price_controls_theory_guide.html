@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Controls: Economic Theory Guide</title>
+    <style>
+        @media print {
+            body { margin: 0.5in; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+            background: white;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #007acc;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-left: 4px solid #007acc;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+        
+        .toc ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .toc a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007acc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .formula-box {
+            background: #f0f8f0;
+            border: 1px solid #90c695;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box {
+            background: #fff7e6;
+            border: 1px solid #ffb366;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .historical-box {
+            background: #f8f0ff;
+            border: 1px solid #d1b3ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .print-instruction {
+            background: #fffbf0;
+            border: 2px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 40px 0;
+        }
+        
+        .key-takeaway {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-instruction no-print">
+        <h3>📄 How to Save as PDF:</h3>
+        <p><strong>1.</strong> Press <code>Ctrl+P</code> (Windows) or <code>Cmd+P</code> (Mac)</p>
+        <p><strong>2.</strong> Select "Save as PDF" as the destination</p>
+        <p><strong>3.</strong> Choose "More settings" and select "A4" paper size</p>
+        <p><strong>4.</strong> Click "Save" and choose your location</p>
+    </div>
+
+    <h1>Price Controls: Economic Theory Guide</h1>
+    <p><em>Understanding Government Market Interventions, Price Floors, and Price Ceilings</em></p>
+    
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+            <li><a href="#introduction">1. Introduction to Price Controls</a></li>
+            <li><a href="#market-equilibrium">2. Market Equilibrium Foundation</a></li>
+            <li><a href="#price-ceilings">3. Price Ceilings</a></li>
+            <li><a href="#price-floors">4. Price Floors</a></li>
+            <li><a href="#economic-effects">5. Economic Effects and Efficiency</a></li>
+            <li><a href="#real-world-examples">6. Real-World Examples</a></li>
+            <li><a href="#unintended-consequences">7. Unintended Consequences</a></li>
+            <li><a href="#policy-alternatives">8. Policy Alternatives</a></li>
+            <li><a href="#simulator-mechanics">9. How the Simulator Works</a></li>
+            <li><a href="#advanced-topics">10. Advanced Topics</a></li>
+        </ul>
+    </div>
+
+    <h2 id="introduction">1. Introduction to Price Controls</h2>
+
+    <h3>What are Price Controls?</h3>
+    <p><strong>Price controls</strong> are government regulations that set legal limits on the prices that can be charged for goods and services. They represent direct government intervention in free market pricing mechanisms.</p>
+
+    <h3>Types of Price Controls</h3>
+    <ol>
+        <li><strong>Price Ceiling</strong>: Maximum legal price (e.g., rent control, gas price caps)</li>
+        <li><strong>Price Floor</strong>: Minimum legal price (e.g., minimum wage, agricultural price supports)</li>
+    </ol>
+
+    <h3>Historical Context</h3>
+    <p>Price controls have been used throughout history, from ancient Rome's grain price regulations to modern rent control laws. While often implemented with good intentions, they frequently produce unintended economic consequences.</p>
+
+    <h3>Why Governments Implement Price Controls</h3>
+    <ul>
+        <li><strong>Affordability</strong>: Make essential goods accessible to low-income consumers</li>
+        <li><strong>Equity</strong>: Protect workers from exploitation or ensure fair wages</li>
+        <li><strong>Stability</strong>: Prevent price volatility during emergencies</li>
+        <li><strong>Political Pressure</strong>: Respond to public demands for action</li>
+    </ul>
+
+    <h2 id="market-equilibrium">2. Market Equilibrium Foundation</h2>
+
+    <h3>Free Market Mechanism</h3>
+    <p>In a free market, prices are determined by the intersection of supply and demand curves:</p>
+
+    <div class="formula-box">
+        <strong>Market Equilibrium:</strong><br>
+        Quantity Demanded = Quantity Supplied<br>
+        Market-clearing price balances supply and demand<br>
+        No shortages or surpluses exist
+    </div>
+
+    <h3>Why Equilibrium Matters</h3>
+    <ul>
+        <li><strong>Efficient Allocation</strong>: Resources flow to their highest-valued uses</li>
+        <li><strong>Information Signal</strong>: Prices convey information about scarcity and value</li>
+        <li><strong>Incentive Structure</strong>: Motivates production and consumption decisions</li>
+        <li><strong>Self-Correcting</strong>: Market forces automatically adjust to changes</li>
+    </ul>
+
+    <h3>Consumer and Producer Surplus</h3>
+    <p>Free market equilibrium maximizes total economic surplus:</p>
+
+    <div class="formula-box">
+        <strong>Consumer Surplus</strong> = Area under demand curve, above equilibrium price<br>
+        <strong>Producer Surplus</strong> = Area above supply curve, below equilibrium price<br>
+        <strong>Total Surplus</strong> = Consumer Surplus + Producer Surplus
+    </div>
+
+    <h2 id="price-ceilings">3. Price Ceilings</h2>
+
+    <h3>Definition and Mechanism</h3>
+    <p>A <strong>price ceiling</strong> sets a maximum legal price below the market equilibrium, preventing prices from rising to their natural level.</p>
+
+    <h3>When Price Ceilings are Binding</h3>
+    <p>Price ceilings only affect markets when set <em>below</em> the equilibrium price. If set above equilibrium, they have no effect.</p>
+
+    <div class="example-box">
+        <h4>Price Ceiling Example: Rent Control</h4>
+        <ul>
+            <li><strong>Market Equilibrium</strong>: $2,000/month rent</li>
+            <li><strong>Price Ceiling</strong>: $1,200/month maximum</li>
+            <li><strong>Result</strong>: Shortage of rental units</li>
+            <li><strong>Quantity Demanded</strong>: More people want apartments at $1,200</li>
+            <li><strong>Quantity Supplied</strong>: Fewer landlords willing to rent at $1,200</li>
+        </ul>
+    </div>
+
+    <h3>Economic Effects of Price Ceilings</h3>
+
+    <h4>Immediate Effects</h4>
+    <ul>
+        <li><strong>Shortage</strong>: Quantity demanded exceeds quantity supplied</li>
+        <li><strong>Lower Prices</strong>: Consumers who get the good pay less</li>
+        <li><strong>Reduced Quantity</strong>: Less of the good is available overall</li>
+    </ul>
+
+    <h4>Long-term Consequences</h4>
+    <ul>
+        <li><strong>Quality Deterioration</strong>: Suppliers reduce quality to cut costs</li>
+        <li><strong>Black Markets</strong>: Illegal markets emerge at higher prices</li>
+        <li><strong>Non-Price Rationing</strong>: Waiting lists, favoritism, discrimination</li>
+        <li><strong>Search Costs</strong>: Time and effort spent finding available goods</li>
+    </ul>
+
+    <h3>Common Examples of Price Ceilings</h3>
+
+    <h4>Rent Control</h4>
+    <ul>
+        <li><strong>Intention</strong>: Keep housing affordable</li>
+        <li><strong>Reality</strong>: Housing shortages, deteriorating conditions</li>
+        <li><strong>Winners</strong>: Current tenants with controlled rents</li>
+        <li><strong>Losers</strong>: New renters, landlords, housing quality</li>
+    </ul>
+
+    <h4>Gas Price Controls</h4>
+    <ul>
+        <li><strong>Intention</strong>: Prevent price gouging during emergencies</li>
+        <li><strong>Reality</strong>: Gas station lines, shortages</li>
+        <li><strong>Winners</strong>: Consumers who can find gas</li>
+        <li><strong>Losers</strong>: Drivers who can't find gas, station owners</li>
+    </ul>
+
+    <h4>Prescription Drug Price Controls</h4>
+    <ul>
+        <li><strong>Intention</strong>: Make medications affordable</li>
+        <li><strong>Reality</strong>: Reduced R&D investment, drug shortages</li>
+        <li><strong>Winners</strong>: Current patients buying controlled drugs</li>
+        <li><strong>Losers</strong>: Future patients, pharmaceutical innovation</li>
+    </ul>
+
+    <h2 id="price-floors">4. Price Floors</h2>
+
+    <h3>Definition and Mechanism</h3>
+    <p>A <strong>price floor</strong> sets a minimum legal price above the market equilibrium, preventing prices from falling to their natural level.</p>
+
+    <h3>When Price Floors are Binding</h3>
+    <p>Price floors only affect markets when set <em>above</em> the equilibrium price. If set below equilibrium, they have no effect.</p>
+
+    <div class="example-box">
+        <h4>Price Floor Example: Minimum Wage</h4>
+        <ul>
+            <li><strong>Market Equilibrium</strong>: $12/hour wage</li>
+            <li><strong>Price Floor</strong>: $15/hour minimum</li>
+            <li><strong>Result</strong>: Surplus of labor (unemployment)</li>
+            <li><strong>Quantity Demanded</strong>: Fewer workers hired at $15/hour</li>
+            <li><strong>Quantity Supplied</strong>: More people want jobs at $15/hour</li>
+        </ul>
+    </div>
+
+    <h3>Economic Effects of Price Floors</h3>
+
+    <h4>Immediate Effects</h4>
+    <ul>
+        <li><strong>Surplus</strong>: Quantity supplied exceeds quantity demanded</li>
+        <li><strong>Higher Prices</strong>: Producers who sell receive more</li>
+        <li><strong>Reduced Quantity</strong>: Less of the good is traded overall</li>
+    </ul>
+
+    <h4>Long-term Consequences</h4>
+    <ul>
+        <li><strong>Persistent Surplus</strong>: Unsold goods or unemployed workers</li>
+        <li><strong>Government Purchases</strong>: May need to buy surplus to maintain floor</li>
+        <li><strong>Resource Misallocation</strong>: Too many resources in protected sector</li>
+        <li><strong>Substitution Effects</strong>: Buyers switch to alternatives</li>
+    </ul>
+
+    <h3>Common Examples of Price Floors</h3>
+
+    <h4>Minimum Wage Laws</h4>
+    <ul>
+        <li><strong>Intention</strong>: Ensure living wages for workers</li>
+        <li><strong>Reality</strong>: May reduce employment for low-skilled workers</li>
+        <li><strong>Winners</strong>: Workers who keep jobs at higher wages</li>
+        <li><strong>Losers</strong>: Unemployed workers, employers with higher costs</li>
+    </ul>
+
+    <h4>Agricultural Price Supports</h4>
+    <ul>
+        <li><strong>Intention</strong>: Protect farmer incomes</li>
+        <li><strong>Reality</strong>: Overproduction, government storage costs</li>
+        <li><strong>Winners</strong>: Farmers receiving supported prices</li>
+        <li><strong>Losers</strong>: Taxpayers, consumers paying higher prices</li>
+    </ul>
+
+    <h4>Professional Licensing</h4>
+    <ul>
+        <li><strong>Intention</strong>: Ensure service quality and safety</li>
+        <li><strong>Reality</strong>: Limits supply, raises prices</li>
+        <li><strong>Winners</strong>: Licensed professionals earning higher wages</li>
+        <li><strong>Losers</strong>: Consumers paying more, excluded workers</li>
+    </ul>
+
+    <h2 id="economic-effects">5. Economic Effects and Efficiency</h2>
+
+    <h3>Deadweight Loss</h3>
+    <p><strong>Deadweight loss</strong> represents the economic efficiency lost when price controls prevent mutually beneficial trades.</p>
+
+    <div class="formula-box">
+        <strong>Deadweight Loss Calculation:</strong><br>
+        DWL = ½ × |Price Control - Equilibrium Price| × |Quantity Traded - Equilibrium Quantity|<br><br>
+        Represents value of trades that would have occurred in free market<br>
+        but are prevented by price controls
+    </div>
+
+    <h3>Distribution Effects</h3>
+
+    <h4>Price Ceilings</h4>
+    <table>
+        <thead>
+            <tr><th>Group</th><th>Effect</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Consumers (lucky)</td><td>Gain</td><td>Pay lower prices for goods they can find</td></tr>
+            <tr><td>Consumers (unlucky)</td><td>Lose</td><td>Cannot find goods at any price</td></tr>
+            <tr><td>Producers</td><td>Lose</td><td>Receive lower prices, sell less quantity</td></tr>
+            <tr><td>Society Overall</td><td>Lose</td><td>Deadweight loss reduces total welfare</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Price Floors</h4>
+    <table>
+        <thead>
+            <tr><th>Group</th><th>Effect</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Producers (lucky)</td><td>Gain</td><td>Receive higher prices for goods they sell</td></tr>
+            <tr><td>Producers (unlucky)</td><td>Lose</td><td>Cannot sell their goods at floor price</td></tr>
+            <tr><td>Consumers</td><td>Lose</td><td>Pay higher prices, buy less quantity</td></tr>
+            <tr><td>Society Overall</td><td>Lose</td><td>Deadweight loss reduces total welfare</td></tr>
+        </tbody>
+    </table>
+
+    <h2 id="real-world-examples">6. Real-World Examples</h2>
+
+    <h3>Historical Case Studies</h3>
+
+    <h4>New York City Rent Control</h4>
+    <div class="historical-box">
+        <p><strong>Background:</strong> Implemented during WWII, continued for decades</p>
+        <ul>
+            <li><strong>Intention</strong>: Keep housing affordable during wartime</li>
+            <li><strong>Results</strong>: Severe housing shortages, deteriorating buildings</li>
+            <li><strong>Evidence</strong>: Vacancy rates fell to below 1%, building maintenance declined</li>
+            <li><strong>Unintended Effects</strong>: Black market rentals, apartment conversions to condos</li>
+            <li><strong>Modern Status</strong>: Partially deregulated but still controversial</li>
+        </ul>
+    </div>
+
+    <h4>1970s U.S. Gas Price Controls</h4>
+    <div class="historical-box">
+        <p><strong>Background:</strong> Nixon administration imposed gas price ceilings during oil crisis</p>
+        <ul>
+            <li><strong>Intention</strong>: Protect consumers from "price gouging"</li>
+            <li><strong>Results</strong>: Long gas station lines, shortages, odd-even rationing</li>
+            <li><strong>Evidence</strong>: Lines of cars waiting hours for gasoline</li>
+            <li><strong>Unintended Effects</strong>: Black market gas sales, economic inefficiency</li>
+            <li><strong>Resolution</strong>: Controls removed, markets cleared quickly</li>
+        </ul>
+    </div>
+
+    <h4>European Agricultural Policy</h4>
+    <div class="historical-box">
+        <p><strong>Background:</strong> EU Common Agricultural Policy with price floors</p>
+        <ul>
+            <li><strong>Intention</strong>: Support farmer incomes and food security</li>
+            <li><strong>Results</strong>: Massive food surpluses, "butter mountains," "wine lakes"</li>
+            <li><strong>Evidence</strong>: EU spent billions storing excess agricultural products</li>
+            <li><strong>Unintended Effects</strong>: Trade disputes, environmental damage from overproduction</li>
+            <li><strong>Reforms</strong>: Shifted toward direct payments, reduced price supports</li>
+        </ul>
+    </div>
+
+    <h2 id="unintended-consequences">7. Unintended Consequences</h2>
+
+    <h3>Quality Effects</h3>
+
+    <h4>Under Price Ceilings</h4>
+    <ul>
+        <li><strong>Quality Reduction</strong>: Suppliers cut costs by reducing quality</li>
+        <li><strong>Service Deterioration</strong>: Less maintenance, customer service</li>
+        <li><strong>Innovation Reduction</strong>: Less incentive to improve products</li>
+        <li><strong>Maintenance Neglect</strong>: Rent-controlled buildings deteriorate</li>
+    </ul>
+
+    <h4>Under Price Floors</h4>
+    <ul>
+        <li><strong>Overqualification</strong>: Employers demand higher skills for same jobs</li>
+        <li><strong>Hour Reduction</strong>: Fewer hours offered to offset higher wages</li>
+        <li><strong>Benefit Cuts</strong>: Non-wage compensation reduced</li>
+        <li><strong>Automation</strong>: Machines substitute for expensive labor</li>
+    </ul>
+
+    <h3>Secondary Markets</h3>
+
+    <h4>Black Markets</h4>
+    <ul>
+        <li><strong>Definition</strong>: Illegal markets that emerge when legal markets fail</li>
+        <li><strong>Price Ceilings</strong>: Illegal sales above ceiling price</li>
+        <li><strong>Price Floors</strong>: Under-the-table payments below floor price</li>
+        <li><strong>Problems</strong>: No legal recourse, dangerous, expensive enforcement</li>
+    </ul>
+
+    <h4>Non-Price Rationing</h4>
+    <ul>
+        <li><strong>Waiting Lists</strong>: Time becomes the rationing mechanism</li>
+        <li><strong>Favoritism</strong>: Personal connections matter more than price</li>
+        <li><strong>Discrimination</strong>: Protected groups may face unequal treatment</li>
+        <li><strong>Bureaucracy</strong>: Administrative allocation replaces market mechanism</li>
+    </ul>
+
+    <h2 id="policy-alternatives">8. Policy Alternatives</h2>
+
+    <h3>Addressing Affordability Concerns</h3>
+
+    <h4>Instead of Price Ceilings</h4>
+    <ul>
+        <li><strong>Income Supplements</strong>: Direct cash transfers to poor consumers</li>
+        <li><strong>Voucher Programs</strong>: Housing vouchers instead of rent control</li>
+        <li><strong>Tax Credits</strong>: Earned Income Tax Credit for low-wage workers</li>
+        <li><strong>Supply-Side Policies</strong>: Reduce barriers to increase supply</li>
+    </ul>
+
+    <h4>Instead of Price Floors</h4>
+    <ul>
+        <li><strong>Negative Income Tax</strong>: Guaranteed minimum income</li>
+        <li><strong>Training Programs</strong>: Increase worker productivity</li>
+        <li><strong>Job Creation</strong>: Public works or subsidized employment</li>
+        <li><strong>Competition Policy</strong>: Ensure competitive labor markets</li>
+    </ul>
+
+    <h3>Why Alternatives are Often Better</h3>
+
+    <div class="highlight-box">
+        <h4>Economic Efficiency</h4>
+        <p><strong>Market-based solutions</strong> typically preserve price signals and voluntary exchange while achieving distributional goals. They avoid deadweight loss by working with market forces rather than against them.</p>
+    </div>
+
+    <h2 id="simulator-mechanics">9. How the Simulator Works</h2>
+
+    <h3>Mathematical Model</h3>
+
+    <h4>Supply and Demand Functions</h4>
+    <pre>// Demand curve: Qd = demandIntercept - demandSlope * P
+demandIntercept = 80 * (demandStrength / 100)
+demandSlope = 0.8
+quantityDemanded = max(0, demandIntercept - demandSlope * price)
+
+// Supply curve: Qs = supplyIntercept + supplySlope * P  
+supplyIntercept = -20 * (supplyStrength / 100)
+supplySlope = 0.9 * (supplyStrength / 100)
+quantitySupplied = max(0, supplyIntercept + supplySlope * price)</pre>
+
+    <h4>Equilibrium Calculation</h4>
+    <pre>// Market equilibrium where Qd = Qs
+equilibriumPrice = (demandIntercept - supplyIntercept) / (demandSlope + supplySlope)
+equilibriumQuantity = demandIntercept - demandSlope * equilibriumPrice</pre>
+
+    <h4>Price Control Effects</h4>
+    <pre>if (controlType === 'ceiling' && controlPrice < equilibriumPrice) {
+    effectivePrice = controlPrice
+    quantityDemanded = demandIntercept - demandSlope * controlPrice
+    quantitySupplied = supplyIntercept + supplySlope * controlPrice  
+    quantityTraded = min(quantityDemanded, quantitySupplied)  // Limited by supply
+    shortage = quantityDemanded - quantitySupplied
+} else if (controlType === 'floor' && controlPrice > equilibriumPrice) {
+    effectivePrice = controlPrice
+    quantityDemanded = demandIntercept - demandSlope * controlPrice
+    quantitySupplied = supplyIntercept + supplySlope * controlPrice
+    quantityTraded = min(quantityDemanded, quantitySupplied)  // Limited by demand  
+    surplus = quantitySupplied - quantityDemanded
+}</pre>
+
+    <h3>Surplus and Welfare Calculations</h3>
+    <pre>// Calculate consumer and producer surplus
+maxDemandPrice = demandIntercept / demandSlope
+minSupplyPrice = -supplyIntercept / supplySlope
+
+consumerSurplus = 0.5 * (maxDemandPrice - effectivePrice) * quantityTraded
+producerSurplus = 0.5 * (effectivePrice - minSupplyPrice) * quantityTraded
+
+// Deadweight loss from price controls
+if (priceControlActive && quantityTraded < equilibriumQuantity) {
+    deadweightLoss = 0.5 * |controlPrice - equilibriumPrice| * 
+                     (equilibriumQuantity - quantityTraded)
+}</pre>
+
+    <h3>Scenario Parameters</h3>
+    <table>
+        <thead>
+            <tr><th>Scenario</th><th>Control Type</th><th>Price Setting</th><th>Market Conditions</th><th>Teaching Point</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Rent Control</td><td>Ceiling</td><td>$35 (below equilibrium)</td><td>High demand, limited supply</td><td>Housing shortage</td></tr>
+            <tr><td>Minimum Wage</td><td>Floor</td><td>$65 (above equilibrium)</td><td>Low demand, high supply</td><td>Unemployment</td></tr>
+            <tr><td>Gas Price Cap</td><td>Ceiling</td><td>$25 (below equilibrium)</td><td>Very high demand</td><td>Fuel shortage</td></tr>
+            <tr><td>Farm Subsidies</td><td>Floor</td><td>$70 (above equilibrium)</td><td>Moderate supply boost</td><td>Agricultural surplus</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Visual Representation</h3>
+    <ul>
+        <li><strong>Supply/Demand Curves</strong>: Red demand curve (downward-sloping), green supply curve (upward-sloping)</li>
+        <li><strong>Equilibrium Point</strong>: Black dot where curves intersect</li>
+        <li><strong>Price Control Line</strong>: Orange dashed horizontal line</li>
+        <li><strong>Shortage/Surplus Area</strong>: Yellow highlighted region showing market imbalance</li>
+        <li><strong>Color Coding</strong>: Green for balanced markets, red for shortages, orange for surpluses</li>
+    </ul>
+
+    <h2 id="advanced-topics">10. Advanced Topics</h2>
+
+    <h3>Elasticity and Price Control Effects</h3>
+
+    <h4>Demand Elasticity Impact</h4>
+    <ul>
+        <li><strong>Elastic Demand</strong>: Price ceilings create smaller shortages (consumers substitute easily)</li>
+        <li><strong>Inelastic Demand</strong>: Price ceilings create larger shortages (consumers can't substitute)</li>
+        <li><strong>Example</strong>: Gasoline (inelastic) vs. restaurant meals (elastic)</li>
+    </ul>
+
+    <h4>Supply Elasticity Impact</h4>
+    <ul>
+        <li><strong>Elastic Supply</strong>: Price floors create larger surpluses (producers respond strongly)</li>
+        <li><strong>Inelastic Supply</strong>: Price floors create smaller surpluses (producers can't adjust quickly)</li>
+        <li><strong>Example</strong>: Manufacturing (elastic) vs. agriculture (inelastic in short run)</li>
+    </ul>
+
+    <hr>
+
+    <h2>Key Takeaways</h2>
+
+    <div class="key-takeaway">
+        <h3>For Students</h3>
+        <ol>
+            <li><strong>Good Intentions ≠ Good Outcomes</strong>: Well-meaning policies can have harmful effects</li>
+            <li><strong>Markets Coordinate

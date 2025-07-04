@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxation & Government Revenue Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: right;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .revenue-highlight {
+            background: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .productivity-section {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .productivity-section h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .productivity-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .positive {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .laffer-point {
+            background: #e1f5fe;
+            border: 1px solid #81d4fa;
+            color: #0277bd;
+        }
+
+        .economic-indicators {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .indicator {
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .indicator-value {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .indicator-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .scenarios {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Taxation & Government Revenue</h1>
+            <p>Explore the Laffer Curve: How tax rates affect government revenue and economic behavior</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Controls -->
+            <div class="card">
+                <h2>Tax Policy Controls</h2>
+                
+                <div class="control-group">
+                    <label>Income Tax Rate</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="taxRate" min="0" max="100" value="25" step="1">
+                    </div>
+                    <div class="slider-value" id="taxRateValue">25%</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Economic Base</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="economicBase" min="50" max="200" value="100" step="5">
+                    </div>
+                    <div class="slider-value" id="economicBaseValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Tax Avoidance Factor</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="avoidanceFactor" min="0.5" max="3" value="1.5" step="0.1">
+                    </div>
+                    <div class="slider-value" id="avoidanceFactorValue">1.5</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="scenarios">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('low')">Low Tax</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('moderate')">Moderate</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('high')">High Tax</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('extreme')">Extreme</button>
+                </div>
+
+                <button class="btn" onclick="findOptimal()">Find Optimal Rate</button>
+                <button class="btn-secondary" onclick="reset()">Reset</button>
+
+                <div class="divider"></div>
+
+                <div class="economic-indicators">
+                    <div class="indicator">
+                        <div class="indicator-value" id="workIncentive">75%</div>
+                        <div class="indicator-label">Work Incentive</div>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-value" id="taxCompliance">85%</div>
+                        <div class="indicator-label">Compliance</div>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-value" id="economicGrowth">2.5%</div>
+                        <div class="indicator-label">Growth Rate</div>
+                    </div>
+                </div>
+
+                <div id="warningBox" class="warning laffer-point" style="display: none;">
+                    You've found the revenue-maximizing tax rate!
+                </div>
+            </div>
+
+            <!-- Center Panel: Chart -->
+            <div class="chart-container">
+                <canvas id="lafferChart"></canvas>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="card">
+                <h2>Government & Economy</h2>
+                
+                <div class="metric-grid">
+                    <div class="metric-card revenue-highlight">
+                        <div class="metric-value" id="govRevenue">$250B</div>
+                        <div class="metric-label">Government Revenue</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="taxBurden">$25B</div>
+                        <div class="metric-label">Total Tax Burden</div>
+                    </div>
+                </div>
+
+                <div class="productivity-section">
+                    <h3>Economic Impact</h3>
+                    <div class="productivity-item">
+                        <span>Taxable Income:</span>
+                        <span id="taxableIncome">$1,000B</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>After-Tax Income:</span>
+                        <span id="afterTaxIncome">$750B</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>Economic Output:</span>
+                        <span id="economicOutput">95%</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>Revenue Lost to Avoidance:</span>
+                        <span id="revenueLost">$12B</span>
+                    </div>
+                </div>
+
+                <div class="productivity-section">
+                    <h3>Laffer Curve Analysis</h3>
+                    <div class="productivity-item">
+                        <span>Current Position:</span>
+                        <span id="lafferPosition">Left Side</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>Optimal Tax Rate:</span>
+                        <span id="optimalRate">~35%</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>Max Possible Revenue:</span>
+                        <span id="maxRevenue">$300B</span>
+                    </div>
+                    <div class="productivity-item">
+                        <span>Distance from Optimal:</span>
+                        <span id="distanceFromOptimal">10%</span>
+                    </div>
+                </div>
+
+                <div class="insights">
+                    <h3>Policy Insights</h3>
+                    <div id="insightsContent">
+                        <div class="insight-item">At 25% tax rate, you're on the left side of the Laffer curve</div>
+                        <div class="insight-item">Government could increase revenue by raising taxes</div>
+                        <div class="insight-item">Work incentives remain strong at this rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let gameState = {
+            taxRate: 25,
+            economicBase: 100,
+            avoidanceFactor: 1.5
+        };
+
+        const scenarios = {
+            low: { taxRate: 10, economicBase: 100, avoidanceFactor: 1.2 },
+            moderate: { taxRate: 35, economicBase: 100, avoidanceFactor: 1.5 },
+            high: { taxRate: 60, economicBase: 100, avoidanceFactor: 2.0 },
+            extreme: { taxRate: 85, economicBase: 100, avoidanceFactor: 2.8 }
+        };
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('lafferChart').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Government Revenue',
+                            data: [],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4,
+                            pointRadius: 0,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Current Tax Rate',
+                            data: [],
+                            borderColor: '#dc3545',
+                            backgroundColor: '#dc3545',
+                            borderWidth: 3,
+                            pointRadius: 8,
+                            pointHoverRadius: 10,
+                            showLine: false
+                        },
+                        {
+                            label: 'Optimal Rate',
+                            data: [],
+                            borderColor: '#ffc107',
+                            backgroundColor: '#ffc107',
+                            borderWidth: 0,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            showLine: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 11 },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        return `Revenue: $${context.parsed.y.toFixed(0)}B at ${context.parsed.x}% tax rate`;
+                                    } else if (context.datasetIndex === 1) {
+                                        return `Current: ${context.parsed.x}% tax rate`;
+                                    } else {
+                                        return `Optimal: ${context.parsed.x}% tax rate`;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tax Rate (%)'
+                            },
+                            min: 0,
+                            max: 100
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Government Revenue (Billions $)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            updateChart();
+        }
+
+        // Calculate Laffer curve points and economic metrics
+        function calculateLafferCurve() {
+            const labels = [];
+            const revenueData = [];
+            let optimalRate = 0;
+            let maxRevenue = 0;
+
+            // Generate Laffer curve
+            for (let rate = 0; rate <= 100; rate += 2) {
+                labels.push(rate);
+                const revenue = calculateRevenue(rate);
+                revenueData.push(revenue);
+                
+                if (revenue > maxRevenue) {
+                    maxRevenue = revenue;
+                    optimalRate = rate;
+                }
+            }
+
+            // Current position calculations
+            const currentRevenue = calculateRevenue(gameState.taxRate);
+            const currentTaxableIncome = calculateTaxableIncome(gameState.taxRate);
+            const currentAfterTaxIncome = currentTaxableIncome * (1 - gameState.taxRate / 100);
+            const workIncentive = Math.max(0, 100 - gameState.taxRate * 1.2);
+            const taxCompliance = Math.max(20, 100 - (gameState.taxRate * gameState.avoidanceFactor));
+            const economicGrowth = Math.max(-2, 4 - (gameState.taxRate * 0.08));
+            const revenueLost = (currentTaxableIncome * gameState.taxRate / 100) - currentRevenue;
+            const economicOutput = Math.max(50, 100 - (gameState.taxRate * 0.6));
+
+            return {
+                labels,
+                revenueData,
+                currentRevenue,
+                currentTaxableIncome,
+                currentAfterTaxIncome,
+                optimalRate,
+                maxRevenue,
+                workIncentive,
+                taxCompliance,
+                economicGrowth,
+                revenueLost,
+                economicOutput
+            };
+        }
+
+        // Calculate revenue for a given tax rate
+        function calculateRevenue(rate) {
+            const baseIncome = calculateTaxableIncome(rate);
+            const grossTaxRevenue = baseIncome * (rate / 100);
+            const compliance = Math.max(0.2, 1 - ((rate * gameState.avoidanceFactor) / 100));
+            return grossTaxRevenue * compliance;
+        }
+
+        // Calculate taxable income based on tax rate (behavioral response)
+        function calculateTaxableIncome(rate) {
+            const baseIncome = gameState.economicBase * 10; // Base income in billions
+            const workDisincentive = Math.max(0.3, 1 - (rate * 0.01)); // Work reduces as taxes increase
+            return baseIncome * workDisincentive;
+        }
+
+        // Update chart and displays
+        function updateChart() {
+            const data = calculateLafferCurve();
+
+            chart.data.labels = data.labels;
+            chart.data.datasets[0].data = data.labels.map((rate, index) => ({
+                x: rate,
+                y: data.revenueData[index]
+            }));
+            chart.data.datasets[1].data = [{
+                x: gameState.taxRate,
+                y: data.currentRevenue
+            }];
+            chart.data.datasets[2].data = [{
+                x: data.optimalRate,
+                y: data.maxRevenue
+            }];
+
+            chart.update();
+
+            // Update displays
+            document.getElementById('govRevenue').textContent = `$${data.currentRevenue.toFixed(0)}B`;
+            document.getElementById('taxBurden').textContent = `$${(data.currentTaxableIncome * gameState.taxRate / 100).toFixed(0)}B`;
+            document.getElementById('taxableIncome').textContent = `$${data.currentTaxableIncome.toFixed(0)}B`;
+            document.getElementById('afterTaxIncome').textContent = `$${data.currentAfterTaxIncome.toFixed(0)}B`;
+            document.getElementById('economicOutput').textContent = `${data.economicOutput.toFixed(0)}%`;
+            document.getElementById('revenueLost').textContent = `$${Math.max(0, data.revenueLost).toFixed(0)}B`;
+
+            document.getElementById('workIncentive').textContent = `${data.workIncentive.toFixed(0)}%`;
+            document.getElementById('taxCompliance').textContent = `${data.taxCompliance.toFixed(0)}%`;
+            document.getElementById('economicGrowth').textContent = `${data.economicGrowth.toFixed(1)}%`;
+
+            document.getElementById('optimalRate').textContent = `~${data.optimalRate}%`;
+            document.getElementById('maxRevenue').textContent = `$${data.maxRevenue.toFixed(0)}B`;
+            document.getElementById('distanceFromOptimal').textContent = `${Math.abs(gameState.taxRate - data.optimalRate)}%`;
+
+            // Laffer curve position
+            const position = gameState.taxRate < data.optimalRate ? 'Left Side' : 
+                           gameState.taxRate > data.optimalRate ? 'Right Side' : 'Peak';
+            document.getElementById('lafferPosition').textContent = position;
+
+            updateInsights(data);
+            updateWarnings(data);
+        }
+
+        // Update insights based on current state
+        function updateInsights(data) {
+            const insights = [];
+            const isOptimal = Math.abs(gameState.taxRate - data.optimalRate) <= 2;
+            
+            if (isOptimal) {
+                insights.push("You've found the revenue-maximizing tax rate!");
+                insights.push("This is the peak of the Laffer curve");
+            } else if (gameState.taxRate < data.optimalRate) {
+                insights.push(`At ${gameState.taxRate}% tax rate, you're on the left side of the Laffer curve`);
+                insights.push("Government could increase revenue by raising taxes");
+                if (gameState.taxRate < 20) {
+                    insights.push("Very low taxes may underfund essential services");
+                }
+            } else {
+                insights.push(`At ${gameState.taxRate}% tax rate, you're on the right side of the Laffer curve`);
+                insights.push("Government could increase revenue by lowering taxes");
+                insights.push("High taxes are reducing economic incentives significantly");
+            }
+
+            if (data.workIncentive < 40) {
+                insights.push("Work incentives are severely damaged");
+            } else if (data.workIncentive > 80) {
+                insights.push("Work incentives remain strong");
+            }
+
+            if (data.taxCompliance < 60) {
+                insights.push("High tax avoidance is reducing actual revenue");
+            }
+
+            if (data.economicGrowth < 0) {
+                insights.push("Economy is contracting due to high tax burden");
+            } else if (data.economicGrowth > 3) {
+                insights.push("Strong economic growth supports higher tax base");
+            }
+
+            document.getElementById('insightsContent').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        // Update warning box
+        function updateWarnings(data) {
+            const warningBox = document.getElementById('warningBox');
+            const isOptimal = Math.abs(gameState.taxRate - data.optimalRate) <= 2;
+            
+            if (isOptimal) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning laffer-point';
+                warningBox.textContent = "You've found the revenue-maximizing tax rate!";
+            } else if (gameState.taxRate > 70) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning';
+                warningBox.textContent = 'Very high taxes are destroying economic incentives!';
+            } else if (gameState.taxRate < 10) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning positive';
+                warningBox.textContent = 'Low taxes boost growth but may underfund services.';
+            } else {
+                warningBox.style.display = 'none';
+            }
+        }
+
+        // Event listeners for sliders
+        function setupSliders() {
+            document.getElementById('taxRate').addEventListener('input', function() {
+                gameState.taxRate = parseInt(this.value);
+                document.getElementById('taxRateValue').textContent = `${gameState.taxRate}%`;
+                updateChart();
+            });
+
+            document.getElementById('economicBase').addEventListener('input', function() {
+                gameState.economicBase = parseInt(this.value);
+                document.getElementById('economicBaseValue').textContent = gameState.economicBase;
+                updateChart();
+            });
+
+            document.getElementById('avoidanceFactor').addEventListener('input', function() {
+                gameState.avoidanceFactor = parseFloat(this.value);
+                document.getElementById('avoidanceFactorValue').textContent = gameState.avoidanceFactor.toFixed(1);
+                updateChart();
+            });
+        }
+
+        // Load predefined scenarios
+        function loadScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            
+            gameState.taxRate = scenario.taxRate;
+            gameState.economicBase = scenario.economicBase;
+            gameState.avoidanceFactor = scenario.avoidanceFactor;
+
+            // Update sliders
+            document.getElementById('taxRate').value = scenario.taxRate;
+            document.getElementById('economicBase').value = scenario.economicBase;
+            document.getElementById('avoidanceFactor').value = scenario.avoidanceFactor;
+
+            // Update displays
+            document.getElementById('taxRateValue').textContent = `${scenario.taxRate}%`;
+            document.getElementById('economicBaseValue').textContent = scenario.economicBase;
+            document.getElementById('avoidanceFactorValue').textContent = scenario.avoidanceFactor.toFixed(1);
+
+            updateChart();
+        }
+
+        // Find and set optimal tax rate
+        function findOptimal() {
+            const data = calculateLafferCurve();
+            gameState.taxRate = data.optimalRate;
+            
+            document.getElementById('taxRate').value = data.optimalRate;
+            document.getElementById('taxRateValue').textContent = `${data.optimalRate}%`;
+            
+            updateChart();
+        }
+
+        // Reset to default values
+        function reset() {
+            loadScenario('moderate');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            setupSliders();
+        });
+    </script>
+</body>
+</html>

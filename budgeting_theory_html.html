@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting & Trade-offs: Economic Theory Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        h4 {
+            color: #34495e;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .definition {
+            background: #ecf0f1;
+            border-left: 4px solid #e74c3c;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .example {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .formula {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .budget-guideline {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .lifecycle-stage {
+            background: #fdf2e9;
+            border-left: 4px solid #e67e22;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .behavioral-insight {
+            background: #f4e5ff;
+            border-left: 4px solid #9b59b6;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .key-takeaway {
+            background: #ebf3fd;
+            border: 2px solid #e74c3c;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.3rem;
+        }
+
+        .toc a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .print-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .mistake-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .strategy-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-header">
+            <h1>Budgeting & Trade-offs: Economic Theory Guide</h1>
+            <p><em>Interactive Economics Education Series</em></p>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#core-principles">Core Economic Principles</a></li>
+                <li><a href="#budget-constraints">Budget Constraints</a></li>
+                <li><a href="#consumer-choice">Consumer Choice Theory</a></li>
+                <li><a href="#personal-finance">Personal Finance Applications</a></li>
+                <li><a href="#time-value">Time Value of Money</a></li>
+                <li><a href="#tradeoff-analysis">Trade-off Analysis Framework</a></li>
+                <li><a href="#lifecycle-planning">Life-Cycle Financial Planning</a></li>
+                <li><a href="#behavioral-economics">Behavioral Economics Insights</a></li>
+                <li><a href="#common-mistakes">Common Budgeting Mistakes</a></li>
+                <li><a href="#advanced-concepts">Advanced Concepts</a></li>
+                <li><a href="#practical-steps">Practical Application Steps</a></li>
+                <li><a href="#takeaways">Key Takeaways</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="core-principles">
+            <h2>Core Economic Principles</h2>
+
+            <h3>1. Scarcity and Choice</h3>
+            <div class="definition">
+                <strong>Scarcity</strong> is the fundamental economic problem: human wants are unlimited, but resources (including money) are limited. This forces us to make <strong>choices</strong> about how to allocate our resources.
+                <br><br>
+                <strong>Key Insight:</strong> Every choice involves giving up something else. This is the foundation of all economic decision-making.
+            </div>
+
+            <h3>2. Opportunity Cost</h3>
+            <div class="definition">
+                <strong>Definition:</strong> The value of the next best alternative that must be given up when making a choice.
+            </div>
+
+            <div class="example">
+                <h4>Examples:</h4>
+                <ul>
+                    <li>Spending $200 on entertainment means $200 less for savings</li>
+                    <li>Working overtime for extra pay means less time for family or education</li>
+                    <li>Buying an expensive car means less money for vacation or emergency fund</li>
+                </ul>
+            </div>
+
+            <div class="formula">
+                Opportunity Cost = Value of Next Best Alternative Foregone
+            </div>
+        </div>
+
+        <div class="section" id="budget-constraints">
+            <h2>Budget Constraints</h2>
+
+            <h3>The Budget Line</h3>
+            <p>A budget constraint represents all possible combinations of goods and services a consumer can afford given their income and prices.</p>
+
+            <div class="formula">
+                Income = (Price₁ × Quantity₁) + (Price₂ × Quantity₂) + ... + (Priceₙ × Quantityₙ)
+            </div>
+
+            <h3>Properties of Budget Constraints</h3>
+            <ol>
+                <li><strong>Slope:</strong> Determined by relative prices of goods</li>
+                <li><strong>Position:</strong> Determined by income level</li>
+                <li><strong>Changes:</strong>
+                    <ul>
+                        <li>Income increase → budget line shifts outward</li>
+                        <li>Price decrease → budget line rotates outward</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section" id="consumer-choice">
+            <h2>Consumer Choice Theory</h2>
+
+            <h3>1. Preferences and Utility</h3>
+            <ul>
+                <li><strong>Utility:</strong> Satisfaction derived from consuming goods and services</li>
+                <li><strong>Marginal Utility:</strong> Additional satisfaction from consuming one more unit</li>
+                <li><strong>Law of Diminishing Marginal Utility:</strong> Each additional unit provides less satisfaction</li>
+            </ul>
+
+            <h3>2. Rational Consumer Behavior</h3>
+            <p>Consumers maximize utility subject to their budget constraint by allocating spending where:</p>
+
+            <div class="formula">
+                Marginal Utility / Price = Constant across all goods
+            </div>
+
+            <h3>3. Income and Substitution Effects</h3>
+            <ul>
+                <li><strong>Income Effect:</strong> How consumption changes when purchasing power changes</li>
+                <li><strong>Substitution Effect:</strong> How consumption changes when relative prices change</li>
+            </ul>
+        </div>
+
+        <div class="section" id="personal-finance">
+            <h2>Personal Finance Applications</h2>
+
+            <div class="budget-guideline">
+                <h3>The 50/30/20 Rule</h3>
+                A popular budgeting framework:
+                <ul>
+                    <li><strong>50%:</strong> Needs (housing, food, utilities, minimum debt payments)</li>
+                    <li><strong>30%:</strong> Wants (entertainment, dining out, hobbies)</li>
+                    <li><strong>20%:</strong> Savings and debt repayment</li>
+                </ul>
+            </div>
+
+            <h3>Budget Category Guidelines</h3>
+
+            <h4>Housing (25-30% of income)</h4>
+            <ul>
+                <li><strong>Rent/Mortgage:</strong> Largest expense for most households</li>
+                <li><strong>Trade-off:</strong> Larger housing budget reduces funds for other goals</li>
+                <li><strong>Opportunity Cost:</strong> Expensive housing delays wealth building</li>
+            </ul>
+
+            <h4>Transportation (10-15% of income)</h4>
+            <ul>
+                <li><strong>Car payments, insurance, gas, maintenance</strong></li>
+                <li><strong>Trade-off:</strong> Newer/fancier car vs. more savings</li>
+                <li><strong>Alternative:</strong> Public transit can free up significant budget</li>
+            </ul>
+
+            <h4>Food (10-12% of income)</h4>
+            <ul>
+                <li><strong>Groceries vs. dining out trade-offs</strong></li>
+                <li><strong>Opportunity Cost:</strong> Expensive food habits reduce investment capacity</li>
+            </ul>
+
+            <h4>Savings (10-20% of income)</h4>
+            <ul>
+                <li><strong>Emergency fund:</strong> 3-6 months of expenses</li>
+                <li><strong>Retirement:</strong> Start early for compound interest benefits</li>
+                <li><strong>Trade-off:</strong> Present consumption vs. future security</li>
+            </ul>
+        </div>
+
+        <div class="section" id="time-value">
+            <h2>Time Value of Money</h2>
+
+            <h3>Present vs. Future Value</h3>
+            <p>Money today is worth more than the same amount in the future due to:</p>
+            <ol>
+                <li><strong>Inflation:</strong> Reduces purchasing power over time</li>
+                <li><strong>Investment opportunity:</strong> Money can earn returns</li>
+                <li><strong>Risk:</strong> Future is uncertain</li>
+            </ol>
+
+            <h3>Compound Interest</h3>
+            <div class="formula">
+                FV = PV × (1 + r)ⁿ
+                <br>
+                <small>FV = Future Value, PV = Present Value, r = Interest rate, n = Number of periods</small>
+            </div>
+
+            <div class="example">
+                <strong>Example:</strong> $1,000 invested at 7% annually becomes $1,967 after 10 years
+            </div>
+
+            <h3>The Cost of Delaying Savings</h3>
+            <p>Starting early has enormous impact:</p>
+            <ul>
+                <li><strong>Age 25:</strong> Save $200/month → $525,000 at retirement (7% return)</li>
+                <li><strong>Age 35:</strong> Save $200/month → $244,000 at retirement (7% return)</li>
+                <li><strong>Difference:</strong> $281,000 despite only 10 extra years!</li>
+            </ul>
+        </div>
+
+        <div class="section" id="tradeoff-analysis">
+            <h2>Trade-off Analysis Framework</h2>
+
+            <ol>
+                <li><strong>Identify the Choice:</strong> What specific decision are you making?</li>
+                <li><strong>List Alternatives:</strong> What are all possible options?</li>
+                <li><strong>Identify Costs and Benefits:</strong>
+                    <ul>
+                        <li><strong>Explicit costs:</strong> Direct monetary costs</li>
+                        <li><strong>Implicit costs:</strong> Opportunity costs</li>
+                        <li><strong>Benefits:</strong> Both immediate and long-term</li>
+                    </ul>
+                </li>
+                <li><strong>Compare Net Benefits:</strong> Choose the option with the highest net benefit (benefits minus costs)</li>
+                <li><strong>Consider Non-Monetary Factors:</strong>
+                    <ul>
+                        <li>Time</li>
+                        <li>Stress/peace of mind</li>
+                        <li>Family impact</li>
+                        <li>Personal values</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section" id="lifecycle-planning">
+            <h2>Life-Cycle Financial Planning</h2>
+
+            <div class="lifecycle-stage">
+                <h3>Young Adults (20s-30s)</h3>
+                <ul>
+                    <li><strong>Priority:</strong> Building emergency fund, starting retirement savings</li>
+                    <li><strong>Trade-offs:</strong> Present enjoyment vs. future security</li>
+                    <li><strong>Advantage:</strong> Time for compound growth</li>
+                </ul>
+            </div>
+
+            <div class="lifecycle-stage">
+                <h3>Middle Age (40s-50s)</h3>
+                <ul>
+                    <li><strong>Priority:</strong> Peak earning years, family expenses, college savings</li>
+                    <li><strong>Trade-offs:</strong> Children's needs vs. retirement preparation</li>
+                    <li><strong>Challenge:</strong> Multiple competing financial goals</li>
+                </ul>
+            </div>
+
+            <div class="lifecycle-stage">
+                <h3>Pre-Retirement (50s-60s)</h3>
+                <ul>
+                    <li><strong>Priority:</strong> Maximizing retirement savings, paying off debt</li>
+                    <li><strong>Trade-offs:</strong> Lifestyle vs. retirement readiness</li>
+                    <li><strong>Opportunity:</strong> Higher income, lower family expenses</li>
+                </ul>
+            </div>
+
+            <div class="lifecycle-stage">
+                <h3>Retirement (65+)</h3>
+                <ul>
+                    <li><strong>Priority:</strong> Preserving wealth, managing withdrawals</li>
+                    <li><strong>Trade-offs:</strong> Current needs vs. legacy/longevity</li>
+                    <li><strong>Challenge:</strong> Fixed income with potential inflation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="behavioral-economics">
+            <h2>Behavioral Economics Insights</h2>
+
+            <div class="behavioral-insight">
+                <h3>1. Mental Accounting</h3>
+                <p>People treat money differently based on its source or intended use</p>
+                <ul>
+                    <li><strong>Example:</strong> Spending tax refund more freely than regular income</li>
+                    <li><strong>Implication:</strong> May lead to suboptimal decisions</li>
+                </ul>
+            </div>
+
+            <div class="behavioral-insight">
+                <h3>2. Present Bias</h3>
+                <p>Tendency to overvalue immediate rewards relative to future rewards</p>
+                <ul>
+                    <li><strong>Example:</strong> Choosing immediate gratification over long-term savings</li>
+                    <li><strong>Solution:</strong> Automate savings to overcome bias</li>
+                </ul>
+            </div>
+
+            <div class="behavioral-insight">
+                <h3>3. Loss Aversion</h3>
+                <p>People feel losses about twice as strongly as equivalent gains</p>
+                <ul>
+                    <li><strong>Example:</strong> Reluctance to cut current spending even for future benefits</li>
+                    <li><strong>Implication:</strong> Framing matters in financial decisions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="common-mistakes">
+            <h2>Common Budgeting Mistakes</h2>
+
+            <div class="mistake-box">
+                <h3>1. Lifestyle Inflation</h3>
+                <p>Increasing spending as income increases, preventing wealth accumulation</p>
+            </div>
+
+            <div class="mistake-box">
+                <h3>2. Ignoring Opportunity Costs</h3>
+                <p>Making decisions without considering alternatives</p>
+            </div>
+
+            <div class="mistake-box">
+                <h3>3. Emergency Fund Neglect</h3>
+                <p>Prioritizing investments over emergency savings</p>
+            </div>
+
+            <div class="mistake-box">
+                <h3>4. Fixed vs. Variable Expenses Confusion</h3>
+                <p>Treating discretionary spending as necessities</p>
+            </div>
+
+            <div class="mistake-box">
+                <h3>5. Short-term Thinking</h3>
+                <p>Focusing only on immediate needs, ignoring long-term goals</p>
+            </div>
+        </div>
+
+        <div class="section" id="advanced-concepts">
+            <h2>Advanced Concepts</h2>
+
+            <div class="strategy-box">
+                <h3>1. Portfolio Theory</h3>
+                <p>Diversifying across different asset classes and time horizons:</p>
+                <ul>
+                    <li><strong>Emergency fund:</strong> High liquidity, low return</li>
+                    <li><strong>Short-term goals:</strong> Moderate risk, moderate return</li>
+                    <li><strong>Long-term goals:</strong> Higher risk, higher expected return</li>
+                </ul>
+            </div>
+
+            <div class="strategy-box">
+                <h3>2. Tax Optimization</h3>
+                <p>Considering after-tax impact of financial decisions:</p>
+                <ul>
+                    <li><strong>Tax-advantaged accounts:</strong> 401(k), IRA, HSA</li>
+                    <li><strong>Tax-loss harvesting:</strong> Offsetting gains with losses</li>
+                    <li><strong>Tax bracket management:</strong> Timing of income and deductions</li>
+                </ul>
+            </div>
+
+            <div class="strategy-box">
+                <h3>3. Insurance as Risk Management</h3>
+                <p>Transferring financial risks that could devastate budget:</p>
+                <ul>
+                    <li><strong>Health insurance:</strong> Medical expense protection</li>
+                    <li><strong>Disability insurance:</strong> Income protection</li>
+                    <li><strong>Life insurance:</strong> Family financial protection</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="practical-steps">
+            <h2>Practical Application Steps</h2>
+
+            <ol>
+                <li><strong>Track Current Spending:</strong> Understand where money actually goes (vs. where you think it goes)</li>
+                <li><strong>Identify Values and Goals:</strong> Align spending with what matters most to you</li>
+                <li><strong>Create Spending Plan:</strong> Allocate income intentionally rather than spending randomly</li>
+                <li><strong>Build in Flexibility:</strong> Allow for unexpected expenses and changing priorities</li>
+                <li><strong>Regular Review and Adjustment:</strong> Budget is a living document, not a one-time exercise</li>
+            </ol>
+        </div>
+
+        <div class="section" id="takeaways">
+            <div class="key-takeaway">
+                <h2>Key Takeaways</h2>
+                <ol>
+                    <li><strong>Every financial decision involves trade-offs and opportunity costs</strong></li>
+                    <li><strong>Budget constraints force choices about resource allocation</strong></li>
+                    <li><strong>Starting early with savings/investing provides enormous advantages</strong></li>
+                    <li><strong>Behavioral biases can lead to suboptimal financial decisions</strong></li>
+                    <li><strong>Successful budgeting aligns spending with personal values and goals</strong></li>
+                    <li><strong>Automation can help overcome tendency to prioritize present over future</strong></li>
+                </ol>
+            </div>
+
+            <h2>Critical Thinking Questions</h2>
+            <ol>
+                <li>How do your current spending patterns reflect your stated priorities?</li>
+                <li>What are the opportunity costs of your largest budget categories?</li>
+                <li>How might your budget change as you move through different life stages?</li>
+                <li>What behavioral biases might be affecting your financial decisions?</li>
+                <li>How do you balance present enjoyment with future security?</li>
+            </ol>
+
+            <hr style="margin: 2rem 0;">
+            <p><em>Use the Budgeting & Trade-offs Simulator to explore these concepts interactively and optimize your personal financial allocation.</em></p>
+        </div>
+    </div>
+</body>
+</html>

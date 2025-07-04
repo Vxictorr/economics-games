@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade & Specialization Theory Guide</title>
+    <style>
+        @media print {
+            body { margin: 0.5in; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+            background: white;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #007acc;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-left: 4px solid #007acc;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+        
+        .toc ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .toc a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007acc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .formula-box {
+            background: #f0f8f0;
+            border: 1px solid #90c695;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box {
+            background: #fff7e6;
+            border: 1px solid #ffb366;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .print-instruction {
+            background: #fffbf0;
+            border: 2px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-instruction no-print">
+        <h3>📄 How to Save as PDF:</h3>
+        <p><strong>1.</strong> Press <code>Ctrl+P</code> (Windows) or <code>Cmd+P</code> (Mac)</p>
+        <p><strong>2.</strong> Select "Save as PDF" as the destination</p>
+        <p><strong>3.</strong> Choose "More settings" and select "A4" paper size</p>
+        <p><strong>4.</strong> Click "Save" and choose your location</p>
+    </div>
+
+    <h1>Trade & Specialization Theory Guide</h1>
+    <p><em>Understanding the Economics Behind Comparative Advantage and International Trade</em></p>
+    
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+            <li><a href="#basic-concepts">1. Basic Concepts</a></li>
+            <li><a href="#opportunity-cost">2. Opportunity Cost</a></li>
+            <li><a href="#absolute-advantage">3. Absolute vs. Comparative Advantage</a></li>
+            <li><a href="#production-possibilities">4. Production Possibilities Frontier</a></li>
+            <li><a href="#specialization-gains">5. Gains from Specialization</a></li>
+            <li><a href="#trade-patterns">6. Trade Patterns and Exchange</a></li>
+            <li><a href="#simulator-mechanics">7. How the Simulator Works</a></li>
+            <li><a href="#real-world">8. Real-World Applications</a></li>
+            <li><a href="#modern-trade">9. Modern Trade Theory</a></li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="basic-concepts">1. Basic Concepts</h2>
+
+    <h3>What is Trade and Specialization?</h3>
+    <p><strong>Trade</strong> is the exchange of goods and services between economic actors (individuals, firms, or countries). <strong>Specialization</strong> occurs when an economic actor focuses production on a limited range of goods or services.</p>
+
+    <ul>
+        <li><strong>Specialization</strong>: Concentrating production efforts on specific goods</li>
+        <li><strong>Trade</strong>: Exchanging specialized products with others</li>
+        <li><strong>Comparative Advantage</strong>: The ability to produce a good at lower opportunity cost</li>
+        <li><strong>Mutual Benefit</strong>: Both parties gain from voluntary exchange</li>
+    </ul>
+
+    <h3>Historical Foundation</h3>
+    <p>The theory of comparative advantage was developed by <strong>David Ricardo</strong> in 1817, building on Adam Smith's earlier work on absolute advantage. Ricardo's insight was revolutionary: even if one country is better at producing everything, both countries can still benefit from trade.</p>
+
+    <h3>Key Assumptions</h3>
+    <ol>
+        <li><strong>Two countries, two goods</strong>: Simplified model for clarity</li>
+        <li><strong>Fixed resources</strong>: Limited factors of production (labor, capital)</li>
+        <li><strong>Constant opportunity costs</strong>: Trade-offs remain stable</li>
+        <li><strong>Free trade</strong>: No barriers to exchange</li>
+        <li><strong>Perfect mobility</strong>: Resources can move between industries</li>
+    </ol>
+
+    <h2 id="opportunity-cost">2. Opportunity Cost</h2>
+
+    <h3>Definition and Importance</h3>
+    <p><strong>Opportunity cost</strong> is the value of the next best alternative that must be given up when making a choice. It's the foundation of comparative advantage theory.</p>
+
+    <div class="formula-box">
+        <strong>Opportunity Cost of Good A = Units of Good B given up / Units of Good A gained</strong>
+    </div>
+
+    <h3>Calculating Opportunity Cost</h3>
+    <p>In the simulator's default scenario:</p>
+
+    <div class="example-box">
+        <h4>USA Production Rates:</h4>
+        <ul>
+            <li>Computers: 10 per hour</li>
+            <li>Shoes: 5 per hour</li>
+        </ul>
+        
+        <h4>Opportunity Costs for USA:</h4>
+        <ul>
+            <li><strong>1 Computer</strong> = 5/10 = <strong>0.5 Shoes</strong></li>
+            <li><strong>1 Shoe</strong> = 10/5 = <strong>2 Computers</strong></li>
+        </ul>
+        
+        <h4>Brazil Production Rates:</h4>
+        <ul>
+            <li>Computers: 4 per hour</li>
+            <li>Shoes: 4 per hour</li>
+        </ul>
+        
+        <h4>Opportunity Costs for Brazil:</h4>
+        <ul>
+            <li><strong>1 Computer</strong> = 4/4 = <strong>1 Shoe</strong></li>
+            <li><strong>1 Shoe</strong> = 4/4 = <strong>1 Computer</strong></li>
+        </ul>
+    </div>
+
+    <h3>The Key Insight</h3>
+    <p>USA has a <strong>lower opportunity cost</strong> for computers (0.5 shoes vs. 1 shoe), while Brazil has a <strong>lower opportunity cost</strong> for shoes (1 computer vs. 2 computers). This forms the basis for beneficial trade.</p>
+
+    <div class="page-break"></div>
+
+    <h2 id="absolute-advantage">3. Absolute vs. Comparative Advantage</h2>
+
+    <h3>Absolute Advantage</h3>
+    <p><strong>Absolute advantage</strong> exists when a country can produce more of a good using the same amount of resources than another country.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Computers/Hour</th>
+                <th>Shoes/Hour</th>
+                <th>Absolute Advantage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>USA</strong></td>
+                <td>10</td>
+                <td>5</td>
+                <td>Both goods</td>
+            </tr>
+            <tr>
+                <td><strong>Brazil</strong></td>
+                <td>4</td>
+                <td>4</td>
+                <td>Neither good</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Comparative Advantage</h3>
+    <p><strong>Comparative advantage</strong> exists when a country can produce a good at a lower opportunity cost than another country.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Computers (opportunity cost)</th>
+                <th>Shoes (opportunity cost)</th>
+                <th>Comparative Advantage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>USA</strong></td>
+                <td>0.5 shoes</td>
+                <td>2 computers</td>
+                <td>Computers</td>
+            </tr>
+            <tr>
+                <td><strong>Brazil</strong></td>
+                <td>1 shoe</td>
+                <td>1 computer</td>
+                <td>Shoes</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <h4>Ricardo's Revolutionary Insight:</h4>
+        <p>Even though USA has absolute advantage in both goods, <strong>both countries can benefit from trade</strong> if they specialize according to their comparative advantages. USA should focus on computers, Brazil on shoes.</p>
+    </div>
+
+    <h2 id="production-possibilities">4. Production Possibilities Frontier (PPF)</h2>
+
+    <h3>Understanding the PPF</h3>
+    <p>The <strong>Production Possibilities Frontier</strong> shows all possible combinations of two goods that a country can produce with its available resources.</p>
+
+    <h3>PPF in the Simulator</h3>
+    <p>The sliders in the simulator represent movement along each country's PPF:</p>
+    <ul>
+        <li><strong>Left side (0% computers)</strong>: All workers produce shoes</li>
+        <li><strong>Middle (50/50)</strong>: Balanced production</li>
+        <li><strong>Right side (100% computers)</strong>: All workers produce computers</li>
+    </ul>
+
+    <div class="formula-box">
+        <strong>USA's PPF equation:</strong><br>
+        If 100 workers total:<br>
+        • Max computers: 100 × 10 = 1,000 computers (0 shoes)<br>
+        • Max shoes: 100 × 5 = 500 shoes (0 computers)<br>
+        • Trade-off: 1 computer = 0.5 shoes
+    </div>
+
+    <h3>Shape of the PPF</h3>
+    <ul>
+        <li><strong>Linear PPF</strong>: Constant opportunity costs (used in simulator)</li>
+        <li><strong>Curved PPF</strong>: Increasing opportunity costs (more realistic)</li>
+        <li><strong>Slope</strong>: Represents the opportunity cost of the x-axis good</li>
+    </ul>
+
+    <h2 id="specialization-gains">5. Gains from Specialization</h2>
+
+    <h3>Before Specialization (50/50 allocation)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Computers</th>
+                <th>Shoes</th>
+                <th>Total Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>USA</strong></td>
+                <td>500</td>
+                <td>250</td>
+                <td>750</td>
+            </tr>
+            <tr>
+                <td><strong>Brazil</strong></td>
+                <td>200</td>
+                <td>200</td>
+                <td>400</td>
+            </tr>
+            <tr>
+                <td><strong>World Total</strong></td>
+                <td>700</td>
+                <td>450</td>
+                <td>1,150</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>After Specialization (80/20 allocation)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Computers</th>
+                <th>Shoes</th>
+                <th>Total Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>USA</strong></td>
+                <td>800</td>
+                <td>100</td>
+                <td>900</td>
+            </tr>
+            <tr>
+                <td><strong>Brazil</strong></td>
+                <td>80</td>
+                <td>320</td>
+                <td>400</td>
+            </tr>
+            <tr>
+                <td><strong>World Total</strong></td>
+                <td>880</td>
+                <td>420</td>
+                <td>1,300</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="highlight-box">
+        <h4>Net Gain from Specialization:</h4>
+        <ul>
+            <li><strong>Additional computers</strong>: 880 - 700 = 180</li>
+            <li><strong>Fewer shoes</strong>: 450 - 420 = 30</li>
+            <li><strong>Total efficiency gain</strong>: 1,300 - 1,150 = 150 units</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="trade-patterns">6. Trade Patterns and Exchange</h2>
+
+    <h3>Terms of Trade</h3>
+    <p>The <strong>terms of trade</strong> determine the rate at which goods are exchanged between countries. For mutually beneficial trade, the terms must fall between each country's opportunity costs.</p>
+
+    <div class="example-box">
+        <h4>Acceptable Exchange Rates for Computers:</h4>
+        <ul>
+            <li><strong>USA's opportunity cost</strong>: 1 computer = 0.5 shoes</li>
+            <li><strong>Brazil's opportunity cost</strong>: 1 computer = 1 shoe</li>
+            <li><strong>Beneficial trade range</strong>: 1 computer = 0.5 to 1 shoe</li>
+        </ul>
+        
+        <h4>Example Trade:</h4>
+        <p>If they agree on <strong>1 computer = 0.75 shoes</strong>:</p>
+        <ul>
+            <li><strong>USA benefits</strong>: Gets 0.75 shoes instead of 0.5</li>
+            <li><strong>Brazil benefits</strong>: Pays 0.75 shoes instead of 1</li>
+        </ul>
+    </div>
+
+    <h3>Why Countries Trade</h3>
+    <ol>
+        <li><strong>Resource Differences</strong>: Natural endowments, climate, geography</li>
+        <li><strong>Technology Differences</strong>: Innovation, expertise, industrial development</li>
+        <li><strong>Scale Economies</strong>: Larger markets allow for more efficient production</li>
+        <li><strong>Consumer Preferences</strong>: Demand for variety and quality</li>
+    </ol>
+
+    <h3>Trade Creation vs. Trade Diversion</h3>
+    <ul>
+        <li><strong>Trade Creation</strong>: New beneficial trade relationships</li>
+        <li><strong>Trade Diversion</strong>: Shifting from efficient to less efficient partners</li>
+        <li><strong>Net Effect</strong>: Overall welfare depends on which dominates</li>
+    </ul>
+
+    <h2 id="simulator-mechanics">7. How the Simulator Works</h2>
+
+    <h3>Core Calculations</h3>
+
+    <h4>1. Production Function</h4>
+    <pre>country1_computers = workers1_percentage × production_rate_c1g1
+country1_shoes = workers2_percentage × production_rate_c1g2
+country2_computers = workers1_percentage × production_rate_c2g1
+country2_shoes = workers2_percentage × production_rate_c2g2</pre>
+
+    <h4>2. Opportunity Cost Calculation</h4>
+    <pre>// For Country 1
+opp_cost_computers = rate_shoes / rate_computers
+opp_cost_shoes = rate_computers / rate_shoes
+
+// For Country 2  
+opp_cost_computers = rate_shoes / rate_computers
+opp_cost_shoes = rate_computers / rate_shoes</pre>
+
+    <h4>3. Comparative Advantage Determination</h4>
+    <pre>country1_advantage_computers = (c1_opp_cost_computers < c2_opp_cost_computers)
+country1_advantage_shoes = (c1_opp_cost_shoes < c2_opp_cost_shoes)</pre>
+
+    <h3>Efficiency Calculation</h3>
+    <p>The simulator calculates efficiency as the percentage of maximum possible output:</p>
+
+    <div class="formula-box">
+        <strong>Efficiency = Current Total Output / Maximum Possible Output</strong><br><br>
+        Where:<br>
+        • Current Total = Sum of all production<br>
+        • Maximum Possible = All countries producing at full capacity
+    </div>
+
+    <h3>Optimization Algorithm</h3>
+    <p>The "Optimize" button implements specialization based on comparative advantage:</p>
+    <pre>if (country1_has_advantage_in_good1) {
+    country1_allocation = [80% good1, 20% good2]
+    country2_allocation = [20% good1, 80% good2]
+} else {
+    country1_allocation = [20% good1, 80% good2]
+    country2_allocation = [80% good1, 20% good2]
+}</pre>
+
+    <div class="page-break"></div>
+
+    <h3>Scenario Parameters</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Scenario</th>
+                <th>Countries</th>
+                <th>Goods</th>
+                <th>Production Rates</th>
+                <th>Teaching Point</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Oil vs Wheat</strong></td>
+                <td>Saudi Arabia vs Ukraine</td>
+                <td>Oil vs Wheat</td>
+                <td>[20,2] vs [3,12]</td>
+                <td>Resource-based advantage</td>
+            </tr>
+            <tr>
+                <td><strong>Tech vs Textile</strong></td>
+                <td>South Korea vs Bangladesh</td>
+                <td>Electronics vs Textiles</td>
+                <td>[15,3] vs [2,10]</td>
+                <td>Technology vs labor costs</td>
+            </tr>
+            <tr>
+                <td><strong>Cars vs Food</strong></td>
+                <td>Germany vs Argentina</td>
+                <td>Cars vs Food</td>
+                <td>[12,4] vs [3,8]</td>
+                <td>Industrial vs agricultural</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="real-world">8. Real-World Applications</h2>
+
+    <h3>Historical Examples</h3>
+
+    <h4>Britain and Portugal (19th Century)</h4>
+    <ul>
+        <li><strong>Britain</strong>: Comparative advantage in manufactured cloth</li>
+        <li><strong>Portugal</strong>: Comparative advantage in wine production</li>
+        <li><strong>Result</strong>: Both countries benefited despite Britain being more productive overall</li>
+    </ul>
+
+    <h4>Japan and USA (Post-WWII)</h4>
+    <ul>
+        <li><strong>Japan</strong>: Specialized in electronics, automobiles</li>
+        <li><strong>USA</strong>: Focused on agriculture, high-tech services</li>
+        <li><strong>Outcome</strong>: Rapid economic growth for both nations</li>
+    </ul>
+
+    <h3>Modern Examples</h3>
+
+    <h4>China's Manufacturing Advantage</h4>
+    <ul>
+        <li><strong>Low labor costs</strong>: Comparative advantage in labor-intensive goods</li>
+        <li><strong>Scale economies</strong>: Massive production capabilities</li>
+        <li><strong>Global impact</strong>: "World's factory" supplying consumer goods</li>
+    </ul>
+
+    <h4>Silicon Valley's Tech Specialization</h4>
+    <ul>
+        <li><strong>Human capital</strong>: Concentration of skilled programmers, engineers</li>
+        <li><strong>Innovation ecosystem</strong>: Universities, venture capital, networking</li>
+        <li><strong>Knowledge spillovers</strong>: Ideas and talent flow between companies</li>
+    </ul>
+
+    <h4>Middle East Oil Production</h4>
+    <ul>
+        <li><strong>Natural resources</strong>: Vast, easily accessible oil reserves</li>
+        <li><strong>Low extraction costs</strong>: Geological advantages</li>
+        <li><strong>Trade specialization</strong>: Export oil, import manufactured goods</li>
+    </ul>
+
+    <h3>Contemporary Trade Patterns</h3>
+
+    <h4>Global Value Chains</h4>
+    <ul>
+        <li><strong>iPhone Example</strong>: Designed in USA, manufactured in China, components from multiple countries</li>
+        <li><strong>Automobile Industry</strong>: Parts sourced globally, assembled regionally</li>
+        <li><strong>Services Trade</strong>: Call centers in India, software development distributed globally</li>
+    </ul>
+
+    <h4>Comparative Advantage Evolution</h4>
+    <ol>
+        <li><strong>Natural Resources</strong> → <strong>Manufacturing</strong> → <strong>Services</strong> → <strong>Innovation</strong></li>
+        <li>Countries move up the value chain as they develop</li>
+        <li>Former comparative advantages may become disadvantages</li>
+    </ol>
+
+    <h2 id="modern-trade">9. Modern Trade Theory Extensions</h2>
+
+    <h3>Beyond Ricardo: New Trade Theories</h3>
+
+    <h4>Heckscher-Ohlin Model</h4>
+    <ul>
+        <li><strong>Factor endowments</strong>: Countries export goods that use their abundant factors</li>
+        <li><strong>Capital vs. Labor</strong>: Rich countries export capital-intensive goods</li>
+        <li><strong>Land vs. Labor</strong>: Large countries export land-intensive goods</li>
+    </ul>
+
+    <h4>New Trade Theory (Paul Krugman)</h4>
+    <ul>
+        <li><strong>Economies of scale</strong>: Larger production lowers unit costs</li>
+        <li><strong>Product differentiation</strong>: Trade in similar but differentiated goods</li>
+        <li><strong>First-mover advantages</strong>: Historical accidents can determine trade patterns</li>
+    </ul>
+
+    <h3>Limitations of Simple Models</h3>
+
+    <h4>Assumptions That Don't Hold</h4>
+    <ul>
+        <li><strong>Perfect competition</strong>: Many markets have monopolistic elements</li>
+        <li><strong>Full employment</strong>: Trade can cause unemployment in some sectors</li>
+        <li><strong>No transportation costs</strong>: Distance and logistics matter</li>
+        <li><strong>Instant adjustment</strong>: Workers can't immediately switch industries</li>
+    </ul>
+
+    <h4>Distributional Effects</h4>
+    <ul>
+        <li><strong>Winners and losers</strong>: Trade benefits some groups more than others</li>
+        <li><strong>Income inequality</strong>: Can worsen within-country inequality</li>
+        <li><strong>Adjustment costs</strong>: Short-term pain for long-term gain</li>
+    </ul>
+
+    <h3>Policy Implications</h3>
+
+    <h4>Arguments for Free Trade</h4>
+    <ul>
+        <li><strong>Efficiency gains</strong>: Higher total world output</li>
+        <li><strong>Consumer benefits</strong>: Lower prices, more variety</li>
+        <li><strong>Innovation incentives</strong>: Competition drives improvement</li>
+        <li><strong>Peace dividend</strong>: Economic interdependence reduces conflict</li>
+    </ul>
+
+    <h4>Arguments for Trade Protection</h4>
+    <ul>
+        <li><strong>Infant industries</strong>: New industries need temporary protection</li>
+        <li><strong>National security</strong>: Some goods are too important to import</li>
+        <li><strong>Employment protection</strong>: Preventing job losses in specific sectors</li>
+        <li><strong>Environmental standards</strong>: Preventing "race to the bottom"</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <hr>
+
+    <h2>Key Takeaways</h2>
+
+    <h3>For Students</h3>
+    <ol>
+        <li><strong>Opportunity cost is fundamental</strong>: It determines comparative advantage</li>
+        <li><strong>Absolute advantage doesn't matter for trade</strong>: Comparative advantage drives beneficial exchange</li>
+        <li><strong>Specialization increases total output</strong>: The world can produce more when countries focus on their strengths</li>
+        <li><strong>Trade creates mutual benefits</strong>: Both parties gain when terms fall between opportunity costs</li>
+        <li><strong>Efficiency comes from specialization</strong>: Resources flow to their most productive uses</li>
+    </ol>
+
+    <h3>For the Simulator</h3>
+    <ol>
+        <li><strong>Start with balanced allocation</strong>: See baseline production levels</li>
+        <li><strong>Identify comparative advantages</strong>: Look at opportunity cost ratios</li>
+        <li><strong>Experiment with specialization</strong>: Move sliders toward each country's strength</li>
+        <li><strong>Use the optimize button</strong>: See maximum efficiency allocation</li>
+        <li><strong>Try different scenarios</strong>: Understand how advantages can vary</li>
+    </ol>
+
+    <h3>Mathematical Relationships</h3>
+
+    <div class="formula-box">
+        <strong>Key Formulas:</strong><br><br>
+        • Opportunity Cost = Units Given Up / Units Gained<br>
+        • Comparative Advantage = Lower Opportunity Cost<br>
+        • Production = Workers × Productivity Rate<br>
+        • Efficiency = Current Output / Maximum Possible Output<br>
+        • Trade Range = Between Both Countries' Opportunity Costs
+    </div>
+
+    <h3>Advanced Concepts to Explore</h3>
+    <ul>
+        <li><strong>Dynamic comparative advantage</strong>: How advantages change over time</li>
+        <li><strong>Intra-industry trade</strong>: Trading similar goods with different characteristics</li>
+        <li><strong>Trade creation vs. diversion</strong>: Effects of trade agreements</li>
+        <li><strong>Factor price equalization</strong>: How trade affects wages and returns</li>
+        <li><strong>Gravity models</strong>: Predicting trade flows based on economic size and distance</li>
+    </ul>
+
+    <div class="highlight-box">
+        <p><em>The Trade & Specialization simulator demonstrates core principles that have shaped global economics for over 200 years. While real-world trade is more complex, involving multiple goods, varying quality, transportation costs, and political factors, the fundamental insights about comparative advantage and mutual gains from trade remain central to understanding international economics.</em></p>
+    </div>
+
+    <h3>Connection to Other Economic Concepts</h3>
+    <ul>
+        <li><strong>Supply and demand</strong>: Trade affects domestic prices and quantities</li>
+        <li><strong>Economic growth</strong>: Specialization can accelerate development</li>
+        <li><strong>Labor markets</strong>: Trade affects employment in different sectors

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Controls: Floor vs Ceiling Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .control-btn {
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .control-btn.active {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .control-btn:hover {
+            background: #e9e9e9;
+        }
+
+        .control-btn.active:hover {
+            background: #555;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: right;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .shortage {
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            color: #c62828;
+        }
+
+        .surplus {
+            background: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .equilibrium {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+        }
+
+        .market-effects {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .market-effects h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .effect-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .positive {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .negative {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .policy-indicators {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .indicator {
+            background: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+
+        .indicator-value {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .indicator-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .market-status {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .scenarios {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-type {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Price Controls: Floor vs Ceiling</h1>
+            <p>Explore how government price interventions affect markets, creating shortages and surpluses</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Controls -->
+            <div class="card">
+                <h2>Policy Controls</h2>
+                
+                <div class="control-group">
+                    <label>Price Control Type</label>
+                    <div class="control-type">
+                        <button class="control-btn active" id="noneBtn" onclick="setPriceControl('none')">Free Market</button>
+                        <button class="control-btn" id="floorBtn" onclick="setPriceControl('floor')">Price Floor</button>
+                        <button class="control-btn" id="ceilingBtn" onclick="setPriceControl('ceiling')">Price Ceiling</button>
+                    </div>
+                </div>
+
+                <div class="control-group" id="controlPrice" style="display: none;">
+                    <label id="controlLabel">Control Price</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="priceControl" min="10" max="90" value="50" step="1">
+                    </div>
+                    <div class="slider-value" id="priceControlValue">$50</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="control-group">
+                    <label>Market Demand Strength</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="demandStrength" min="50" max="150" value="100" step="5">
+                    </div>
+                    <div class="slider-value" id="demandStrengthValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Market Supply Strength</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="supplyStrength" min="50" max="150" value="100" step="5">
+                    </div>
+                    <div class="slider-value" id="supplyStrengthValue">100</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="scenarios">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('rent')">Rent Control</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('wage')">Minimum Wage</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('gas')">Gas Price Cap</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('farm')">Farm Subsidies</button>
+                </div>
+
+                <button class="btn" onclick="reset()">Reset to Free Market</button>
+
+                <div class="divider"></div>
+
+                <div class="policy-indicators">
+                    <div class="indicator">
+                        <div class="indicator-value" id="deadweightLoss">$0</div>
+                        <div class="indicator-label">Deadweight Loss</div>
+                    </div>
+                    <div class="indicator">
+                        <div class="indicator-value" id="welfareChange">0%</div>
+                        <div class="indicator-label">Welfare Change</div>
+                    </div>
+                </div>
+
+                <div id="warningBox" class="warning" style="display: none;">
+                    Free market operates at equilibrium.
+                </div>
+            </div>
+
+            <!-- Center Panel: Chart -->
+            <div class="chart-container">
+                <canvas id="priceControlChart"></canvas>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="card">
+                <h2>Market Analysis</h2>
+                
+                <div class="market-status equilibrium" id="marketStatus">
+                    Free Market Equilibrium
+                </div>
+
+                <div class="metric-grid">
+                    <div class="metric-card" id="priceCard">
+                        <div class="metric-value" id="marketPrice">$50</div>
+                        <div class="metric-label">Market Price</div>
+                    </div>
+                    <div class="metric-card" id="quantityCard">
+                        <div class="metric-value" id="marketQuantity">50</div>
+                        <div class="metric-label">Quantity Traded</div>
+                    </div>
+                </div>
+
+                <div class="market-effects">
+                    <h3>Market Effects</h3>
+                    <div class="effect-item">
+                        <span>Quantity Demanded:</span>
+                        <span id="quantityDemanded">50</span>
+                    </div>
+                    <div class="effect-item">
+                        <span>Quantity Supplied:</span>
+                        <span id="quantitySupplied">50</span>
+                    </div>
+                    <div class="effect-item">
+                        <span>Market Imbalance:</span>
+                        <span id="marketImbalance">0 (Balanced)</span>
+                    </div>
+                    <div class="effect-item">
+                        <span>Consumer Surplus:</span>
+                        <span id="consumerSurplus">$625</span>
+                    </div>
+                    <div class="effect-item">
+                        <span>Producer Surplus:</span>
+                        <span id="producerSurplus">$625</span>
+                    </div>
+                </div>
+
+                <div class="market-effects">
+                    <h3>Economic Consequences</h3>
+                    <div id="consequences">
+                        <div class="effect-item">
+                            <span>Market Efficiency:</span>
+                            <span>100% (Optimal)</span>
+                        </div>
+                        <div class="effect-item">
+                            <span>Resource Allocation:</span>
+                            <span>Efficient</span>
+                        </div>
+                        <div class="effect-item">
+                            <span>Government Intervention:</span>
+                            <span>None Required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights">
+                    <h3>Policy Insights</h3>
+                    <div id="insightsContent">
+                        <div class="insight-item">Free market achieves optimal allocation of resources</div>
+                        <div class="insight-item">Supply and demand determine price without government intervention</div>
+                        <div class="insight-item">Maximum total economic surplus is achieved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let gameState = {
+            controlType: 'none',
+            controlPrice: 50,
+            demandStrength: 100,
+            supplyStrength: 100
+        };
+
+        const scenarios = {
+            rent: { controlType: 'ceiling', controlPrice: 35, demandStrength: 120, supplyStrength: 80 },
+            wage: { controlType: 'floor', controlPrice: 65, demandStrength: 80, supplyStrength: 120 },
+            gas: { controlType: 'ceiling', controlPrice: 25, demandStrength: 130, supplyStrength: 90 },
+            farm: { controlType: 'floor', controlPrice: 70, demandStrength: 90, supplyStrength: 110 }
+        };
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('priceControlChart').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Demand',
+                            data: [],
+                            borderColor: '#dc3545',
+                            backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Supply',
+                            data: [],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Price Control',
+                            data: [],
+                            borderColor: '#ff6b35',
+                            backgroundColor: 'rgba(255, 107, 53, 0.3)',
+                            borderWidth: 3,
+                            borderDash: [10, 5],
+                            fill: false,
+                            pointRadius: 0,
+                            tension: 0
+                        },
+                        {
+                            label: 'Equilibrium',
+                            data: [],
+                            borderColor: '#333',
+                            backgroundColor: '#333',
+                            pointRadius: 8,
+                            pointHoverRadius: 10,
+                            showLine: false
+                        },
+                        {
+                            label: 'Shortage/Surplus Area',
+                            data: [],
+                            backgroundColor: 'rgba(255, 193, 7, 0.3)',
+                            borderColor: 'rgba(255, 193, 7, 0.8)',
+                            borderWidth: 1,
+                            fill: true,
+                            pointRadius: 0,
+                            tension: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 11 },
+                                usePointStyle: true,
+                                padding: 20,
+                                filter: function(item) {
+                                    return !item.text.includes('Area');
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: $${context.parsed.y} at quantity ${context.parsed.x}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Quantity'
+                            },
+                            min: 0,
+                            max: 100
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Price ($)'
+                            },
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            updateChart();
+        }
+
+        // Calculate supply and demand curves
+        function calculateMarketData() {
+            const demandData = [];
+            const supplyData = [];
+
+            // Demand curve: Qd = demandIntercept - demandSlope * P
+            const demandIntercept = 80 * (gameState.demandStrength / 100);
+            const demandSlope = 0.8;
+
+            // Supply curve: Qs = supplyIntercept + supplySlope * P
+            const supplyIntercept = -20 * (gameState.supplyStrength / 100);
+            const supplySlope = 0.9 * (gameState.supplyStrength / 100);
+
+            // Generate curve points
+            for (let price = 0; price <= 100; price += 2) {
+                const qd = Math.max(0, demandIntercept - demandSlope * price);
+                const qs = Math.max(0, supplyIntercept + supplySlope * price);
+
+                demandData.push({ x: qd, y: price });
+                supplyData.push({ x: qs, y: price });
+            }
+
+            // Calculate equilibrium
+            const equilibriumPrice = (demandIntercept - supplyIntercept) / (demandSlope + supplySlope);
+            const equilibriumQuantity = demandIntercept - demandSlope * equilibriumPrice;
+
+            // Calculate market effects under price control
+            let effectivePrice, quantityTraded, quantityDemanded, quantitySupplied;
+            let marketImbalance = 0;
+
+            if (gameState.controlType === 'none') {
+                effectivePrice = equilibriumPrice;
+                quantityTraded = equilibriumQuantity;
+                quantityDemanded = equilibriumQuantity;
+                quantitySupplied = equilibriumQuantity;
+            } else if (gameState.controlType === 'floor') {
+                if (gameState.controlPrice > equilibriumPrice) {
+                    effectivePrice = gameState.controlPrice;
+                    quantityDemanded = Math.max(0, demandIntercept - demandSlope * gameState.controlPrice);
+                    quantitySupplied = Math.max(0, supplyIntercept + supplySlope * gameState.controlPrice);
+                    quantityTraded = quantityDemanded; // Surplus - trade limited by demand
+                    marketImbalance = quantitySupplied - quantityDemanded; // Surplus
+                } else {
+                    effectivePrice = equilibriumPrice;
+                    quantityTraded = equilibriumQuantity;
+                    quantityDemanded = equilibriumQuantity;
+                    quantitySupplied = equilibriumQuantity;
+                }
+            } else if (gameState.controlType === 'ceiling') {
+                if (gameState.controlPrice < equilibriumPrice) {
+                    effectivePrice = gameState.controlPrice;
+                    quantityDemanded = Math.max(0, demandIntercept - demandSlope * gameState.controlPrice);
+                    quantitySupplied = Math.max(0, supplyIntercept + supplySlope * gameState.controlPrice);
+                    quantityTraded = quantitySupplied; // Shortage - trade limited by supply
+                    marketImbalance = quantityDemanded - quantitySupplied; // Shortage
+                } else {
+                    effectivePrice = equilibriumPrice;
+                    quantityTraded = equilibriumQuantity;
+                    quantityDemanded = equilibriumQuantity;
+                    quantitySupplied = equilibriumQuantity;
+                }
+            }
+
+            // Calculate surpluses
+            const maxDemandPrice = demandIntercept / demandSlope;
+            const minSupplyPrice = -supplyIntercept / supplySlope;
+            
+            let consumerSurplus, producerSurplus, deadweightLoss;
+            
+            if (gameState.controlType === 'none') {
+                consumerSurplus = 0.5 * (maxDemandPrice - effectivePrice) * quantityTraded;
+                producerSurplus = 0.5 * (effectivePrice - minSupplyPrice) * quantityTraded;
+                deadweightLoss = 0;
+            } else {
+                // With price controls, calculate deadweight loss
+                consumerSurplus = 0.5 * (maxDemandPrice - effectivePrice) * quantityTraded;
+                producerSurplus = 0.5 * (effectivePrice - minSupplyPrice) * quantityTraded;
+                
+                if (gameState.controlType === 'floor' && gameState.controlPrice > equilibriumPrice) {
+                    // Price floor reduces quantity traded, creating deadweight loss
+                    deadweightLoss = 0.5 * (gameState.controlPrice - equilibriumPrice) * (equilibriumQuantity - quantityTraded);
+                } else if (gameState.controlType === 'ceiling' && gameState.controlPrice < equilibriumPrice) {
+                    // Price ceiling reduces quantity traded, creating deadweight loss
+                    deadweightLoss = 0.5 * (equilibriumPrice - gameState.controlPrice) * (equilibriumQuantity - quantityTraded);
+                } else {
+                    deadweightLoss = 0;
+                }
+            }
+
+            return {
+                demandData,
+                supplyData,
+                equilibrium: { price: equilibriumPrice, quantity: equilibriumQuantity },
+                market: {
+                    effectivePrice,
+                    quantityTraded,
+                    quantityDemanded,
+                    quantitySupplied,
+                    marketImbalance,
+                    consumerSurplus,
+                    producerSurplus,
+                    deadweightLoss
+                }
+            };
+        }
+
+        // Update chart with new data
+        function updateChart() {
+            const data = calculateMarketData();
+
+            chart.data.datasets[0].data = data.demandData;
+            chart.data.datasets[1].data = data.supplyData;
+            chart.data.datasets[3].data = [{ x: data.equilibrium.quantity, y: data.equilibrium.price }];
+
+            // Price control line
+            if (gameState.controlType !== 'none') {
+                chart.data.datasets[2].data = [
+                    { x: 0, y: gameState.controlPrice },
+                    { x: 100, y: gameState.controlPrice }
+                ];
+            } else {
+                chart.data.datasets[2].data = [];
+            }
+
+            // Shortage/surplus area
+            if (gameState.controlType !== 'none' && data.market.marketImbalance !== 0) {
+                const areaData = [];
+                if (gameState.controlType === 'ceiling' && gameState.controlPrice < data.equilibrium.price) {
+                    // Shortage area
+                    areaData.push({ x: data.market.quantitySupplied, y: gameState.controlPrice });
+                    areaData.push({ x: data.market.quantityDemanded, y: gameState.controlPrice });
+                } else if (gameState.controlType === 'floor' && gameState.controlPrice > data.equilibrium.price) {
+                    // Surplus area
+                    areaData.push({ x: data.market.quantityDemanded, y: gameState.controlPrice });
+                    areaData.push({ x: data.market.quantitySupplied, y: gameState.controlPrice });
+                }
+                chart.data.datasets[4].data = areaData;
+            } else {
+                chart.data.datasets[4].data = [];
+            }
+
+            chart.update();
+            updateDisplays(data);
+        }
+
+        // Update all display elements
+        function updateDisplays(data) {
+            const market = data.market;
+            
+            // Market price and quantity
+            document.getElementById('marketPrice').textContent = `${market.effectivePrice.toFixed(0)}`;
+            document.getElementById('marketQuantity').textContent = market.quantityTraded.toFixed(0);
+
+            // Market effects
+            document.getElementById('quantityDemanded').textContent = market.quantityDemanded.toFixed(0);
+            document.getElementById('quantitySupplied').textContent = market.quantitySupplied.toFixed(0);
+            document.getElementById('consumerSurplus').textContent = `${market.consumerSurplus.toFixed(0)}`;
+            document.getElementById('producerSurplus').textContent = `${market.producerSurplus.toFixed(0)}`;
+
+            // Market imbalance
+            let imbalanceText;
+            if (Math.abs(market.marketImbalance) < 0.1) {
+                imbalanceText = "0 (Balanced)";
+            } else if (market.marketImbalance > 0) {
+                imbalanceText = `${market.marketImbalance.toFixed(0)} (Shortage)`;
+            } else {
+                imbalanceText = `${Math.abs(market.marketImbalance).toFixed(0)} (Surplus)`;
+            }
+            document.getElementById('marketImbalance').textContent = imbalanceText;
+
+            // Policy indicators
+            document.getElementById('deadweightLoss').textContent = `${market.deadweightLoss.toFixed(0)}`;
+            const normalSurplus = market.consumerSurplus + market.producerSurplus + market.deadweightLoss;
+            const currentSurplus = market.consumerSurplus + market.producerSurplus;
+            const welfareChange = normalSurplus > 0 ? ((currentSurplus - normalSurplus) / normalSurplus * 100) : 0;
+            document.getElementById('welfareChange').textContent = `${welfareChange.toFixed(1)}%`;
+
+            // Update market status and styling
+            updateMarketStatus(market);
+            updateConsequences(market);
+            updateInsights(market);
+            updateWarnings(market);
+        }
+
+        // Update market status display
+        function updateMarketStatus(market) {
+            const statusEl = document.getElementById('marketStatus');
+            const priceCard = document.getElementById('priceCard');
+            const quantityCard = document.getElementById('quantityCard');
+
+            if (gameState.controlType === 'none') {
+                statusEl.textContent = 'Free Market Equilibrium';
+                statusEl.className = 'market-status equilibrium';
+                priceCard.className = 'metric-card equilibrium';
+                quantityCard.className = 'metric-card equilibrium';
+            } else if (Math.abs(market.marketImbalance) < 0.1) {
+                statusEl.textContent = 'Price Control (No Effect)';
+                statusEl.className = 'market-status equilibrium';
+                priceCard.className = 'metric-card equilibrium';
+                quantityCard.className = 'metric-card equilibrium';
+            } else if (market.marketImbalance > 0) {
+                statusEl.textContent = 'Shortage Created';
+                statusEl.className = 'market-status shortage';
+                priceCard.className = 'metric-card shortage';
+                quantityCard.className = 'metric-card shortage';
+            } else {
+                statusEl.textContent = 'Surplus Created';
+                statusEl.className = 'market-status surplus';
+                priceCard.className = 'metric-card surplus';
+                quantityCard.className = 'metric-card surplus';
+            }
+        }
+
+        // Update economic consequences
+        function updateConsequences(market) {
+            const consequences = [];
+            
+            if (gameState.controlType === 'none') {
+                consequences.push({ label: 'Market Efficiency:', value: '100% (Optimal)' });
+                consequences.push({ label: 'Resource Allocation:', value: 'Efficient' });
+                consequences.push({ label: 'Government Intervention:', value: 'None Required' });
+            } else if (Math.abs(market.marketImbalance) < 0.1) {
+                consequences.push({ label: 'Market Efficiency:', value: '100% (Control Ineffective)' });
+                consequences.push({ label: 'Resource Allocation:', value: 'Efficient' });
+                consequences.push({ label: 'Government Intervention:', value: 'Unnecessary' });
+            } else {
+                const efficiency = ((market.consumerSurplus + market.producerSurplus) / 
+                                 (market.consumerSurplus + market.producerSurplus + market.deadweightLoss) * 100);
+                consequences.push({ label: 'Market Efficiency:', value: `${efficiency.toFixed(0)}% (Reduced)` });
+                consequences.push({ label: 'Resource Allocation:', value: 'Inefficient' });
+                
+                if (gameState.controlType === 'floor') {
+                    consequences.push({ label: 'Market Outcome:', value: 'Surplus & Waste' });
+                } else {
+                    consequences.push({ label: 'Market Outcome:', value: 'Shortage & Rationing' });
+                }
+            }
+
+            const consequencesEl = document.getElementById('consequences');
+            consequencesEl.innerHTML = consequences.map(item => 
+                `<div class="effect-item"><span>${item.label}</span><span>${item.value}</span></div>`
+            ).join('');
+        }
+
+        // Update insights based on current state
+        function updateInsights(market) {
+            const insights = [];
+            
+            if (gameState.controlType === 'none') {
+                insights.push("Free market achieves optimal allocation of resources");
+                insights.push("Supply and demand determine price without government intervention");
+                insights.push("Maximum total economic surplus is achieved");
+            } else if (Math.abs(market.marketImbalance) < 0.1) {
+                if (gameState.controlType === 'floor') {
+                    insights.push("Price floor is below equilibrium price - no effect");
+                    insights.push("Market operates as if no control exists");
+                } else {
+                    insights.push("Price ceiling is above equilibrium price - no effect");
+                    insights.push("Market operates as if no control exists");
+                }
+                insights.push("Government intervention is unnecessary in this case");
+            } else {
+                if (gameState.controlType === 'floor') {
+                    insights.push("Price floor creates surplus - suppliers want to sell more than buyers want to buy");
+                    insights.push("Government may need to purchase excess supply");
+                    insights.push("Higher prices benefit producers but hurt consumers");
+                    if (market.deadweightLoss > 50) {
+                        insights.push("Significant economic inefficiency created");
+                    }
+                } else {
+                    insights.push("Price ceiling creates shortage - buyers want more than suppliers will provide");
+                    insights.push("Rationing mechanisms may emerge (waiting lines, black markets)");
+                    insights.push("Lower prices benefit consumers but hurt producers");
+                    if (market.deadweightLoss > 50) {
+                        insights.push("Significant economic inefficiency created");
+                    }
+                }
+            }
+
+            document.getElementById('insightsContent').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        // Update warning box
+        function updateWarnings(market) {
+            const warningBox = document.getElementById('warningBox');
+            
+            if (gameState.controlType === 'none') {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning positive';
+                warningBox.textContent = 'Free market operates at equilibrium.';
+            } else if (Math.abs(market.marketImbalance) < 0.1) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning';
+                warningBox.textContent = 'Price control has no effect - market finds natural equilibrium.';
+            } else if (market.deadweightLoss > 100) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning negative';
+                warningBox.textContent = 'Severe market distortion! Large deadweight loss created.';
+            } else if (market.marketImbalance > 0) {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning negative';
+                warningBox.textContent = 'Shortage alert: Demand exceeds supply at controlled price.';
+            } else {
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning';
+                warningBox.textContent = 'Surplus created: Supply exceeds demand at controlled price.';
+            }
+        }
+
+        // Set price control type
+        function setPriceControl(type) {
+            gameState.controlType = type;
+            
+            // Update button states
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(type + 'Btn').classList.add('active');
+            
+            // Show/hide control price slider
+            const controlPriceEl = document.getElementById('controlPrice');
+            const controlLabelEl = document.getElementById('controlLabel');
+            
+            if (type === 'none') {
+                controlPriceEl.style.display = 'none';
+            } else {
+                controlPriceEl.style.display = 'block';
+                controlLabelEl.textContent = type === 'floor' ? 'Minimum Price' : 'Maximum Price';
+            }
+            
+            updateChart();
+        }
+
+        // Event listeners for sliders
+        function setupSliders() {
+            document.getElementById('priceControl').addEventListener('input', function() {
+                gameState.controlPrice = parseInt(this.value);
+                document.getElementById('priceControlValue').textContent = `${gameState.controlPrice}`;
+                updateChart();
+            });
+
+            document.getElementById('demandStrength').addEventListener('input', function() {
+                gameState.demandStrength = parseInt(this.value);
+                document.getElementById('demandStrengthValue').textContent = gameState.demandStrength;
+                updateChart();
+            });
+
+            document.getElementById('supplyStrength').addEventListener('input', function() {
+                gameState.supplyStrength = parseInt(this.value);
+                document.getElementById('supplyStrengthValue').textContent = gameState.supplyStrength;
+                updateChart();
+            });
+        }
+
+        // Load predefined scenarios
+        function loadScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            
+            gameState.controlType = scenario.controlType;
+            gameState.controlPrice = scenario.controlPrice;
+            gameState.demandStrength = scenario.demandStrength;
+            gameState.supplyStrength = scenario.supplyStrength;
+
+            // Update button states
+            setPriceControl(scenario.controlType);
+
+            // Update sliders
+            document.getElementById('priceControl').value = scenario.controlPrice;
+            document.getElementById('demandStrength').value = scenario.demandStrength;
+            document.getElementById('supplyStrength').value = scenario.supplyStrength;
+
+            // Update displays
+            document.getElementById('priceControlValue').textContent = `${scenario.controlPrice}`;
+            document.getElementById('demandStrengthValue').textContent = scenario.demandStrength;
+            document.getElementById('supplyStrengthValue').textContent = scenario.supplyStrength;
+
+            updateChart();
+        }
+
+        // Reset to free market
+        function reset() {
+            gameState = {
+                controlType: 'none',
+                controlPrice: 50,
+                demandStrength: 100,
+                supplyStrength: 100
+            };
+
+            setPriceControl('none');
+
+            // Reset sliders
+            document.getElementById('priceControl').value = 50;
+            document.getElementById('demandStrength').value = 100;
+            document.getElementById('supplyStrength').value = 100;
+
+            // Update displays
+            document.getElementById('priceControlValue').textContent = '$50';
+            document.getElementById('demandStrengthValue').textContent = '100';
+            document.getElementById('supplyStrengthValue').textContent = '100';
+
+            updateChart();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            setupSliders();
+        });
+    </script>
+</body>
+</html>

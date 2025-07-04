@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflation & Purchasing Power: Economic Theory Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: #2c3e50;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        h4 {
+            color: #34495e;
+            margin-top: 1.2rem;
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .definition {
+            background: #ecf0f1;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .example {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .formula {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .historical-note {
+            background: #fdf2e9;
+            border-left: 4px solid #e67e22;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .key-takeaway {
+            background: #ebf3fd;
+            border: 2px solid #3498db;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.3rem;
+        }
+
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .print-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-header">
+            <h1>Inflation & Purchasing Power: Economic Theory Guide</h1>
+            <p><em>Interactive Economics Education Series</em></p>
+        </div>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#what-is-inflation">What is Inflation?</a></li>
+                <li><a href="#key-concepts">Key Concepts</a></li>
+                <li><a href="#real-world-impact">Real-World Impact</a></li>
+                <li><a href="#wage-relationship">Inflation-Wage Growth Relationship</a></li>
+                <li><a href="#historical-context">Historical Context</a></li>
+                <li><a href="#protection-strategies">Protection Strategies</a></li>
+                <li><a href="#policy-responses">Policy Responses</a></li>
+                <li><a href="#formulas">Mathematical Formulas</a></li>
+                <li><a href="#takeaways">Key Takeaways</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="what-is-inflation">
+            <h2>What is Inflation?</h2>
+            
+            <div class="definition">
+                <strong>Inflation</strong> is the general increase in prices of goods and services in an economy over time. When inflation occurs, each unit of currency buys fewer goods and services than it did before, effectively reducing the <strong>purchasing power</strong> of money.
+            </div>
+        </div>
+
+        <div class="section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>1. Purchasing Power</h3>
+            <ul>
+                <li><strong>Definition:</strong> The amount of goods and services that can be purchased with a unit of currency</li>
+                <li><strong>Real vs. Nominal:</strong>
+                    <ul>
+                        <li>Nominal value = face value of money</li>
+                        <li>Real value = what that money can actually buy (adjusted for inflation)</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>2. Types of Inflation</h3>
+
+            <h4>Demand-Pull Inflation</h4>
+            <ul>
+                <li><strong>Cause:</strong> More demand than supply can meet</li>
+                <li><strong>Example:</strong> Economic boom increases consumer spending faster than production</li>
+                <li><strong>Result:</strong> "Too much money chasing too few goods"</li>
+            </ul>
+
+            <h4>Cost-Push Inflation</h4>
+            <ul>
+                <li><strong>Cause:</strong> Rising production costs</li>
+                <li><strong>Example:</strong> Oil price increases raise transportation costs</li>
+                <li><strong>Result:</strong> Producers pass higher costs to consumers</li>
+            </ul>
+
+            <h4>Built-in Inflation</h4>
+            <ul>
+                <li><strong>Cause:</strong> Expectations of future inflation</li>
+                <li><strong>Example:</strong> Workers demand higher wages expecting prices to rise</li>
+                <li><strong>Result:</strong> Self-fulfilling prophecy cycle</li>
+            </ul>
+
+            <h3>3. Inflation Measurement</h3>
+
+            <h4>Consumer Price Index (CPI)</h4>
+            <ul>
+                <li>Tracks prices of a "basket" of common goods and services</li>
+                <li>Includes: food, housing, transportation, medical care, entertainment</li>
+            </ul>
+            
+            <div class="formula">
+                CPI = (Current Year CPI / Base Year CPI) × 100
+            </div>
+
+            <h4>Core Inflation</h4>
+            <ul>
+                <li>Excludes volatile food and energy prices</li>
+                <li>Provides clearer long-term trend</li>
+            </ul>
+        </div>
+
+        <div class="section" id="real-world-impact">
+            <h2>Real-World Impact</h2>
+
+            <h3>On Individuals</h3>
+            <ul>
+                <li><strong>Fixed Income Earners:</strong> Hurt most by inflation (retirees, students)</li>
+                <li><strong>Debtors:</strong> Benefit (pay back with "cheaper" dollars)</li>
+                <li><strong>Creditors:</strong> Hurt (receive back less valuable money)</li>
+                <li><strong>Workers:</strong> Impact depends on wage growth vs. inflation rate</li>
+            </ul>
+
+            <h3>On Economy</h3>
+            <ul>
+                <li><strong>Moderate Inflation (2-3%):</strong> Often sign of healthy economic growth</li>
+                <li><strong>High Inflation (>5%):</strong> Erodes savings, creates uncertainty</li>
+                <li><strong>Hyperinflation (>50% monthly):</strong> Destroys economic stability</li>
+                <li><strong>Deflation (negative inflation):</strong> Can signal economic problems</li>
+            </ul>
+        </div>
+
+        <div class="section" id="wage-relationship">
+            <h2>The Inflation-Wage Growth Relationship</h2>
+
+            <h3>Real Purchasing Power Change</h3>
+            <div class="formula">
+                Real Change = Wage Growth Rate - Inflation Rate
+            </div>
+
+            <div class="example">
+                <h4>Examples:</h4>
+                <ul>
+                    <li>Wages grow 3%, inflation 2% → +1% real purchasing power</li>
+                    <li>Wages grow 2%, inflation 4% → -2% real purchasing power (losing ground)</li>
+                    <li>Wages grow 5%, inflation 5% → 0% real change (keeping pace)</li>
+                </ul>
+            </div>
+
+            <h3>Compound Effects Over Time</h3>
+            <p>Small differences compound significantly:</p>
+            <ul>
+                <li>1% annual real loss → 10% purchasing power lost over 10 years</li>
+                <li>2% annual real loss → 18% purchasing power lost over 10 years</li>
+            </ul>
+        </div>
+
+        <div class="section" id="historical-context">
+            <h2>Historical Context</h2>
+
+            <h3>Notable Inflation Periods</h3>
+
+            <div class="historical-note">
+                <h4>The Great Inflation (1970s)</h4>
+                <ul>
+                    <li><strong>Cause:</strong> Oil crises, loose monetary policy</li>
+                    <li><strong>Peak:</strong> 14.8% in 1980 (US)</li>
+                    <li><strong>Impact:</strong> Massive erosion of purchasing power</li>
+                </ul>
+            </div>
+
+            <h4>Hyperinflation Examples</h4>
+            <ul>
+                <li><strong>Germany (1923):</strong> Prices doubled every 3-4 days</li>
+                <li><strong>Zimbabwe (2008):</strong> 231 million percent annual inflation</li>
+                <li><strong>Venezuela (2010s):</strong> Over 1,000,000% peak inflation</li>
+            </ul>
+
+            <h4>Recent Trends</h4>
+            <ul>
+                <li><strong>2008-2020:</strong> Low inflation period (often <2%)</li>
+                <li><strong>2021-2023:</strong> Inflation surge post-COVID (supply chains, monetary policy)</li>
+            </ul>
+        </div>
+
+        <div class="section" id="protection-strategies">
+            <h2>Strategies for Protecting Against Inflation</h2>
+
+            <h3>For Individuals</h3>
+            <ol>
+                <li><strong>Invest in Real Assets</strong>
+                    <ul>
+                        <li>Real estate, stocks, commodities</li>
+                        <li>Assets that historically outpace inflation</li>
+                    </ul>
+                </li>
+                <li><strong>Variable Income Sources</strong>
+                    <ul>
+                        <li>Careers with regular raises</li>
+                        <li>Business ownership</li>
+                        <li>Inflation-adjusted investments</li>
+                    </ul>
+                </li>
+                <li><strong>Debt Strategy</strong>
+                    <ul>
+                        <li>Fixed-rate debt becomes cheaper over time</li>
+                        <li>Avoid variable-rate debt during rising inflation</li>
+                    </ul>
+                </li>
+                <li><strong>Education & Skills</strong>
+                    <ul>
+                        <li>Continuous learning maintains earning power</li>
+                        <li>Specialized skills command premium wages</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>For Businesses</h3>
+            <ol>
+                <li><strong>Pricing Power:</strong> Ability to raise prices with costs</li>
+                <li><strong>Efficiency Improvements:</strong> Offset cost increases</li>
+                <li><strong>Supply Chain Diversification:</strong> Reduce vulnerability to shocks</li>
+            </ol>
+        </div>
+
+        <div class="section" id="policy-responses">
+            <h2>Policy Responses</h2>
+
+            <h3>Central Bank Tools</h3>
+
+            <h4>Interest Rates</h4>
+            <ul>
+                <li><strong>Raise rates:</strong> Reduce borrowing, cool economy, lower inflation</li>
+                <li><strong>Lower rates:</strong> Stimulate borrowing, heat economy, risk higher inflation</li>
+            </ul>
+
+            <h4>Money Supply</h4>
+            <ul>
+                <li><strong>Reduce supply:</strong> Less money in circulation, deflationary pressure</li>
+                <li><strong>Increase supply:</strong> More money in circulation, inflationary pressure</li>
+            </ul>
+
+            <h3>Government Policy</h3>
+            <ul>
+                <li><strong>Fiscal restraint:</strong> Reduce spending to cool economy</li>
+                <li><strong>Supply-side policies:</strong> Increase production capacity</li>
+                <li><strong>Price controls:</strong> Direct regulation (often ineffective long-term)</li>
+            </ul>
+        </div>
+
+        <div class="section" id="formulas">
+            <h2>Mathematical Formulas</h2>
+
+            <h3>Future Value with Inflation</h3>
+            <div class="formula">
+                Future Purchasing Power = Present Value / (1 + inflation rate)^years
+            </div>
+
+            <h3>Real Interest Rate</h3>
+            <div class="formula">
+                Real Rate = Nominal Rate - Inflation Rate
+            </div>
+
+            <h3>Inflation Adjustment</h3>
+            <div class="formula">
+                Inflation-Adjusted Value = Nominal Value × (Base Year CPI / Current Year CPI)
+            </div>
+        </div>
+
+        <div class="section" id="takeaways">
+            <div class="key-takeaway">
+                <h2>Key Takeaways</h2>
+                <ol>
+                    <li><strong>Small inflation rates compound significantly over time</strong></li>
+                    <li><strong>Real purchasing power depends on the relationship between income growth and inflation</strong></li>
+                    <li><strong>Different groups are affected differently by inflation</strong></li>
+                    <li><strong>Moderate inflation (2-3%) is generally considered healthy for an economy</strong></li>
+                    <li><strong>Understanding inflation helps make better financial decisions</strong></li>
+                    <li><strong>Assets and investments can help protect against inflation's erosive effects</strong></li>
+                </ol>
+            </div>
+
+            <h2>Critical Thinking Questions</h2>
+            <ol>
+                <li>Why might moderate inflation be preferable to deflation?</li>
+                <li>How does inflation affect different age groups differently?</li>
+                <li>What role do inflation expectations play in actual inflation?</li>
+                <li>How do global events (wars, pandemics) affect national inflation rates?</li>
+                <li>Why is it difficult for central banks to target exact inflation rates?</li>
+            </ol>
+
+            <hr style="margin: 2rem 0;">
+            <p><em>Use the Inflation & Purchasing Power Simulator to explore these concepts interactively and see how different scenarios affect your financial future.</em></p>
+        </div>
+    </div>
+</body>
+</html>

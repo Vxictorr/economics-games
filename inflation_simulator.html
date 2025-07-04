@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inflation & Purchasing Power Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: right;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 400px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .basket-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.85rem;
+        }
+
+        .basket-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 500;
+        }
+
+        .item-price {
+            color: #666;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .positive {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .metric-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .scenarios {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Inflation & Purchasing Power</h1>
+            <p>See how inflation affects the real value of money over time</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Controls -->
+            <div class="card">
+                <h2>Economic Parameters</h2>
+                
+                <div class="control-group">
+                    <label>Annual Inflation Rate</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="inflationRate" min="0" max="15" value="2" step="0.1">
+                    </div>
+                    <div class="slider-value" id="inflationValue">2.0%</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Annual Wage Growth</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="wageGrowth" min="0" max="12" value="3" step="0.1">
+                    </div>
+                    <div class="slider-value" id="wageValue">3.0%</div>
+                </div>
+
+                <div class="control-group">
+                    <label>Time Period (Years)</label>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="timePeriod" min="5" max="30" value="10" step="1">
+                    </div>
+                    <div class="slider-value" id="timeValue">10 years</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="scenarios">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('stable')">Stable Economy</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('moderate')">Moderate Inflation</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('high')">High Inflation</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('deflation')">Deflation</button>
+                </div>
+
+                <button class="btn" onclick="reset()">Reset</button>
+
+                <div class="divider"></div>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="realInflation">-1.0%</div>
+                        <div class="metric-label">Real Purchasing Power Change</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="totalLoss">$10</div>
+                        <div class="metric-label">Total Value Lost</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Panel: Chart -->
+            <div class="chart-container">
+                <canvas id="inflationChart"></canvas>
+            </div>
+
+            <!-- Right Panel: Shopping Basket -->
+            <div class="card">
+                <h2>Shopping Basket</h2>
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Track how prices affect everyday purchases</p>
+                
+                <div id="basketItems">
+                    <div class="basket-item">
+                        <span class="item-name">☕ Coffee</span>
+                        <span class="item-price" data-base="3.50">$3.50</span>
+                    </div>
+                    <div class="basket-item">
+                        <span class="item-name">🍞 Bread</span>
+                        <span class="item-price" data-base="2.00">$2.00</span>
+                    </div>
+                    <div class="basket-item">
+                        <span class="item-name">⛽ Gas (gallon)</span>
+                        <span class="item-price" data-base="3.20">$3.20</span>
+                    </div>
+                    <div class="basket-item">
+                        <span class="item-name">🎬 Movie Ticket</span>
+                        <span class="item-price" data-base="12.00">$12.00</span>
+                    </div>
+                    <div class="basket-item">
+                        <span class="item-name">🍕 Pizza</span>
+                        <span class="item-price" data-base="15.00">$15.00</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="basketToday">$35.70</div>
+                        <div class="metric-label">Basket Today</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="basketFuture">$43.46</div>
+                        <div class="metric-label">Basket in <span id="futureYears">10</span> Years</div>
+                    </div>
+                </div>
+
+                <div class="insights">
+                    <h3>Key Insights</h3>
+                    <div id="insightsContent">
+                        <div class="insight-item">Your purchasing power decreases when inflation exceeds wage growth</div>
+                        <div class="insight-item">Even small inflation rates compound significantly over time</div>
+                        <div class="insight-item">Track real inflation: inflation rate - wage growth</div>
+                    </div>
+                </div>
+
+                <div id="warningBox" class="warning" style="display: none;">
+                    High inflation is eroding purchasing power significantly!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let gameState = {
+            inflationRate: 2.0,
+            wageGrowth: 3.0,
+            timePeriod: 10,
+            initialAmount: 100
+        };
+
+        const scenarios = {
+            stable: { inflation: 2.0, wage: 3.0, time: 10 },
+            moderate: { inflation: 4.0, wage: 3.5, time: 15 },
+            high: { inflation: 8.0, wage: 5.0, time: 10 },
+            deflation: { inflation: -1.0, wage: 1.0, time: 10 }
+        };
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('inflationChart').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Real Value of $100',
+                            data: [],
+                            borderColor: '#dc3545',
+                            backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Nominal Value (with wage growth)',
+                            data: [],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Inflation-Adjusted Value',
+                            data: [],
+                            borderColor: '#ffc107',
+                            backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 11 },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Years from Today'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Value ($)'
+                            },
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            updateChart();
+        }
+
+        // Calculate purchasing power over time
+        function calculatePurchasingPower() {
+            const years = [];
+            const realValues = [];
+            const nominalValues = [];
+            const adjustedValues = [];
+
+            for (let year = 0; year <= gameState.timePeriod; year++) {
+                years.push(year);
+                
+                // Real purchasing power (adjusted for inflation)
+                const realValue = gameState.initialAmount / Math.pow(1 + gameState.inflationRate / 100, year);
+                realValues.push(realValue);
+                
+                // Nominal value with wage growth
+                const nominalValue = gameState.initialAmount * Math.pow(1 + gameState.wageGrowth / 100, year);
+                nominalValues.push(nominalValue);
+                
+                // Inflation-adjusted purchasing power
+                const adjustedValue = nominalValue / Math.pow(1 + gameState.inflationRate / 100, year);
+                adjustedValues.push(adjustedValue);
+            }
+
+            return { years, realValues, nominalValues, adjustedValues };
+        }
+
+        // Update chart with new data
+        function updateChart() {
+            const { years, realValues, nominalValues, adjustedValues } = calculatePurchasingPower();
+
+            chart.data.labels = years;
+            chart.data.datasets[0].data = realValues;
+            chart.data.datasets[1].data = nominalValues;
+            chart.data.datasets[2].data = adjustedValues;
+
+            chart.update();
+
+            // Update metrics
+            const finalReal = realValues[realValues.length - 1];
+            const finalAdjusted = adjustedValues[adjustedValues.length - 1];
+            const realInflationRate = gameState.inflationRate - gameState.wageGrowth;
+            const totalLoss = gameState.initialAmount - finalAdjusted;
+
+            document.getElementById('realInflation').textContent = `${realInflationRate.toFixed(1)}%`;
+            document.getElementById('totalLoss').textContent = `$${totalLoss.toFixed(0)}`;
+
+            // Update shopping basket
+            updateShoppingBasket();
+            updateInsights();
+        }
+
+        // Update shopping basket prices
+        function updateShoppingBasket() {
+            const inflationMultiplier = Math.pow(1 + gameState.inflationRate / 100, gameState.timePeriod);
+            let todayTotal = 0;
+            let futureTotal = 0;
+
+            document.querySelectorAll('.item-price').forEach(priceElement => {
+                const basePrice = parseFloat(priceElement.dataset.base);
+                const futurePrice = basePrice * inflationMultiplier;
+                
+                priceElement.textContent = `$${basePrice.toFixed(2)}`;
+                todayTotal += basePrice;
+                futureTotal += futurePrice;
+            });
+
+            document.getElementById('basketToday').textContent = `$${todayTotal.toFixed(2)}`;
+            document.getElementById('basketFuture').textContent = `$${futureTotal.toFixed(2)}`;
+            document.getElementById('futureYears').textContent = gameState.timePeriod;
+        }
+
+        // Update insights and warnings
+        function updateInsights() {
+            const realInflationRate = gameState.inflationRate - gameState.wageGrowth;
+            const insights = [];
+            const warningBox = document.getElementById('warningBox');
+
+            if (realInflationRate > 2) {
+                insights.push("Your purchasing power is declining rapidly");
+                insights.push("Consider investments that outpace inflation");
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning';
+                warningBox.textContent = 'High inflation is eroding purchasing power significantly!';
+            } else if (realInflationRate > 0) {
+                insights.push("Moderate inflation is reducing your purchasing power");
+                insights.push("Wages are not keeping up with price increases");
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning';
+                warningBox.textContent = 'Your money is losing value over time.';
+            } else if (realInflationRate < -1) {
+                insights.push("Your purchasing power is increasing");
+                insights.push("Wages are growing faster than inflation");
+                warningBox.style.display = 'block';
+                warningBox.className = 'warning positive';
+                warningBox.textContent = 'Great! Your purchasing power is growing.';
+            } else {
+                insights.push("Your purchasing power is relatively stable");
+                insights.push("Wages are roughly keeping pace with inflation");
+                warningBox.style.display = 'none';
+            }
+
+            // Add general insights
+            insights.push(`After ${gameState.timePeriod} years, $100 today will buy ${(100/Math.pow(1 + gameState.inflationRate/100, gameState.timePeriod)).toFixed(0)}% of today's goods`);
+
+            document.getElementById('insightsContent').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        // Event listeners for sliders
+        function setupSliders() {
+            document.getElementById('inflationRate').addEventListener('input', function() {
+                gameState.inflationRate = parseFloat(this.value);
+                document.getElementById('inflationValue').textContent = `${gameState.inflationRate.toFixed(1)}%`;
+                updateChart();
+            });
+
+            document.getElementById('wageGrowth').addEventListener('input', function() {
+                gameState.wageGrowth = parseFloat(this.value);
+                document.getElementById('wageValue').textContent = `${gameState.wageGrowth.toFixed(1)}%`;
+                updateChart();
+            });
+
+            document.getElementById('timePeriod').addEventListener('input', function() {
+                gameState.timePeriod = parseInt(this.value);
+                document.getElementById('timeValue').textContent = `${gameState.timePeriod} years`;
+                updateChart();
+            });
+        }
+
+        // Load predefined scenarios
+        function loadScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            
+            gameState.inflationRate = scenario.inflation;
+            gameState.wageGrowth = scenario.wage;
+            gameState.timePeriod = scenario.time;
+
+            // Update sliders
+            document.getElementById('inflationRate').value = scenario.inflation;
+            document.getElementById('wageGrowth').value = scenario.wage;
+            document.getElementById('timePeriod').value = scenario.time;
+
+            // Update displays
+            document.getElementById('inflationValue').textContent = `${scenario.inflation.toFixed(1)}%`;
+            document.getElementById('wageValue').textContent = `${scenario.wage.toFixed(1)}%`;
+            document.getElementById('timeValue').textContent = `${scenario.time} years`;
+
+            updateChart();
+        }
+
+        // Reset to default values
+        function reset() {
+            loadScenario('stable');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            setupSliders();
+        });
+    </script>
+</body>
+</html>

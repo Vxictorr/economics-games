@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Structures: Competition Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .market-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .market-btn {
+            padding: 0.75rem 1.5rem;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            min-width: 140px;
+        }
+
+        .market-btn.active {
+            background: #333;
+            color: white;
+            border-color: #333;
+        }
+
+        .market-btn:hover {
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 320px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .firm-controls {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .firm-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .firm-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .control-group {
+            margin-bottom: 1rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: right;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .market-overview {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .overview-item {
+            text-align: center;
+        }
+
+        .overview-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .overview-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .firm-performance {
+            margin-bottom: 1rem;
+        }
+
+        .performance-header {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stat-label {
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            font-size: 0.7rem;
+        }
+
+        .market-insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .market-type-info {
+            background: #e8f4f8;
+            border: 1px solid #b3d9e8;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .market-type-info h3 {
+            font-size: 0.9rem;
+            color: #1e6091;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-type-info p {
+            font-size: 0.8rem;
+            color: #2c5973;
+        }
+
+        .welfare-analysis {
+            background: #fff9e6;
+            border: 1px solid #ffe066;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .welfare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .welfare-item {
+            text-align: center;
+        }
+
+        .welfare-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #cc8800;
+        }
+
+        .welfare-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #996600;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .market-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .market-btn {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Market Structures: Competition Game</h1>
+            <p>Experience how different market structures affect pricing, competition, and consumer welfare</p>
+        </div>
+
+        <div class="market-selector">
+            <button class="market-btn active" onclick="setMarketStructure('perfect')">
+                Perfect Competition
+            </button>
+            <button class="market-btn" onclick="setMarketStructure('monopolistic')">
+                Monopolistic Competition
+            </button>
+            <button class="market-btn" onclick="setMarketStructure('oligopoly')">
+                Oligopoly
+            </button>
+            <button class="market-btn" onclick="setMarketStructure('monopoly')">
+                Monopoly
+            </button>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Firm Controls -->
+            <div class="card">
+                <h2>Firm Strategy</h2>
+                
+                <div id="firmControls">
+                    <!-- Firm controls will be dynamically generated -->
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="scenarios">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('priceWar')">Price War</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('innovation')">Innovation Race</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('collusion')">Tacit Collusion</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('newEntry')">New Entrant</button>
+                </div>
+
+                <button class="btn" onclick="optimizeStrategy()">Auto-Optimize</button>
+                <button class="btn-secondary" onclick="resetMarket()">Reset Market</button>
+            </div>
+
+            <!-- Center Panel: Charts -->
+            <div>
+                <div class="market-type-info" id="marketInfo">
+                    <h3>Perfect Competition</h3>
+                    <p>Many firms selling identical products. No single firm can influence market price. Price equals marginal cost.</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="marketChart"></canvas>
+                </div>
+
+                <div class="welfare-analysis">
+                    <h3 style="font-size: 0.8rem; color: #cc8800; margin-bottom: 1rem;">Economic Welfare Analysis</h3>
+                    <div class="welfare-grid">
+                        <div class="welfare-item">
+                            <div class="welfare-value" id="consumerSurplus">$2,500</div>
+                            <div class="welfare-label">Consumer Surplus</div>
+                        </div>
+                        <div class="welfare-item">
+                            <div class="welfare-value" id="producerSurplus">$1,200</div>
+                            <div class="welfare-label">Producer Surplus</div>
+                        </div>
+                        <div class="welfare-item">
+                            <div class="welfare-value" id="totalWelfare">$3,700</div>
+                            <div class="welfare-label">Total Welfare</div>
+                        </div>
+                        <div class="welfare-item">
+                            <div class="welfare-value" id="deadweightLoss">$0</div>
+                            <div class="welfare-label">Deadweight Loss</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Market Results -->
+            <div class="card">
+                <h2>Market Results</h2>
+                
+                <div class="market-overview">
+                    <div class="overview-grid">
+                        <div class="overview-item">
+                            <div class="overview-value" id="marketPrice">$50</div>
+                            <div class="overview-label">Market Price</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-value" id="totalQuantity">100</div>
+                            <div class="overview-label">Total Quantity</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-value" id="hhi">25</div>
+                            <div class="overview-label">Market Concentration (HHI)</div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-value" id="efficiency">100%</div>
+                            <div class="overview-label">Market Efficiency</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="firmPerformance">
+                    <!-- Firm performance data will be populated here -->
+                </div>
+
+                <div class="market-insights">
+                    <h3>Market Analysis</h3>
+                    <div id="insightsContent">
+                        <div class="insight-item">Perfect competition maximizes economic efficiency</div>
+                        <div class="insight-item">All firms are price takers with zero economic profit</div>
+                        <div class="insight-item">Consumer welfare is maximized at P = MC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let currentMarket = 'perfect';
+        
+        // Market structure configurations
+        const marketStructures = {
+            perfect: {
+                name: 'Perfect Competition',
+                description: 'Many firms selling identical products. No single firm can influence market price. Price equals marginal cost.',
+                firms: 4,
+                firmNames: ['Firm A', 'Firm B', 'Firm C', 'Firm D'],
+                colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'],
+                priceControl: false,
+                maxPrice: 100,
+                maxQuantity: 50,
+                maxRnD: 20,
+                maxAdvertising: 10
+            },
+            monopolistic: {
+                name: 'Monopolistic Competition',
+                description: 'Many firms selling differentiated products. Some price control through product differentiation. Free entry and exit.',
+                firms: 3,
+                firmNames: ['Brand Alpha', 'Brand Beta', 'Brand Gamma'],
+                colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+                priceControl: true,
+                maxPrice: 100,
+                maxQuantity: 60,
+                maxRnD: 40,
+                maxAdvertising: 50
+            },
+            oligopoly: {
+                name: 'Oligopoly',
+                description: 'Few large firms dominating the market. Strategic interactions matter. High barriers to entry.',
+                firms: 3,
+                firmNames: ['MegaCorp', 'TitanInc', 'ApexLtd'],
+                colors: ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+                priceControl: true,
+                maxPrice: 120,
+                maxQuantity: 80,
+                maxRnD: 80,
+                maxAdvertising: 60
+            },
+            monopoly: {
+                name: 'Monopoly',
+                description: 'Single firm controlling the entire market. Maximum pricing power. High barriers prevent entry.',
+                firms: 1,
+                firmNames: ['MonoCorp'],
+                colors: ['#ff6b6b'],
+                priceControl: true,
+                maxPrice: 150,
+                maxQuantity: 100,
+                maxRnD: 100,
+                maxAdvertising: 80
+            }
+        };
+
+        // Game state
+        let gameState = {
+            firms: []
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMarket('perfect');
+        });
+
+        function initializeMarket(marketType) {
+            currentMarket = marketType;
+            const structure = marketStructures[marketType];
+            
+            // Reset game state
+            gameState.firms = [];
+            
+            // Initialize firms
+            for (let i = 0; i < structure.firms; i++) {
+                gameState.firms.push({
+                    name: structure.firmNames[i],
+                    color: structure.colors[i],
+                    price: marketType === 'perfect' ? 50 : 60 + (i * 5),
+                    quantity: 25,
+                    rnd: 20,
+                    advertising: 20,
+                    marketShare: 0,
+                    profit: 0,
+                    revenue: 0
+                });
+            }
+            
+            setupControls();
+            initChart();
+            updateMarket();
+        }
+
+        function setMarketStructure(marketType) {
+            // Update button states
+            document.querySelectorAll('.market-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update market info
+            const structure = marketStructures[marketType];
+            document.getElementById('marketInfo').innerHTML = `
+                <h3>${structure.name}</h3>
+                <p>${structure.description}</p>
+            `;
+            
+            initializeMarket(marketType);
+        }
+
+        function setupControls() {
+            const structure = marketStructures[currentMarket];
+            const controlsContainer = document.getElementById('firmControls');
+            controlsContainer.innerHTML = '';
+
+            gameState.firms.forEach((firm, index) => {
+                const firmDiv = document.createElement('div');
+                firmDiv.className = 'firm-controls';
+                
+                let controls = `
+                    <div class="firm-title">
+                        <div class="firm-color" style="background-color: ${firm.color}"></div>
+                        ${firm.name}
+                    </div>
+                `;
+
+                // Price control (not for perfect competition)
+                if (structure.priceControl) {
+                    controls += `
+                        <div class="control-group">
+                            <label>Price</label>
+                            <div class="slider-container">
+                                <input type="range" class="slider" id="price${index}" 
+                                       min="30" max="${structure.maxPrice}" value="${firm.price}" step="1"
+                                       onchange="updateFirm(${index}, 'price', this.value)">
+                            </div>
+                            <div class="slider-value" id="priceValue${index}">$${firm.price}</div>
+                        </div>
+                    `;
+                }
+
+                // Always show quantity
+                controls += `
+                    <div class="control-group">
+                        <label>Production Quantity</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="quantity${index}" 
+                                   min="10" max="${structure.maxQuantity}" value="${firm.quantity}" step="1"
+                                   onchange="updateFirm(${index}, 'quantity', this.value)">
+                        </div>
+                        <div class="slider-value" id="quantityValue${index}">${firm.quantity} units</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>R&D Investment</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="rnd${index}" 
+                                   min="0" max="${structure.maxRnD}" value="${firm.rnd}" step="1"
+                                   onchange="updateFirm(${index}, 'rnd', this.value)">
+                        </div>
+                        <div class="slider-value" id="rndValue${index}">$${firm.rnd}K</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Advertising</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="advertising${index}" 
+                                   min="0" max="${structure.maxAdvertising}" value="${firm.advertising}" step="1"
+                                   onchange="updateFirm(${index}, 'advertising', this.value)">
+                        </div>
+                        <div class="slider-value" id="advertisingValue${index}">$${firm.advertising}K</div>
+                    </div>
+                `;
+
+                firmDiv.innerHTML = controls;
+                controlsContainer.appendChild(firmDiv);
+            });
+        }
+
+        function updateFirm(firmIndex, property, value) {
+            gameState.firms[firmIndex][property] = parseInt(value);
+            document.getElementById(`${property}Value${firmIndex}`).textContent = 
+                property === 'price' ? `$${value}` : 
+                property === 'quantity' ? `${value} units` : `$${value}K`;
+            
+            updateMarket();
+        }
+
+        function calculateMarketResults() {
+            const structure = marketStructures[currentMarket];
+            let totalQuantity = 0;
+            let weightedPrice = 0;
+            
+            // Calculate market shares and adjust for competition
+            gameState.firms.forEach((firm, index) => {
+                // Base demand influenced by price, R&D, and advertising
+                let demandFactor = 100;
+                
+                if (structure.priceControl) {
+                    // Price sensitivity varies by market structure
+                    const priceSensitivity = currentMarket === 'monopoly' ? 0.3 : 
+                                           currentMarket === 'oligopoly' ? 0.5 : 0.8;
+                    demandFactor -= (firm.price - 50) * priceSensitivity;
+                }
+                
+                // R&D and advertising boost demand
+                demandFactor += firm.rnd * 0.5;
+                demandFactor += firm.advertising * 0.3;
+                
+                // Competition effects
+                if (structure.firms > 1) {
+                    const avgCompetitorPrice = gameState.firms
+                        .filter((_, i) => i !== index)
+                        .reduce((sum, f) => sum + f.price, 0) / (structure.firms - 1);
+                    
+                    if (structure.priceControl) {
+                        demandFactor += (avgCompetitorPrice - firm.price) * 0.4;
+                    }
+                }
+                
+                demandFactor = Math.max(20, Math.min(200, demandFactor));
+                
+                // Calculate actual quantity sold (limited by production)
+                const potentialSales = (firm.quantity * demandFactor) / 100;
+                firm.quantitySold = Math.min(firm.quantity, potentialSales);
+                
+                totalQuantity += firm.quantitySold;
+                
+                // Calculate financials
+                const effectivePrice = structure.priceControl ? firm.price : 50; // Perfect competition price = MC
+                firm.revenue = firm.quantitySold * effectivePrice;
+                
+                // Costs: production + R&D + advertising
+                const productionCost = firm.quantitySold * 30; // MC = $30
+                const totalCosts = productionCost + (firm.rnd * 1000) + (firm.advertising * 1000);
+                firm.profit = firm.revenue - totalCosts;
+                
+                weightedPrice += effectivePrice * firm.quantitySold;
+            });
+            
+            // Calculate market-level metrics
+            const avgPrice = totalQuantity > 0 ? weightedPrice / totalQuantity : 50;
+            
+            // Market share calculation
+            gameState.firms.forEach(firm => {
+                firm.marketShare = totalQuantity > 0 ? (firm.quantitySold / totalQuantity) * 100 : 0;
+            });
+            
+            // Calculate HHI (Herfindahl-Hirschman Index)
+            const hhi = gameState.firms.reduce((sum, firm) => sum + Math.pow(firm.marketShare, 2), 0);
+            
+            // Consumer and producer surplus calculations
+            const perfectPrice = 50; // Competitive equilibrium
+            const consumerSurplus = totalQuantity * (100 - avgPrice) / 2;
+            const producerSurplus = gameState.firms.reduce((sum, firm) => sum + Math.max(0, firm.profit), 0);
+            const totalWelfare = consumerSurplus + producerSurplus;
+            
+            // Deadweight loss (compared to perfect competition)
+            const perfectQuantity = 100;
+            const deadweightLoss = Math.max(0, (perfectQuantity - totalQuantity) * (avgPrice - perfectPrice) / 2);
+            
+            // Market efficiency
+            const efficiency = Math.max(0, 100 - (deadweightLoss / (totalWelfare + deadweightLoss)) * 100);
+            
+            return {
+                avgPrice,
+                totalQuantity,
+                hhi,
+                efficiency,
+                consumerSurplus,
+                producerSurplus,
+                totalWelfare,
+                deadweightLoss
+            };
+        }
+
+        function updateMarket() {
+            const results = calculateMarketResults();
+            
+            // Update overview
+            document.getElementById('marketPrice').textContent = `$${results.avgPrice.toFixed(0)}`;
+            document.getElementById('totalQuantity').textContent = results.totalQuantity.toFixed(0);
+            document.getElementById('hhi').textContent = results.hhi.toFixed(0);
+            document.getElementById('efficiency').textContent = `${results.efficiency.toFixed(0)}%`;
+            
+            // Update welfare analysis
+            document.getElementById('consumerSurplus').textContent = `$${results.consumerSurplus.toFixed(0)}`;
+            document.getElementById('producerSurplus').textContent = `$${results.producerSurplus.toFixed(0)}`;
+            document.getElementById('totalWelfare').textContent = `$${results.totalWelfare.toFixed(0)}`;
+            document.getElementById('deadweightLoss').textContent = `$${results.deadweightLoss.toFixed(0)}`;
+            
+            // Update firm performance
+            updateFirmPerformance();
+            
+            // Update insights
+            updateInsights(results);
+            
+            // Update chart
+            updateChart(results);
+        }
+
+        function updateFirmPerformance() {
+            const container = document.getElementById('firmPerformance');
+            container.innerHTML = '';
+            
+            gameState.firms.forEach((firm, index) => {
+                const div = document.createElement('div');
+                div.className = 'firm-performance';
+                div.innerHTML = `
+                    <div class="performance-header">
+                        <div class="firm-color" style="background-color: ${firm.color}"></div>
+                        ${firm.name}
+                    </div>
+                    <div class="performance-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">${firm.marketShare.toFixed(1)}%</div>
+                            <div class="stat-label">Market Share</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$${firm.revenue.toFixed(0)}</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$${firm.profit.toFixed(0)}</div>
+                            <div class="stat-label">Profit</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateInsights(results) {
+            const insights = [];
+            
+            if (currentMarket === 'perfect') {
+                insights.push("Perfect competition maximizes economic efficiency");
+                insights.push("All firms are price takers with zero economic profit");
+                insights.push("Consumer welfare is maximized at P = MC");
+                if (results.deadweightLoss > 100) {
+                    insights.push("Deviation from perfect competition creates deadweight loss");
+                }
+            } else if (currentMarket === 'monopolistic') {
+                insights.push("Product differentiation allows some pricing power");
+                insights.push("Advertising and R&D drive competition");
+                insights.push("Free entry limits long-run profits");
+                if (results.hhi > 2500) {
+                    insights.push("Market concentration is getting high");
+                }
+            } else if (currentMarket === 'oligopoly') {
+                insights.push("Strategic interactions between firms matter");
+                insights.push("Firms must consider competitor responses");
+                if (results.hhi > 1800) {
+                    insights.push("High concentration may enable coordination");
+                }
+                if (results.efficiency < 80) {
+                    insights.push("Market power reduces economic efficiency");
+                }
+            } else if (currentMarket === 'monopoly') {
+                insights.push("Monopolist maximizes profit by restricting output");
+                insights.push("Price exceeds marginal cost, creating deadweight loss");
+                insights.push(`Efficiency loss: ${(100 - results.efficiency).toFixed(0)}%`);
+                if (results.deadweightLoss > 500) {
+                    insights.push("Significant welfare loss from monopoly power");
+                }
+            }
+            
+            // Add general insights based on market conditions
+            if (results.hhi < 1500) {
+                insights.push("Market is unconcentrated and competitive");
+            } else if (results.hhi < 2500) {
+                insights.push("Market is moderately concentrated");
+            } else {
+                insights.push("Market is highly concentrated");
+            }
+            
+            document.getElementById('insightsContent').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: gameState.firms.map(firm => firm.name),
+                    datasets: [{
+                        data: gameState.firms.map(firm => firm.marketShare),
+                        backgroundColor: gameState.firms.map(firm => firm.color),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 11 },
+                                usePointStyle: true,
+                                padding: 15,
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => {
+                                        const firm = gameState.firms[i];
+                                        return {
+                                            text: `${label}: ${firm.marketShare.toFixed(1)}% (Profit: ${firm.profit.toFixed(0)})`,
+                                            fillStyle: data.datasets[0].backgroundColor[i],
+                                            strokeStyle: data.datasets[0].borderColor,
+                                            lineWidth: data.datasets[0].borderWidth,
+                                            pointStyle: 'circle'
+                                        };
+                                    });
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const firm = gameState.firms[context.dataIndex];
+                                    return [
+                                        `Market Share: ${firm.marketShare.toFixed(1)}%`,
+                                        `Revenue: ${firm.revenue.toFixed(0)}`,
+                                        `Profit: ${firm.profit.toFixed(0)}`,
+                                        `Quantity Sold: ${firm.quantitySold.toFixed(1)}`
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    cutout: '50%'
+                }
+            });
+        }
+
+        function updateChart(results) {
+            if (chart) {
+                chart.data.datasets[0].data = gameState.firms.map(firm => firm.marketShare);
+                chart.update();
+            }
+        }
+
+        function loadScenario(scenarioType) {
+            switch (scenarioType) {
+                case 'priceWar':
+                    // Aggressive pricing competition
+                    gameState.firms.forEach((firm, index) => {
+                        if (marketStructures[currentMarket].priceControl) {
+                            firm.price = 45 + (index * 2);
+                            document.getElementById(`price${index}`).value = firm.price;
+                            document.getElementById(`priceValue${index}`).textContent = `${firm.price}`;
+                        }
+                        firm.advertising = Math.min(marketStructures[currentMarket].maxAdvertising, 40);
+                        document.getElementById(`advertising${index}`).value = firm.advertising;
+                        document.getElementById(`advertisingValue${index}`).textContent = `${firm.advertising}K`;
+                    });
+                    break;
+                    
+                case 'innovation':
+                    // Heavy R&D investment
+                    gameState.firms.forEach((firm, index) => {
+                        firm.rnd = Math.min(marketStructures[currentMarket].maxRnD, 60);
+                        document.getElementById(`rnd${index}`).value = firm.rnd;
+                        document.getElementById(`rndValue${index}`).textContent = `${firm.rnd}K`;
+                        
+                        if (marketStructures[currentMarket].priceControl) {
+                            firm.price = 65 + (index * 5); // Premium pricing for innovation
+                            document.getElementById(`price${index}`).value = firm.price;
+                            document.getElementById(`priceValue${index}`).textContent = `${firm.price}`;
+                        }
+                    });
+                    break;
+                    
+                case 'collusion':
+                    // Coordinated high pricing (oligopoly/monopolistic)
+                    if (currentMarket === 'oligopoly' || currentMarket === 'monopolistic') {
+                        gameState.firms.forEach((firm, index) => {
+                            firm.price = 80;
+                            firm.quantity = 20; // Restrict output
+                            document.getElementById(`price${index}`).value = firm.price;
+                            document.getElementById(`priceValue${index}`).textContent = `${firm.price}`;
+                            document.getElementById(`quantity${index}`).value = firm.quantity;
+                            document.getElementById(`quantityValue${index}`).textContent = `${firm.quantity} units`;
+                        });
+                    }
+                    break;
+                    
+                case 'newEntry':
+                    // Aggressive new entrant strategy
+                    if (gameState.firms.length > 1) {
+                        const lastFirm = gameState.firms[gameState.firms.length - 1];
+                        const lastIndex = gameState.firms.length - 1;
+                        
+                        if (marketStructures[currentMarket].priceControl) {
+                            lastFirm.price = 40; // Penetration pricing
+                            document.getElementById(`price${lastIndex}`).value = lastFirm.price;
+                            document.getElementById(`priceValue${lastIndex}`).textContent = `${lastFirm.price}`;
+                        }
+                        
+                        lastFirm.advertising = Math.min(marketStructures[currentMarket].maxAdvertising, 50);
+                        lastFirm.quantity = Math.min(marketStructures[currentMarket].maxQuantity, 40);
+                        
+                        document.getElementById(`advertising${lastIndex}`).value = lastFirm.advertising;
+                        document.getElementById(`advertisingValue${lastIndex}`).textContent = `${lastFirm.advertising}K`;
+                        document.getElementById(`quantity${lastIndex}`).value = lastFirm.quantity;
+                        document.getElementById(`quantityValue${lastIndex}`).textContent = `${lastFirm.quantity} units`;
+                    }
+                    break;
+            }
+            
+            updateMarket();
+        }
+
+        function optimizeStrategy() {
+            // Simple optimization: maximize profit for each firm given competitors
+            gameState.firms.forEach((firm, index) => {
+                const structure = marketStructures[currentMarket];
+                
+                if (currentMarket === 'monopoly') {
+                    // Monopolist: P = 80, Q = 30 typically maximizes profit
+                    firm.price = 85;
+                    firm.quantity = 35;
+                    firm.rnd = 40;
+                    firm.advertising = 30;
+                } else if (currentMarket === 'oligopoly') {
+                    // Oligopoly: Balance between competition and coordination
+                    firm.price = 70;
+                    firm.quantity = 30;
+                    firm.rnd = 50;
+                    firm.advertising = 35;
+                } else if (currentMarket === 'monopolistic') {
+                    // Monopolistic competition: Differentiation focus
+                    firm.price = 60;
+                    firm.quantity = 35;
+                    firm.rnd = 35;
+                    firm.advertising = 40;
+                } else {
+                    // Perfect competition: Price taker, focus on cost efficiency
+                    firm.price = 50; // Market price
+                    firm.quantity = 40;
+                    firm.rnd = 25;
+                    firm.advertising = 10;
+                }
+                
+                // Update UI
+                if (structure.priceControl) {
+                    document.getElementById(`price${index}`).value = firm.price;
+                    document.getElementById(`priceValue${index}`).textContent = `${firm.price}`;
+                }
+                document.getElementById(`quantity${index}`).value = firm.quantity;
+                document.getElementById(`quantityValue${index}`).textContent = `${firm.quantity} units`;
+                document.getElementById(`rnd${index}`).value = firm.rnd;
+                document.getElementById(`rndValue${index}`).textContent = `${firm.rnd}K`;
+                document.getElementById(`advertising${index}`).value = firm.advertising;
+                document.getElementById(`advertisingValue${index}`).textContent = `${firm.advertising}K`;
+            });
+            
+            updateMarket();
+        }
+
+        function resetMarket() {
+            initializeMarket(currentMarket);
+        }
+    </script>
+</body>
+</html>

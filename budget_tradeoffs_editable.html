@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting & Trade-offs Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .income-section {
+            background: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .income-display {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .income-label {
+            text-align: center;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .income-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #c8e6c9;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-align: center;
+            background: white;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        .income-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .income-presets {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .preset-btn {
+            padding: 0.3rem 0.5rem;
+            font-size: 0.7rem;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+
+        .preset-btn:hover {
+            background: #e9e9e9;
+        }
+
+        .budget-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f8f8f8;
+            border-radius: 6px;
+        }
+
+        .budget-icon {
+            font-size: 1.2rem;
+            margin-right: 0.75rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .budget-info {
+            flex: 1;
+        }
+
+        .budget-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .budget-slider {
+            width: 100%;
+            height: 3px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .budget-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .budget-amount {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        .chart-container {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 500px;
+        }
+
+        .remaining-budget {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .remaining-amount {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 0.25rem;
+        }
+
+        .remaining-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .over-budget {
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            color: #c62828;
+        }
+
+        .under-budget {
+            background: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .scenarios {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .goals-section {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .goal-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.8rem;
+        }
+
+        .goal-item:last-child {
+            border-bottom: none;
+        }
+
+        .goal-name {
+            font-weight: 500;
+        }
+
+        .goal-progress {
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #28a745;
+            transition: width 0.3s ease;
+        }
+
+        .opportunity-cost {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .opportunity-cost h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #856404;
+            margin-bottom: 0.75rem;
+        }
+
+        .cost-item {
+            font-size: 0.8rem;
+            color: #856404;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .scenarios {
+                grid-template-columns: 1fr;
+            }
+            
+            .income-presets {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Budgeting & Trade-offs</h1>
+            <p>Learn how budget constraints force difficult choices and opportunity costs</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Budget Controls -->
+            <div class="card">
+                <h2>Monthly Budget</h2>
+                
+                <div class="income-section">
+                    <div class="income-label">Monthly Income</div>
+                    <div class="income-display" id="monthlyIncomeDisplay">$4,000</div>
+                    <input type="number" class="income-input" id="monthlyIncomeInput" value="4000" min="1000" max="20000" step="100" placeholder="Enter monthly income">
+                    <div class="income-presets">
+                        <button class="preset-btn" onclick="setIncome(2500)">$2.5k</button>
+                        <button class="preset-btn" onclick="setIncome(4000)">$4k</button>
+                        <button class="preset-btn" onclick="setIncome(6000)">$6k</button>
+                        <button class="preset-btn" onclick="setIncome(10000)">$10k</button>
+                    </div>
+                </div>
+
+                <div id="budgetItems">
+                    <div class="budget-item">
+                        <div class="budget-icon">🏠</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Rent/Housing</div>
+                            <input type="range" class="budget-slider" id="housing" min="800" max="5000" value="1200" step="50">
+                            <div class="budget-amount" id="housingAmount">$1,200 (30%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">🍽️</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Food & Dining</div>
+                            <input type="range" class="budget-slider" id="food" min="200" max="2000" value="400" step="25">
+                            <div class="budget-amount" id="foodAmount">$400 (10%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">🚗</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Transportation</div>
+                            <input type="range" class="budget-slider" id="transport" min="100" max="1500" value="300" step="25">
+                            <div class="budget-amount" id="transportAmount">$300 (8%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">🎮</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Entertainment</div>
+                            <input type="range" class="budget-slider" id="entertainment" min="50" max="1000" value="200" step="25">
+                            <div class="budget-amount" id="entertainmentAmount">$200 (5%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">👕</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Clothing</div>
+                            <input type="range" class="budget-slider" id="clothing" min="50" max="800" value="150" step="25">
+                            <div class="budget-amount" id="clothingAmount">$150 (4%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">💰</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Savings</div>
+                            <input type="range" class="budget-slider" id="savings" min="0" max="3000" value="300" step="25">
+                            <div class="budget-amount" id="savingsAmount">$300 (8%)</div>
+                        </div>
+                    </div>
+
+                    <div class="budget-item">
+                        <div class="budget-icon">📚</div>
+                        <div class="budget-info">
+                            <div class="budget-name">Education/Skills</div>
+                            <input type="range" class="budget-slider" id="education" min="0" max="1000" value="100" step="25">
+                            <div class="budget-amount" id="educationAmount">$100 (3%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="scenarios">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('student')">College Student</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('professional')">Young Professional</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('family')">Family Budget</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('retirement')">Pre-Retirement</button>
+                </div>
+
+                <button class="btn" onclick="optimizeBudget()">Optimize Budget</button>
+                <button class="btn-secondary" onclick="reset()">Reset</button>
+            </div>
+
+            <!-- Center Panel: Chart -->
+            <div class="chart-container">
+                <canvas id="budgetChart"></canvas>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="card">
+                <h2>Budget Summary</h2>
+                
+                <div class="remaining-budget" id="remainingBudget">
+                    <div class="remaining-amount" id="remainingAmount">$1,450</div>
+                    <div class="remaining-label">Remaining Budget</div>
+                </div>
+
+                <div class="goals-section">
+                    <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.75rem;">Financial Goals</h3>
+                    
+                    <div class="goal-item">
+                        <span class="goal-name">Emergency Fund</span>
+                        <span class="goal-progress" id="emergencyProgress">15%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="emergencyBar" style="width: 15%"></div>
+                    </div>
+
+                    <div class="goal-item">
+                        <span class="goal-name">Retirement Savings</span>
+                        <span class="goal-progress" id="retirementProgress">8%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="retirementBar" style="width: 8%"></div>
+                    </div>
+
+                    <div class="goal-item">
+                        <span class="goal-name">Skill Development</span>
+                        <span class="goal-progress" id="skillProgress">3%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="skillBar" style="width: 3%"></div>
+                    </div>
+                </div>
+
+                <div class="opportunity-cost">
+                    <h3>Opportunity Costs</h3>
+                    <div id="opportunityCosts">
+                        <div class="cost-item">Higher housing = Less savings potential</div>
+                        <div class="cost-item">More entertainment = Delayed emergency fund</div>
+                        <div class="cost-item">Lower education spending = Slower career growth</div>
+                    </div>
+                </div>
+
+                <div class="insights">
+                    <h3>Budget Insights</h3>
+                    <div id="insightsContent">
+                        <div class="insight-item">You're allocating 30% to housing (recommended: 25-30%)</div>
+                        <div class="insight-item">Consider increasing savings rate for long-term financial health</div>
+                        <div class="insight-item">Every dollar has an opportunity cost - choose wisely</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+        let gameState = {
+            income: 4000,
+            housing: 1200,
+            food: 400,
+            transport: 300,
+            entertainment: 200,
+            clothing: 150,
+            savings: 300,
+            education: 100
+        };
+
+        const scenarios = {
+            student: { income: 2000, housing: 600, food: 300, transport: 100, entertainment: 150, clothing: 100, savings: 200, education: 200 },
+            professional: { income: 6000, housing: 1800, food: 500, transport: 400, entertainment: 300, clothing: 200, savings: 800, education: 200 },
+            family: { income: 8000, housing: 2400, food: 800, transport: 600, entertainment: 400, clothing: 300, savings: 1000, education: 100 },
+            retirement: { income: 5000, housing: 1000, food: 400, transport: 200, entertainment: 300, clothing: 100, savings: 1500, education: 50 }
+        };
+
+        const budgetCategories = [
+            { key: 'housing', name: '🏠 Housing', color: '#ff6b6b' },
+            { key: 'food', name: '🍽️ Food', color: '#4ecdc4' },
+            { key: 'transport', name: '🚗 Transport', color: '#45b7d1' },
+            { key: 'entertainment', name: '🎮 Entertainment', color: '#f9ca24' },
+            { key: 'clothing', name: '👕 Clothing', color: '#6c5ce7' },
+            { key: 'savings', name: '💰 Savings', color: '#a29bfe' },
+            { key: 'education', name: '📚 Education', color: '#fd79a8' }
+        ];
+
+        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('budgetChart').getContext('2d');
+            
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: [],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 11 },
+                                usePointStyle: true,
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed;
+                                    const percentage = ((value / gameState.income) * 100).toFixed(1);
+                                    return `${context.label}: $${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            updateChart();
+        }
+
+        // Set income and update all related elements
+        function setIncome(amount) {
+            gameState.income = amount;
+            document.getElementById('monthlyIncomeInput').value = amount;
+            document.getElementById('monthlyIncomeDisplay').textContent = `$${amount.toLocaleString()}`;
+            updateSliderMaxValues();
+            updateChart();
+        }
+
+        // Update slider maximum values based on income
+        function updateSliderMaxValues() {
+            const maxHousing = Math.max(800, Math.round(gameState.income * 0.6));
+            const maxFood = Math.max(200, Math.round(gameState.income * 0.3));
+            const maxTransport = Math.max(100, Math.round(gameState.income * 0.25));
+            const maxEntertainment = Math.max(50, Math.round(gameState.income * 0.2));
+            const maxClothing = Math.max(50, Math.round(gameState.income * 0.15));
+            const maxSavings = Math.max(0, Math.round(gameState.income * 0.5));
+            const maxEducation = Math.max(0, Math.round(gameState.income * 0.2));
+
+            document.getElementById('housing').max = maxHousing;
+            document.getElementById('food').max = maxFood;
+            document.getElementById('transport').max = maxTransport;
+            document.getElementById('entertainment').max = maxEntertainment;
+            document.getElementById('clothing').max = maxClothing;
+            document.getElementById('savings').max = maxSavings;
+            document.getElementById('education').max = maxEducation;
+        }
+
+        // Update chart and displays
+        function updateChart() {
+            const labels = [];
+            const data = [];
+            const colors = [];
+
+            budgetCategories.forEach(category => {
+                if (gameState[category.key] > 0) {
+                    labels.push(category.name);
+                    data.push(gameState[category.key]);
+                    colors.push(category.color);
+                }
+            });
+
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.data.datasets[0].backgroundColor = colors;
+            chart.update();
+
+            updateBudgetSummary();
+            updateGoals();
+            updateInsights();
+            updateOpportunityCosts();
+        }
+
+        // Update budget summary
+        function updateBudgetSummary() {
+            const totalSpent = Object.keys(gameState).reduce((sum, key) => {
+                return key !== 'income' ? sum + gameState[key] : sum;
+            }, 0);
+
+            const remaining = gameState.income - totalSpent;
+            const remainingElement = document.getElementById('remainingBudget');
+            const remainingAmount = document.getElementById('remainingAmount');
+
+            remainingAmount.textContent = `$${remaining.toLocaleString()}`;
+
+            if (remaining < 0) {
+                remainingElement.className = 'remaining-budget over-budget';
+                document.getElementById('remainingAmount').textContent = `-$${Math.abs(remaining).toLocaleString()}`;
+            } else if (remaining > gameState.income * 0.1) {
+                remainingElement.className = 'remaining-budget under-budget';
+            } else {
+                remainingElement.className = 'remaining-budget';
+            }
+
+            // Update individual budget displays
+            budgetCategories.forEach(category => {
+                const percentage = ((gameState[category.key] / gameState.income) * 100).toFixed(1);
+                const amountElement = document.getElementById(category.key + 'Amount');
+                if (amountElement) {
+                    amountElement.textContent = `$${gameState[category.key]} (${percentage}%)`;
+                }
+            });
+        }
+
+        // Update financial goals
+        function updateGoals() {
+            const emergencyTarget = gameState.income * 0.20; // 20% for emergency fund
+            const retirementTarget = gameState.income * 0.15; // 15% for retirement
+            const skillTarget = gameState.income * 0.05; // 5% for skills
+
+            const emergencyProgress = Math.min(100, (gameState.savings / emergencyTarget) * 100);
+            const retirementProgress = Math.min(100, (gameState.savings / retirementTarget) * 100);
+            const skillProgress = Math.min(100, (gameState.education / skillTarget) * 100);
+
+            document.getElementById('emergencyProgress').textContent = `${emergencyProgress.toFixed(0)}%`;
+            document.getElementById('emergencyBar').style.width = `${emergencyProgress}%`;
+
+            document.getElementById('retirementProgress').textContent = `${retirementProgress.toFixed(0)}%`;
+            document.getElementById('retirementBar').style.width = `${retirementProgress}%`;
+
+            document.getElementById('skillProgress').textContent = `${skillProgress.toFixed(0)}%`;
+            document.getElementById('skillBar').style.width = `${skillProgress}%`;
+        }
+
+        // Update insights
+        function updateInsights() {
+            const insights = [];
+            const housingPercent = (gameState.housing / gameState.income) * 100;
+            const savingsPercent = (gameState.savings / gameState.income) * 100;
+            const educationPercent = (gameState.education / gameState.income) * 100;
+
+            if (housingPercent > 35) {
+                insights.push("Housing costs are very high - consider downsizing or roommates");
+            } else if (housingPercent < 20) {
+                insights.push("Low housing costs give you flexibility for other goals");
+            } else {
+                insights.push(`Housing at ${housingPercent.toFixed(0)}% is within recommended range (25-30%)`);
+            }
+
+            if (savingsPercent < 10) {
+                insights.push("Consider increasing savings rate for financial security");
+            } else if (savingsPercent > 20) {
+                insights.push("Excellent savings rate! You're building wealth effectively");
+            }
+
+            if (educationPercent < 2) {
+                insights.push("Investing in skills/education can boost future income");
+            } else if (educationPercent > 8) {
+                insights.push("High education investment should pay off long-term");
+            }
+
+            const totalSpent = Object.keys(gameState).reduce((sum, key) => {
+                return key !== 'income' ? sum + gameState[key] : sum;
+            }, 0);
+
+            if (totalSpent > gameState.income) {
+                insights.push("You're overspending! Need to cut costs or increase income");
+            }
+
+            // Add income-specific insights
+            if (gameState.income < 3000) {
+                insights.push("Low income requires careful prioritization of essentials");
+            } else if (gameState.income > 8000) {
+                insights.push("Higher income allows for more savings and discretionary spending");
+            }
+
+            document.getElementById('insightsContent').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        // Update opportunity costs
+        function updateOpportunityCosts() {
+            const costs = [];
+            const housingPercent = (gameState.housing / gameState.income) * 100;
+            const entertainmentPercent = (gameState.entertainment / gameState.income) * 100;
+            const savingsPercent = (gameState.savings / gameState.income) * 100;
+
+            if (housingPercent > 30) {
+                costs.push("High housing costs limit savings and investment opportunities");
+            }
+
+            if (entertainmentPercent > 8) {
+                costs.push("Entertainment spending reduces emergency fund contributions");
+            }
+
+            if (savingsPercent < 10) {
+                costs.push("Low savings today means less compound interest later");
+            }
+
+            if (gameState.education < gameState.income * 0.03) {
+                costs.push("Minimal education spending may limit career advancement");
+            }
+
+            if (costs.length === 0) {
+                costs.push("Well-balanced budget with reasonable trade-offs");
+            }
+
+            document.getElementById('opportunityCosts').innerHTML = costs.map(cost => 
+                `<div class="cost-item">${cost}</div>`
+            ).join('');
+        }
+
+        // Setup slider event listeners
+        function setupSliders() {
+            // Income input listener
+            document.getElementById('monthlyIncomeInput').addEventListener('input', function() {
+                const income = parseInt(this.value) || 1000;
+                setIncome(income);
+            });
+
+            // Budget category sliders
+            budgetCategories.forEach(category => {
+                const slider = document.getElementById(category.key);
+                if (slider) {
+                    slider.addEventListener('input', function() {
+                        gameState[category.key] = parseInt(this.value);
+                        updateChart();
+                    });
+                }
+            });
+        }
+
+        // Load predefined scenarios
+        function loadScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            
+            gameState = { ...scenario };
+
+            // Update income input and display
+            setIncome(gameState.income);
+
+            // Update sliders
+            budgetCategories.forEach(category => {
+                const slider = document.getElementById(category.key);
+                if (slider) {
+                    slider.value = gameState[category.key];
+                }
+            });
+
+            updateChart();
+        }
+
+        // Optimize budget based on recommended percentages
+        function optimizeBudget() {
+            gameState.housing = Math.round(gameState.income * 0.28);
+            gameState.food = Math.round(gameState.income * 0.12);
+            gameState.transport = Math.round(gameState.income * 0.08);
+            gameState.entertainment = Math.round(gameState.income * 0.06);
+            gameState.clothing = Math.round(gameState.income * 0.04);
+            gameState.savings = Math.round(gameState.income * 0.20);
+            gameState.education = Math.round(gameState.income * 0.05);
+
+            // Update sliders
+            budgetCategories.forEach(category => {
+                const slider = document.getElementById(category.key);
+                if (slider) {
+                    slider.value = gameState[category.key];
+                }
+            });
+
+            updateChart();
+        }
+
+        // Reset to default values
+        function reset() {
+            setIncome(4000);
+            gameState.housing = 1200;
+            gameState.food = 400;
+            gameState.transport = 300;
+            gameState.entertainment = 200;
+            gameState.clothing = 150;
+            gameState.savings = 300;
+            gameState.education = 100;
+
+            // Update sliders
+            budgetCategories.forEach(category => {
+                const slider = document.getElementById(category.key);
+                if (slider) {
+                    slider.value = gameState[category.key];
+                }
+            });
+
+            updateChart();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initChart();
+            setupSliders();
+            updateSliderMaxValues();
+        });
+    </script>
+</body>
+</html>

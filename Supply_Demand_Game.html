@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply & Demand Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .panel h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-group {
+            margin-bottom: 24px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 2px;
+            border-radius: 1px;
+            background: #e5e5e5;
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #333;
+            transform: scale(1.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .slider-value {
+            font-size: 0.8rem;
+            color: #999;
+            text-align: right;
+        }
+
+        .chart-container {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 32px;
+            min-height: 500px;
+        }
+
+        .info-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h4 {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #1a1a1a;
+        }
+
+        .button {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .button:hover {
+            background: #333;
+        }
+
+        .button.active {
+            background: #0066cc;
+        }
+
+        .button.active:hover {
+            background: #0052a3;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .button-small {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: #e5e5e5;
+            margin: 24px 0;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+
+        .status-normal { background: #28a745; }
+        .status-elastic { background: #ffc107; }
+        .status-random { background: #dc3545; }
+
+        #supplyDemandChart {
+            max-height: 400px;
+        }
+
+        #historicalChart {
+            max-height: 120px;
+        }
+
+        .event-log {
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+            border-radius: 4px;
+            padding: 12px;
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            color: #666;
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+
+        .event-log div {
+            margin-bottom: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .event-log div:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -4px;
+            border: 4px solid transparent;
+            border-top-color: #1a1a1a;
+        }
+
+        .control-group:hover .tooltip {
+            opacity: 1;
+        }
+
+        .description {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .game-area {
+                grid-template-columns: 260px 1fr 260px;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .game-area {
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+            }
+            
+            .chart-container {
+                grid-column: 1 / -1;
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .game-area {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Chart styling overrides */
+        .chartjs-tooltip {
+            background: #1a1a1a !important;
+            border: none !important;
+            border-radius: 4px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Supply & Demand Simulator</h1>
+            <p>Interactive microeconomics visualization and learning tool</p>
+        </div>
+
+        <div class="game-area">
+            <!-- Left Panel: Controls -->
+            <div class="panel">
+                <h3>Market Controls</h3>
+                
+                <!-- Demand Factors -->
+                <div class="control-group">
+                    <label for="income">Consumer Income</label>
+                    <div class="slider-container">
+                        <input type="range" id="income" class="slider" min="50" max="150" value="100">
+                        <div class="tooltip">Higher income increases demand for normal goods</div>
+                    </div>
+                    <div class="slider-value" id="incomeValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="population">Population Size</label>
+                    <div class="slider-container">
+                        <input type="range" id="population" class="slider" min="50" max="200" value="100">
+                        <div class="tooltip">More consumers increases market demand</div>
+                    </div>
+                    <div class="slider-value" id="populationValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="preferences">Product Popularity</label>
+                    <div class="slider-container">
+                        <input type="range" id="preferences" class="slider" min="20" max="180" value="100">
+                        <div class="tooltip">Consumer preferences and trends</div>
+                    </div>
+                    <div class="slider-value" id="preferencesValue">100</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <div class="control-group">
+                    <label for="productionCost">Production Cost</label>
+                    <div class="slider-container">
+                        <input type="range" id="productionCost" class="slider" min="50" max="200" value="100">
+                        <div class="tooltip">Higher costs reduce supply willingness</div>
+                    </div>
+                    <div class="slider-value" id="productionCostValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="technology">Technology Level</label>
+                    <div class="slider-container">
+                        <input type="range" id="technology" class="slider" min="50" max="150" value="100">
+                        <div class="tooltip">Better technology improves supply efficiency</div>
+                    </div>
+                    <div class="slider-value" id="technologyValue">100</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="suppliers">Number of Suppliers</label>
+                    <div class="slider-container">
+                        <input type="range" id="suppliers" class="slider" min="50" max="150" value="100">
+                        <div class="tooltip">More suppliers increases market supply</div>
+                    </div>
+                    <div class="slider-value" id="suppliersValue">100</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Mode Controls -->
+                <button id="elasticityToggle" class="button" onclick="toggleElasticity()">
+                    Normal Curves<span id="elasticityStatus" class="status-dot status-normal"></span>
+                </button>
+                <div class="description" id="elasticityDescription">Standard price sensitivity</div>
+
+                <button id="randomToggle" class="button" onclick="toggleRandomEvents()">
+                    Random Events<span id="randomStatus" class="status-dot status-normal"></span>
+                </button>
+
+                <div class="section-divider"></div>
+
+                <!-- Event Buttons -->
+                <div class="button-group">
+                    <button class="button button-small" onclick="triggerEvent('economic-boom')">Boom</button>
+                    <button class="button button-small" onclick="triggerEvent('recession')">Recession</button>
+                </div>
+                <div class="button-group">
+                    <button class="button button-small" onclick="triggerEvent('supply-shortage')">Shortage</button>
+                    <button class="button button-small" onclick="triggerEvent('tech-innovation')">Innovation</button>
+                </div>
+                <button class="button" onclick="resetMarket()">Reset Market</button>
+            </div>
+
+            <!-- Center Panel: Chart -->
+            <div class="chart-container">
+                <canvas id="supplyDemandChart"></canvas>
+            </div>
+
+            <!-- Right Panel: Information -->
+            <div>
+                <!-- Equilibrium Info -->
+                <div class="info-card">
+                    <h4>Market Equilibrium</h4>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <div class="metric-label">Price</div>
+                            <div class="metric-value" id="equilibriumPrice">$50.00</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Quantity</div>
+                            <div class="metric-value" id="equilibriumQuantity">50.0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Info -->
+                <div class="info-card">
+                    <h4>Market Financials</h4>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <div class="metric-label">Revenue</div>
+                            <div class="metric-value" id="totalRevenue">$2,500</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Profit</div>
+                            <div class="metric-value" id="estimatedProfit">$1,250</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Surplus Info -->
+                <div class="info-card">
+                    <h4>Economic Surplus</h4>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <div class="metric-label">Consumer</div>
+                            <div class="metric-value" id="consumerSurplus">$625</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Producer</div>
+                            <div class="metric-value" id="producerSurplus">$625</div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 12px;">
+                        <div class="metric-label">Total Surplus</div>
+                        <div class="metric-value" id="totalSurplus">$1,250</div>
+                    </div>
+                </div>
+
+                <!-- Historical Chart -->
+                <div class="info-card">
+                    <h4>Price History</h4>
+                    <canvas id="historicalChart"></canvas>
+                </div>
+
+                <!-- Event Log -->
+                <div class="info-card">
+                    <h4>Event Log</h4>
+                    <div class="event-log" id="eventLog">
+                        System initialized
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart, historicalChart;
+        let isElastic = false;
+        let randomEventsActive = false;
+        let randomEventInterval;
+        let priceHistory = [];
+        let timeStamp = 0;
+
+        let currentState = {
+            income: 100,
+            population: 100,
+            preferences: 100,
+            productionCost: 100,
+            technology: 100,
+            suppliers: 100
+        };
+
+        const randomEvents = [
+            { name: 'Tech Breakthrough', effect: () => { currentState.technology = Math.min(150, currentState.technology + 20); updateSliderDisplay('technology'); }},
+            { name: 'Supply Chain Crisis', effect: () => { currentState.productionCost = Math.min(200, currentState.productionCost + 30); updateSliderDisplay('productionCost'); }},
+            { name: 'Consumer Trend', effect: () => { currentState.preferences = Math.min(180, currentState.preferences + 25); updateSliderDisplay('preferences'); }},
+            { name: 'Economic Uncertainty', effect: () => { currentState.income = Math.max(50, currentState.income - 15); updateSliderDisplay('income'); }},
+            { name: 'New Competitors', effect: () => { currentState.suppliers = Math.min(150, currentState.suppliers + 15); updateSliderDisplay('suppliers'); }},
+            { name: 'Population Growth', effect: () => { currentState.population = Math.min(200, currentState.population + 20); updateSliderDisplay('population'); }}
+        ];
+
+        // Initialize charts with minimal styling
+        function initCharts() {
+            const ctx = document.getElementById('supplyDemandChart').getContext('2d');
+            
+            Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            Chart.defaults.color = '#666';
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            label: 'Demand',
+                            data: [],
+                            borderColor: '#dc3545',
+                            backgroundColor: 'rgba(220, 53, 69, 0.05)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Supply',
+                            data: [],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.05)',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.1,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Equilibrium',
+                            data: [],
+                            borderColor: '#1a1a1a',
+                            backgroundColor: '#1a1a1a',
+                            borderWidth: 0,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            showLine: false
+                        },
+                        {
+                            label: 'Consumer Surplus',
+                            data: [],
+                            borderColor: 'rgba(0, 102, 204, 0)',
+                            backgroundColor: 'rgba(0, 102, 204, 0.1)',
+                            fill: true,
+                            pointRadius: 0,
+                            showLine: false
+                        },
+                        {
+                            label: 'Producer Surplus',
+                            data: [],
+                            borderColor: 'rgba(40, 167, 69, 0)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            fill: true,
+                            pointRadius: 0,
+                            showLine: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: { size: 12, weight: '400' },
+                                usePointStyle: true,
+                                boxWidth: 12,
+                                padding: 20,
+                                filter: function(item) {
+                                    return !item.text.includes('Surplus');
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1a1a1a',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#333',
+                            borderWidth: 1,
+                            cornerRadius: 4,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Quantity',
+                                font: { size: 12, weight: '400' },
+                                color: '#666'
+                            },
+                            min: 0,
+                            max: 100,
+                            grid: { 
+                                color: '#f0f0f0',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: '#999',
+                                font: { size: 11 }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Price ($)',
+                                font: { size: 12, weight: '400' },
+                                color: '#666'
+                            },
+                            min: 0,
+                            max: 100,
+                            grid: { 
+                                color: '#f0f0f0',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: '#999',
+                                font: { size: 11 }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            });
+
+            // Historical chart with minimal design
+            const histCtx = document.getElementById('historicalChart').getContext('2d');
+            historicalChart = new Chart(histCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Price',
+                        data: [],
+                        borderColor: '#1a1a1a',
+                        backgroundColor: 'rgba(26, 26, 26, 0.05)',
+                        borderWidth: 1,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2,
+                        pointHoverRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1a1a1a',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#333',
+                            borderWidth: 1,
+                            cornerRadius: 4,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: {
+                            beginAtZero: true,
+                            grid: { display: false },
+                            ticks: {
+                                color: '#999',
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            updateChart();
+        }
+
+        // Calculate supply and demand curves with elasticity
+        function calculateCurves() {
+            const demandData = [];
+            const supplyData = [];
+
+            // Base elasticity values
+            let demandSlope = isElastic ? 0.4 : 0.8;  // Elastic = flatter curve
+            let supplySlope = isElastic ? 1.8 : 0.9;  // Elastic = steeper curve
+
+            // Demand curve: Qd = demandIntercept - demandSlope * P
+            const demandIntercept = 80 * (currentState.income / 100) * (currentState.population / 100) * (currentState.preferences / 100);
+
+            // Supply curve: Qs = supplyIntercept + supplySlope * P
+            const supplyIntercept = -20 * (currentState.technology / 100) * (currentState.suppliers / 100) / (currentState.productionCost / 100);
+            const adjustedSupplySlope = supplySlope * (currentState.technology / 100) * (currentState.suppliers / 100) / (currentState.productionCost / 100);
+
+            // Generate curve points
+            for (let price = 0; price <= 100; price += 2) {
+                const qd = Math.max(0, demandIntercept - demandSlope * price);
+                const qs = Math.max(0, supplyIntercept + adjustedSupplySlope * price);
+
+                demandData.push({ x: qd, y: price });
+                supplyData.push({ x: qs, y: price });
+            }
+
+            // Calculate equilibrium
+            const equilibriumPrice = (demandIntercept - supplyIntercept) / (demandSlope + adjustedSupplySlope);
+            const equilibriumQuantity = demandIntercept - demandSlope * equilibriumPrice;
+
+            // Calculate surplus areas
+            const maxDemandPrice = demandIntercept / demandSlope;
+            const minSupplyPrice = -supplyIntercept / adjustedSupplySlope;
+            
+            const consumerSurplus = 0.5 * (maxDemandPrice - equilibriumPrice) * equilibriumQuantity;
+            const producerSurplus = 0.5 * (equilibriumPrice - minSupplyPrice) * equilibriumQuantity;
+
+            // Create surplus visualization data
+            const consumerSurplusData = [];
+            const producerSurplusData = [];
+            
+            // Consumer surplus triangle
+            consumerSurplusData.push({ x: 0, y: maxDemandPrice });
+            consumerSurplusData.push({ x: equilibriumQuantity, y: equilibriumPrice });
+            consumerSurplusData.push({ x: 0, y: equilibriumPrice });
+
+            // Producer surplus triangle  
+            producerSurplusData.push({ x: 0, y: minSupplyPrice });
+            producerSurplusData.push({ x: equilibriumQuantity, y: equilibriumPrice });
+            producerSurplusData.push({ x: 0, y: equilibriumPrice });
+
+            return {
+                demandData,
+                supplyData,
+                consumerSurplusData,
+                producerSurplusData,
+                equilibrium: {
+                    price: Math.max(0, equilibriumPrice),
+                    quantity: Math.max(0, equilibriumQuantity)
+                },
+                surplus: {
+                    consumer: Math.max(0, consumerSurplus),
+                    producer: Math.max(0, producerSurplus),
+                    total: Math.max(0, consumerSurplus + producerSurplus)
+                }
+            };
+        }
+
+        // Update chart with new data
+        function updateChart() {
+            const { demandData, supplyData, consumerSurplusData, producerSurplusData, equilibrium, surplus } = calculateCurves();
+
+            chart.data.datasets[0].data = demandData;
+            chart.data.datasets[1].data = supplyData;
+            chart.data.datasets[2].data = [{ x: equilibrium.quantity, y: equilibrium.price }];
+            chart.data.datasets[3].data = consumerSurplusData;
+            chart.data.datasets[4].data = producerSurplusData;
+
+            chart.update('none');
+
+            // Update displays
+            document.getElementById('equilibriumPrice').textContent = `$${equilibrium.price.toFixed(2)}`;
+            document.getElementById('equilibriumQuantity').textContent = equilibrium.quantity.toFixed(1);
+
+            // Calculate financials
+            const revenue = equilibrium.price * equilibrium.quantity;
+            const costPerUnit = (currentState.productionCost / 100) * 30;
+            const profit = revenue - (costPerUnit * equilibrium.quantity);
+
+            document.getElementById('totalRevenue').textContent = `$${revenue.toFixed(0)}`;
+            document.getElementById('estimatedProfit').textContent = `$${profit.toFixed(0)}`;
+
+            // Update surplus displays
+            document.getElementById('consumerSurplus').textContent = `$${surplus.consumer.toFixed(0)}`;
+            document.getElementById('producerSurplus').textContent = `$${surplus.producer.toFixed(0)}`;
+            document.getElementById('totalSurplus').textContent = `$${surplus.total.toFixed(0)}`;
+
+            // Update historical data
+            addToHistory(equilibrium.price);
+        }
+
+        // Add price to historical tracking
+        function addToHistory(price) {
+            timeStamp++;
+            priceHistory.push(price);
+            
+            // Keep only last 20 data points
+            if (priceHistory.length > 20) {
+                priceHistory.shift();
+            }
+
+            // Update historical chart
+            historicalChart.data.labels = priceHistory.map((_, i) => i + 1);
+            historicalChart.data.datasets[0].data = priceHistory;
+            historicalChart.update('none');
+        }
+
+        // Toggle elasticity mode
+        function toggleElasticity() {
+            isElastic = !isElastic;
+            const toggle = document.getElementById('elasticityToggle');
+            const status = document.getElementById('elasticityStatus');
+            const description = document.getElementById('elasticityDescription');
+            
+            if (isElastic) {
+                toggle.innerHTML = 'Elastic Curves<span id="elasticityStatus" class="status-dot status-elastic"></span>';
+                toggle.classList.add('active');
+                description.textContent = 'High price sensitivity - responsive curves';
+            } else {
+                toggle.innerHTML = 'Normal Curves<span id="elasticityStatus" class="status-dot status-normal"></span>';
+                toggle.classList.remove('active');
+                description.textContent = 'Standard price sensitivity';
+            }
+            
+            updateChart();
+        }
+
+        // Toggle random events
+        function toggleRandomEvents() {
+            randomEventsActive = !randomEventsActive;
+            const toggle = document.getElementById('randomToggle');
+            
+            if (randomEventsActive) {
+                toggle.innerHTML = 'Stop Events<span id="randomStatus" class="status-dot status-random"></span>';
+                toggle.classList.add('active');
+                
+                // Start random events every 10-20 seconds
+                randomEventInterval = setInterval(() => {
+                    const event = randomEvents[Math.floor(Math.random() * randomEvents.length)];
+                    event.effect();
+                    logEvent(`${event.name}`);
+                    updateChart();
+                }, Math.random() * 10000 + 10000);
+                
+                logEvent('Random events activated');
+            } else {
+                toggle.innerHTML = 'Random Events<span id="randomStatus" class="status-dot status-normal"></span>';
+                toggle.classList.remove('active');
+                
+                if (randomEventInterval) {
+                    clearInterval(randomEventInterval);
+                }
+                logEvent('Random events stopped');
+            }
+        }
+
+        // Log events to the event log
+        function logEvent(message) {
+            const log = document.getElementById('eventLog');
+            const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            log.innerHTML = `<div>${time} ${message}</div>` + log.innerHTML;
+            
+            // Keep only last 8 events
+            const events = log.children;
+            while (events.length > 8) {
+                log.removeChild(events[events.length - 1]);
+            }
+        }
+
+        // Update slider display
+        function updateSliderDisplay(sliderId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(sliderId + 'Value');
+            slider.value = currentState[sliderId];
+            display.textContent = currentState[sliderId];
+        }
+
+        // Event handlers for sliders
+        function setupSliders() {
+            const sliders = ['income', 'population', 'preferences', 'productionCost', 'technology', 'suppliers'];
+            
+            sliders.forEach(slider => {
+                const element = document.getElementById(slider);
+                const valueDisplay = document.getElementById(slider + 'Value');
+                
+                element.addEventListener('input', (e) => {
+                    const value = parseInt(e.target.value);
+                    currentState[slider] = value;
+                    valueDisplay.textContent = value;
+                    updateChart();
+                });
+            });
+        }
+
+        // Market events
+        function triggerEvent(eventType) {
+            let eventName;
+            
+            switch (eventType) {
+                case 'economic-boom':
+                    currentState.income = Math.min(150, currentState.income + 30);
+                    currentState.population = Math.min(200, currentState.population + 20);
+                    eventName = 'Economic boom triggered';
+                    break;
+                    
+                case 'supply-shortage':
+                    currentState.productionCost = Math.min(200, currentState.productionCost + 40);
+                    currentState.suppliers = Math.max(50, currentState.suppliers - 20);
+                    eventName = 'Supply shortage created';
+                    break;
+                    
+                case 'tech-innovation':
+                    currentState.technology = Math.min(150, currentState.technology + 30);
+                    currentState.productionCost = Math.max(50, currentState.productionCost - 20);
+                    eventName = 'Tech innovation deployed';
+                    break;
+                    
+                case 'recession':
+                    currentState.income = Math.max(50, currentState.income - 25);
+                    currentState.preferences = Math.max(20, currentState.preferences - 20);
+                    eventName = 'Economic recession hit';
+                    break;
+            }
+
+            // Update all slider displays
+            Object.keys(currentState).forEach(updateSliderDisplay);
+            logEvent(eventName);
+            updateChart();
+        }
+
+        // Reset market to default values
+        function resetMarket() {
+            currentState = {
+                income: 100,
+                population: 100,
+                preferences: 100,
+                productionCost: 100,
+                technology: 100,
+                suppliers: 100
+            };
+
+            Object.keys(currentState).forEach(updateSliderDisplay);
+            
+            // Reset modes
+            if (isElastic) toggleElasticity();
+            if (randomEventsActive) toggleRandomEvents();
+            
+            // Clear history
+            priceHistory = [];
+            timeStamp = 0;
+            historicalChart.data.labels = [];
+            historicalChart.data.datasets[0].data = [];
+            historicalChart.update();
+            
+            logEvent('Market reset to defaults');
+            updateChart();
+        }
+
+        // Initialize the game
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            setupSliders();
+            logEvent('Simulator ready');
+        });
+    </script>
+</body>
+</html>
+                

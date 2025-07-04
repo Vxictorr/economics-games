@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply & Demand Theory Guide</title>
+    <style>
+        @media print {
+            body { margin: 0.5in; }
+            .page-break { page-break-before: always; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+            background: white;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #007acc;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-left: 4px solid #007acc;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #666;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .toc {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #007acc;
+        }
+        
+        .toc ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .toc a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .highlight-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007acc;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .formula-box {
+            background: #f0f8f0;
+            border: 1px solid #90c695;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .example-box {
+            background: #fff7e6;
+            border: 1px solid #ffb366;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .print-instruction {
+            background: #fffbf0;
+            border: 2px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: #e0e0e0;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-instruction no-print">
+        <h3>📄 How to Save as PDF:</h3>
+        <p><strong>1.</strong> Press <code>Ctrl+P</code> (Windows) or <code>Cmd+P</code> (Mac)</p>
+        <p><strong>2.</strong> Select "Save as PDF" as the destination</p>
+        <p><strong>3.</strong> Choose "More settings" and select "A4" paper size</p>
+        <p><strong>4.</strong> Click "Save" and choose your location</p>
+    </div>
+
+    <h1>Supply & Demand Theory Guide</h1>
+    <p><em>Understanding the Fundamentals Behind the Simulator</em></p>
+    
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+            <li><a href="#basic-concepts">1. Basic Concepts</a></li>
+            <li><a href="#demand-curve">2. The Demand Curve</a></li>
+            <li><a href="#supply-curve">3. The Supply Curve</a></li>
+            <li><a href="#market-equilibrium">4. Market Equilibrium</a></li>
+            <li><a href="#shifts-movements">5. Shifts vs. Movements</a></li>
+            <li><a href="#price-elasticity">6. Price Elasticity</a></li>
+            <li><a href="#surplus">7. Consumer & Producer Surplus</a></li>
+            <li><a href="#simulator">8. How the Simulator Works</a></li>
+            <li><a href="#applications">9. Real-World Applications</a></li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="basic-concepts">1. Basic Concepts</h2>
+
+    <h3>What is Supply and Demand?</h3>
+    <p><strong>Supply and demand</strong> is the fundamental economic model explaining price determination in a market economy. It describes the relationship between the availability of a commodity (supply) and the desire for that commodity (demand).</p>
+
+    <ul>
+        <li><strong>Demand</strong>: The quantity of a good consumers are willing and able to purchase at various prices</li>
+        <li><strong>Supply</strong>: The quantity of a good producers are willing and able to offer at various prices</li>
+        <li><strong>Market</strong>: Where buyers and sellers interact to exchange goods and services</li>
+    </ul>
+
+    <h3>Key Assumptions</h3>
+    <ol>
+        <li><strong>Rational actors</strong>: Consumers maximize utility, producers maximize profit</li>
+        <li><strong>Perfect information</strong>: All participants know market conditions</li>
+        <li><strong>Free market</strong>: No external interference or monopolies</li>
+        <li><strong>Ceteris paribus</strong>: "All else equal" - we change one variable at a time</li>
+    </ol>
+
+    <h2 id="demand-curve">2. The Demand Curve</h2>
+
+    <h3>Basic Demand Relationship</h3>
+    <p>The <strong>Law of Demand</strong> states that as price increases, quantity demanded decreases (and vice versa), assuming all other factors remain constant.</p>
+
+    <div class="formula-box">
+        Price ↑ → Quantity Demanded ↓<br>
+        Price ↓ → Quantity Demanded ↑
+    </div>
+
+    <h3>Mathematical Representation</h3>
+    <p>In the simulator, demand follows a linear function:</p>
+
+    <div class="formula-box">
+        <strong>Qd = a - b × P</strong><br><br>
+        Where:<br>
+        • <strong>Qd</strong> = Quantity demanded<br>
+        • <strong>a</strong> = Demand intercept (maximum quantity when price = 0)<br>
+        • <strong>b</strong> = Demand slope (price sensitivity)<br>
+        • <strong>P</strong> = Price
+    </div>
+
+    <h3>Factors That Shift Demand</h3>
+
+    <h4>1. Consumer Income</h4>
+    <ul>
+        <li><strong>Normal goods</strong>: Income ↑ → Demand ↑</li>
+        <li><strong>Inferior goods</strong>: Income ↑ → Demand ↓</li>
+        <li><em>In simulator</em>: Higher income slider increases demand intercept</li>
+    </ul>
+
+    <h4>2. Population Size</h4>
+    <ul>
+        <li>More consumers → Higher total demand</li>
+        <li><em>In simulator</em>: Population slider directly multiplies demand</li>
+    </ul>
+
+    <h4>3. Consumer Preferences/Trends</h4>
+    <ul>
+        <li>Popular products have higher demand</li>
+        <li>Fashion, advertising, social trends affect preferences</li>
+        <li><em>In simulator</em>: Popularity slider shifts demand curve</li>
+    </ul>
+
+    <h4>4. Price of Related Goods</h4>
+    <ul>
+        <li><strong>Substitutes</strong>: If Coca-Cola price rises, Pepsi demand increases</li>
+        <li><strong>Complements</strong>: If gas prices rise, car demand decreases</li>
+    </ul>
+
+    <h4>5. Future Expectations</h4>
+    <ul>
+        <li>Expected price increases → Current demand increases</li>
+        <li>Expected income changes → Current demand changes</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2 id="supply-curve">3. The Supply Curve</h2>
+
+    <h3>Basic Supply Relationship</h3>
+    <p>The <strong>Law of Supply</strong> states that as price increases, quantity supplied increases, assuming all other factors remain constant.</p>
+
+    <div class="formula-box">
+        Price ↑ → Quantity Supplied ↑<br>
+        Price ↓ → Quantity Supplied ↓
+    </div>
+
+    <h3>Mathematical Representation</h3>
+    <p>In the simulator, supply follows:</p>
+
+    <div class="formula-box">
+        <strong>Qs = c + d × P</strong><br><br>
+        Where:<br>
+        • <strong>Qs</strong> = Quantity supplied<br>
+        • <strong>c</strong> = Supply intercept (can be negative)<br>
+        • <strong>d</strong> = Supply slope (production responsiveness)<br>
+        • <strong>P</strong> = Price
+    </div>
+
+    <h3>Factors That Shift Supply</h3>
+
+    <h4>1. Production Costs</h4>
+    <ul>
+        <li>Higher costs → Lower supply (curve shifts left/up)</li>
+        <li>Lower costs → Higher supply (curve shifts right/down)</li>
+        <li><em>In simulator</em>: Production cost slider affects both intercept and slope</li>
+    </ul>
+
+    <h4>2. Technology Level</h4>
+    <ul>
+        <li>Better technology → Lower costs → Higher supply</li>
+        <li>Automation, efficiency improvements, innovation</li>
+        <li><em>In simulator</em>: Technology slider increases supply capability</li>
+    </ul>
+
+    <h4>3. Number of Suppliers</h4>
+    <ul>
+        <li>More competitors → Higher market supply</li>
+        <li>Market entry/exit affects total supply</li>
+        <li><em>In simulator</em>: Suppliers slider multiplies supply capacity</li>
+    </ul>
+
+    <h4>4. Government Regulations</h4>
+    <ul>
+        <li>Taxes, subsidies, regulations affect production costs</li>
+        <li>Environmental standards, labor laws, trade policies</li>
+    </ul>
+
+    <h4>5. Input Prices</h4>
+    <ul>
+        <li>Raw materials, labor, energy costs</li>
+        <li>Supply chain disruptions</li>
+    </ul>
+
+    <h2 id="market-equilibrium">4. Market Equilibrium</h2>
+
+    <h3>Finding Equilibrium</h3>
+    <p><strong>Equilibrium</strong> occurs where supply equals demand:</p>
+
+    <div class="formula-box">
+        Qd = Qs<br>
+        a - b × P = c + d × P<br><br>
+        Solving for equilibrium price:<br>
+        <strong>P* = (a - c) / (b + d)</strong><br><br>
+        Then equilibrium quantity:<br>
+        <strong>Q* = a - b × P*</strong>
+    </div>
+
+    <h3>Characteristics of Equilibrium</h3>
+    <ol>
+        <li><strong>Market clearing</strong>: No shortage or surplus</li>
+        <li><strong>Stable</strong>: Tendency to return if disturbed</li>
+        <li><strong>Efficient</strong>: Maximum total surplus achieved</li>
+        <li><strong>Dynamic</strong>: Changes as market conditions change</li>
+    </ol>
+
+    <h3>Disequilibrium Situations</h3>
+
+    <h4>Shortage (Excess Demand)</h4>
+    <ul>
+        <li>Price below equilibrium</li>
+        <li>Qd > Qs</li>
+        <li>Upward pressure on price</li>
+        <li><em>Example</em>: Concert tickets priced too low</li>
+    </ul>
+
+    <h4>Surplus (Excess Supply)</h4>
+    <ul>
+        <li>Price above equilibrium</li>
+        <li>Qs > Qd</li>
+        <li>Downward pressure on price</li>
+        <li><em>Example</em>: Overproduced seasonal goods</li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h2 id="shifts-movements">5. Shifts vs. Movements</h2>
+
+    <h3>Movement Along the Curve</h3>
+    <ul>
+        <li><strong>Cause</strong>: Change in the good's own price</li>
+        <li><strong>Effect</strong>: Move to different point on same curve</li>
+        <li><strong>Example</strong>: Gas price rises, people buy less gas</li>
+    </ul>
+
+    <h3>Shift of the Entire Curve</h3>
+    <ul>
+        <li><strong>Cause</strong>: Change in external factors (income, costs, preferences)</li>
+        <li><strong>Effect</strong>: Entire curve moves left/right or up/down</li>
+        <li><strong>Example</strong>: Income rises, demand for restaurant meals increases at all prices</li>
+    </ul>
+
+    <div class="highlight-box">
+        <h4>In the Simulator:</h4>
+        <p><strong>Demand Shifts:</strong></p>
+        <ul>
+            <li><strong>Rightward shift</strong> (increase): Income ↑, Population ↑, Popularity ↑</li>
+            <li><strong>Leftward shift</strong> (decrease): Opposite changes</li>
+        </ul>
+        <p><strong>Supply Shifts:</strong></p>
+        <ul>
+            <li><strong>Rightward shift</strong> (increase): Technology ↑, Suppliers ↑, Costs ↓</li>
+            <li><strong>Leftward shift</strong> (decrease): Opposite changes</li>
+        </ul>
+    </div>
+
+    <h2 id="price-elasticity">6. Price Elasticity</h2>
+
+    <h3>Definition</h3>
+    <p><strong>Price elasticity</strong> measures how responsive quantity is to price changes:</p>
+
+    <div class="formula-box">
+        <strong>Elasticity = % Change in Quantity / % Change in Price</strong>
+    </div>
+
+    <h3>Types of Elasticity</h3>
+
+    <h4>Demand Elasticity</h4>
+    <ul>
+        <li><strong>Elastic</strong> (|E| > 1): Quantity very responsive to price
+            <ul>
+                <li>Luxury goods, substitutes available</li>
+                <li><em>Simulator</em>: Flatter demand curve</li>
+            </ul>
+        </li>
+        <li><strong>Inelastic</strong> (|E| < 1): Quantity not very responsive to price
+            <ul>
+                <li>Necessities, no substitutes</li>
+                <li><em>Simulator</em>: Steeper demand curve</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h4>Supply Elasticity</h4>
+    <ul>
+        <li><strong>Elastic</strong>: Easy to increase/decrease production
+            <ul><li><em>Simulator</em>: Steeper supply curve</li></ul>
+        </li>
+        <li><strong>Inelastic</strong>: Hard to change production quickly
+            <ul><li><em>Simulator</em>: Flatter supply curve</li></ul>
+        </li>
+    </ul>
+
+    <div class="example-box">
+        <h4>Elasticity Toggle in Simulator</h4>
+        <p><strong>Normal Mode</strong>: Standard elasticity values</p>
+        <ul>
+            <li>Demand slope = 0.8</li>
+            <li>Supply slope = 0.9</li>
+        </ul>
+        <p><strong>Elastic Mode</strong>: Higher price sensitivity</p>
+        <ul>
+            <li>Demand slope = 0.4 (flatter, more responsive)</li>
+            <li>Supply slope = 1.8 (steeper, more responsive)</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2 id="surplus">7. Consumer & Producer Surplus</h2>
+
+    <h3>Consumer Surplus</h3>
+    <p><strong>Consumer surplus</strong> is the difference between what consumers are willing to pay and what they actually pay.</p>
+    <ul>
+        <li><strong>Graphically</strong>: Area under demand curve, above market price</li>
+        <li><strong>Formula</strong>: ½ × (Max Price - Equilibrium Price) × Equilibrium Quantity</li>
+        <li><strong>Interpretation</strong>: Consumer benefit from market participation</li>
+    </ul>
+
+    <h3>Producer Surplus</h3>
+    <p><strong>Producer surplus</strong> is the difference between what producers receive and their minimum acceptable price.</p>
+    <ul>
+        <li><strong>Graphically</strong>: Area above supply curve, below market price</li>
+        <li><strong>Formula</strong>: ½ × (Equilibrium Price - Min Price) × Equilibrium Quantity</li>
+        <li><strong>Interpretation</strong>: Producer benefit from market participation</li>
+    </ul>
+
+    <h3>Total Surplus</h3>
+    <p><strong>Total surplus</strong> = Consumer Surplus + Producer Surplus</p>
+    <ul>
+        <li>Measures total economic benefit</li>
+        <li>Maximized at equilibrium</li>
+        <li>Reduces with price controls or market inefficiencies</li>
+    </ul>
+
+    <div class="highlight-box">
+        <p>In the simulator, the surplus areas are <strong>shaded</strong> on the graph and <strong>calculated</strong> in real-time, showing how market changes affect economic welfare.</p>
+    </div>
+
+    <h2 id="simulator">8. How the Simulator Works</h2>
+
+    <h3>Core Calculations</h3>
+
+    <h4>1. Demand Function</h4>
+    <pre>demandIntercept = 80 × (income/100) × (population/100) × (preferences/100)
+demandSlope = isElastic ? 0.4 : 0.8
+Qd = demandIntercept - demandSlope × P</pre>
+
+    <h4>2. Supply Function</h4>
+    <pre>supplyIntercept = -20 × (technology/100) × (suppliers/100) / (productionCost/100)
+supplySlope = (isElastic ? 1.8 : 0.9) × adjustments
+Qs = supplyIntercept + supplySlope × P</pre>
+
+    <h4>3. Equilibrium Calculation</h4>
+    <pre>equilibriumPrice = (demandIntercept - supplyIntercept) / (demandSlope + supplySlope)
+equilibriumQuantity = demandIntercept - demandSlope × equilibriumPrice</pre>
+
+    <h3>Slider Effects</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Slider</th>
+                <th>Affects</th>
+                <th>Direction</th>
+                <th>Reasoning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Income</strong></td>
+                <td>Demand intercept</td>
+                <td>Positive</td>
+                <td>Higher income → more purchasing power</td>
+            </tr>
+            <tr>
+                <td><strong>Population</strong></td>
+                <td>Demand intercept</td>
+                <td>Positive</td>
+                <td>More consumers → higher total demand</td>
+            </tr>
+            <tr>
+                <td><strong>Preferences</strong></td>
+                <td>Demand intercept</td>
+                <td>Positive</td>
+                <td>Popular products → higher willingness to pay</td>
+            </tr>
+            <tr>
+                <td><strong>Production Cost</strong></td>
+                <td>Supply intercept & slope</td>
+                <td>Negative</td>
+                <td>Higher costs → less profitable to produce</td>
+            </tr>
+            <tr>
+                <td><strong>Technology</strong></td>
+                <td>Supply intercept & slope</td>
+                <td>Positive</td>
+                <td>Better tech → more efficient production</td>
+            </tr>
+            <tr>
+                <td><strong>Suppliers</strong></td>
+                <td>Supply intercept & slope</td>
+                <td>Positive</td>
+                <td>More competitors → higher market supply</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h3>Event System</h3>
+
+    <h4>Manual Events</h4>
+    <ul>
+        <li><strong>Economic Boom</strong>: ↑ Income, ↑ Population</li>
+        <li><strong>Recession</strong>: ↓ Income, ↓ Preferences</li>
+        <li><strong>Supply Shortage</strong>: ↑ Production Cost, ↓ Suppliers</li>
+        <li><strong>Tech Innovation</strong>: ↑ Technology, ↓ Production Cost</li>
+    </ul>
+
+    <h4>Random Events</h4>
+    <ul>
+        <li>Triggered every 10-20 seconds when activated</li>
+        <li>Simulates real-world market volatility</li>
+        <li>Six different scenarios affecting various parameters</li>
+    </ul>
+
+    <h3>Financial Calculations</h3>
+
+    <h4>Revenue</h4>
+    <pre>totalRevenue = equilibriumPrice × equilibriumQuantity</pre>
+
+    <h4>Estimated Profit</h4>
+    <pre>costPerUnit = (productionCost/100) × 30
+totalCost = costPerUnit × equilibriumQuantity
+profit = totalRevenue - totalCost</pre>
+
+    <h2 id="applications">9. Real-World Applications</h2>
+
+    <h3>Market Examples</h3>
+
+    <h4>Elastic Demand</h4>
+    <ul>
+        <li><strong>Luxury cars</strong>: Price increase → large decrease in sales</li>
+        <li><strong>Restaurant dining</strong>: Many substitutes available</li>
+        <li><strong>Vacation travel</strong>: Postponable, discretionary spending</li>
+    </ul>
+
+    <h4>Inelastic Demand</h4>
+    <ul>
+        <li><strong>Gasoline</strong>: Few substitutes for transportation</li>
+        <li><strong>Medical care</strong>: Necessity regardless of price</li>
+        <li><strong>Basic food items</strong>: Essential for survival</li>
+    </ul>
+
+    <h4>Elastic Supply</h4>
+    <ul>
+        <li><strong>Digital products</strong>: Easy to scale production</li>
+        <li><strong>Service industries</strong>: Can hire more workers quickly</li>
+        <li><strong>Manufacturing with excess capacity</strong></li>
+    </ul>
+
+    <h4>Inelastic Supply</h4>
+    <ul>
+        <li><strong>Agricultural products</strong>: Fixed growing seasons</li>
+        <li><strong>Real estate</strong>: Limited land availability</li>
+        <li><strong>Specialized skilled labor</strong>: Takes time to train</li>
+    </ul>
+
+    <h3>Market Events in Reality</h3>
+
+    <h4>Supply Shocks</h4>
+    <ul>
+        <li><strong>Oil crisis (1973)</strong>: Reduced supply → higher prices</li>
+        <li><strong>COVID-19</strong>: Supply chain disruptions</li>
+        <li><strong>Natural disasters</strong>: Affect production capacity</li>
+    </ul>
+
+    <h4>Demand Shocks</h4>
+    <ul>
+        <li><strong>Housing bubble (2008)</strong>: Speculation increased demand</li>
+        <li><strong>Pandemic lockdowns</strong>: Reduced demand for services</li>
+        <li><strong>Technology adoption</strong>: Smartphones increased demand for data</li>
+    </ul>
+
+    <h3>Policy Implications</h3>
+
+    <h4>Price Controls</h4>
+    <ul>
+        <li><strong>Price ceiling</strong>: Creates shortages if below equilibrium</li>
+        <li><strong>Price floor</strong>: Creates surpluses if above equilibrium</li>
+        <li><strong>Examples</strong>: Rent control, minimum wage</li>
+    </ul>
+
+    <h4>Market Interventions</h4>
+    <ul>
+        <li><strong>Taxes</strong>: Shift supply curve up/left</li>
+        <li><strong>Subsidies</strong>: Shift supply curve down/right</li>
+        <li><strong>Regulations</strong>: Affect production costs and supply</li>
+    </ul>
+
+    <hr>
+
+    <h2>Key Takeaways</h2>
+
+    <h3>For Students</h3>
+    <ol>
+        <li><strong>Understand the basics</strong>: Supply up-sloping, demand down-sloping</li>
+        <li><strong>Differentiate shifts vs. movements</strong>: Internal price changes vs. external factors</li>
+        <li><strong>Recognize elasticity</strong>: How responsive markets are to price changes</li>
+        <li><strong>Apply to real situations</strong>: Connect theory to current events and personal experiences</li>
+    </ol>
+
+    <h3>For the Simulator</h3>
+    <ol>
+        <li><strong>Experiment freely</strong>: Try extreme values to see relationships</li>
+        <li><strong>Watch the surplus</strong>: Understand how efficiency changes</li>
+        <li><strong>Use random events</strong>: Experience market unpredictability</li>
+        <li><strong>Compare elasticity modes</strong>: See how market structure affects outcomes</li>
+    </ol>
+
+    <h3>Advanced Concepts to Explore</h3>
+    <ul>
+        <li><strong>Cross-price elasticity</strong>: How related goods affect demand</li>
+        <li><strong>Income elasticity</strong>: How income changes affect different goods</li>
+        <li><strong>Long-run vs. short-run</strong>: How time affects elasticity</li>
+        <li><strong>Market structures</strong>: Perfect competition vs. monopoly effects</li>
+    </ul>
+
+    <div class="highlight-box">
+        <p><em>This simulator provides a foundation for understanding microeconomic principles. Real markets are more complex, involving multiple goods, imperfect information, and various market structures, but the fundamental supply and demand framework remains essential for economic analysis.</em></p>
+    </div>
+
+</body>
+</html>

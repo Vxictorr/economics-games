@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade & Specialize</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: #555;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .scenario-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        .production-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .production-table th,
+        .production-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.8rem;
+        }
+
+        .production-table th {
+            background: #f8f8f8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            font-size: 0.7rem;
+        }
+
+        .production-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .country-section {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .country-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .slider-group {
+            margin-bottom: 1rem;
+        }
+
+        .slider-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #333;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            font-size: 0.75rem;
+            color: #888;
+            text-align: right;
+        }
+
+        .output-section {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .output-section h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .output-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+        }
+
+        .opportunity-cost {
+            background: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .opportunity-cost h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #f57f17;
+            margin-bottom: 0.75rem;
+        }
+
+        .cost-item {
+            font-size: 0.8rem;
+            color: #f57f17;
+            margin-bottom: 0.25rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: #f8f8f8;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+        }
+
+        .insights {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .insights h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .insight-item {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        .notification {
+            background: #e8f5e8;
+            border: 1px solid #c8e6c9;
+            border-radius: 4px;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #2e7d32;
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Trade & Specialize</h1>
+            <p>Interactive economics simulator for opportunity cost and comparative advantage</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Panel: Setup -->
+            <div class="card">
+                <h2>Scenario Setup</h2>
+                
+                <div class="two-col">
+                    <div class="input-group">
+                        <label>Country 1</label>
+                        <input type="text" id="country1" value="🇺🇸 USA">
+                    </div>
+                    <div class="input-group">
+                        <label>Country 2</label>
+                        <input type="text" id="country2" value="🇧🇷 Brazil">
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div class="input-group">
+                        <label>Good 1</label>
+                        <input type="text" id="good1" value="Computers">
+                    </div>
+                    <div class="input-group">
+                        <label>Good 2</label>
+                        <input type="text" id="good2" value="Shoes">
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="two-col">
+                    <div>
+                        <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">🇺🇸 USA Rates</h3>
+                        <div class="input-group">
+                            <label id="c1g1-label">Computers/Hr</label>
+                            <input type="number" id="c1g1-rate" value="10" min="1" max="50">
+                        </div>
+                        <div class="input-group">
+                            <label id="c1g2-label">Shoes/Hr</label>
+                            <input type="number" id="c1g2-rate" value="5" min="1" max="50">
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">🇧🇷 Brazil Rates</h3>
+                        <div class="input-group">
+                            <label id="c2g1-label">Computers/Hr</label>
+                            <input type="number" id="c2g1-rate" value="4" min="1" max="50">
+                        </div>
+                        <div class="input-group">
+                            <label id="c2g2-label">Shoes/Hr</label>
+                            <input type="number" id="c2g2-rate" value="4" min="1" max="50">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="applySettings()" style="width: 100%; margin-bottom: 1rem;">Apply Settings</button>
+
+                <div class="divider"></div>
+
+                <h3 style="font-size: 0.7rem; text-transform: uppercase; color: #666; margin-bottom: 0.5rem;">Quick Scenarios</h3>
+                <div class="btn-group">
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('oil-wheat')">Oil vs Wheat</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('tech-textile')">Tech vs Textile</button>
+                    <button class="btn-secondary scenario-btn" onclick="loadScenario('cars-food')">Cars vs Food</button>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn" onclick="optimize()">Optimize</button>
+                    <button class="btn-secondary" onclick="reset()">Reset</button>
+                </div>
+
+                <div class="notification" id="notification"></div>
+            </div>
+
+            <!-- Center Panel: Production -->
+            <div>
+                <table class="production-table" id="production-table">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th id="th-good1">Computers/Hr</th>
+                            <th id="th-good2">Shoes/Hr</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong id="table-c1">🇺🇸 USA</strong></td>
+                            <td id="table-c1g1">10</td>
+                            <td id="table-c1g2">5</td>
+                        </tr>
+                        <tr>
+                            <td><strong id="table-c2">🇧🇷 Brazil</strong></td>
+                            <td id="table-c2g1">4</td>
+                            <td id="table-c2g2">4</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="country-section">
+                    <div class="country-title" id="country1-title">🇺🇸 USA</div>
+                    
+                    <div class="slider-group">
+                        <label><span id="c1-g1-label">Workers producing Computers</span>: <span id="c1-workers1">50</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="c1-slider1" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <label><span id="c1-g2-label">Workers producing Shoes</span>: <span id="c1-workers2">50</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="c1-slider2" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Production Output</h3>
+                        <div class="output-item">
+                            <span id="c1-output1-label">Computers:</span>
+                            <span id="c1-output1">500</span>
+                        </div>
+                        <div class="output-item">
+                            <span id="c1-output2-label">Shoes:</span>
+                            <span id="c1-output2">250</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-cost">
+                        <h3>Opportunity Cost</h3>
+                        <div class="cost-item">1 <span id="c1-cost1-good">Computer</span> = <span id="c1-cost1">0.5</span> <span id="c1-cost1-for">Shoes</span></div>
+                        <div class="cost-item">1 <span id="c1-cost2-good">Shoe</span> = <span id="c1-cost2">2</span> <span id="c1-cost2-for">Computers</span></div>
+                    </div>
+                </div>
+
+                <div class="country-section">
+                    <div class="country-title" id="country2-title">🇧🇷 Brazil</div>
+                    
+                    <div class="slider-group">
+                        <label><span id="c2-g1-label">Workers producing Computers</span>: <span id="c2-workers1">50</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="c2-slider1" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <div class="slider-group">
+                        <label><span id="c2-g2-label">Workers producing Shoes</span>: <span id="c2-workers2">50</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="c2-slider2" min="0" max="100" value="50">
+                        </div>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Production Output</h3>
+                        <div class="output-item">
+                            <span id="c2-output1-label">Computers:</span>
+                            <span id="c2-output1">200</span>
+                        </div>
+                        <div class="output-item">
+                            <span id="c2-output2-label">Shoes:</span>
+                            <span id="c2-output2">200</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-cost">
+                        <h3>Opportunity Cost</h3>
+                        <div class="cost-item">1 <span id="c2-cost1-good">Computer</span> = <span id="c2-cost1">1</span> <span id="c2-cost1-for">Shoes</span></div>
+                        <div class="cost-item">1 <span id="c2-cost2-good">Shoe</span> = <span id="c2-cost2">1</span> <span id="c2-cost2-for">Computers</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="card">
+                <h2>Global Results</h2>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="total-good1">700</div>
+                        <div class="metric-label">Total <span id="metric-good1">Computers</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="total-good2">450</div>
+                        <div class="metric-label">Total <span id="metric-good2">Shoes</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="efficiency">75%</div>
+                        <div class="metric-label">Efficiency</div>
+                    </div>
+                </div>
+
+                <div class="insights">
+                    <h3>Economic Insights</h3>
+                    <div id="insights-content">
+                        <div class="insight-item">USA has absolute advantage in both goods but comparative advantage in computers</div>
+                        <div class="insight-item">Brazil has comparative advantage in shoes despite lower absolute productivity</div>
+                        <div class="insight-item">Try specialization for maximum efficiency</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let gameState = {
+            countries: ['🇺🇸 USA', '🇧🇷 Brazil'],
+            goods: ['Computers', 'Shoes'],
+            rates: {
+                c1g1: 10, c1g2: 5,
+                c2g1: 4, c2g2: 4
+            }
+        };
+
+        // Predefined scenarios
+        const scenarios = {
+            'oil-wheat': {
+                countries: ['🇸🇦 Saudi Arabia', '🇺🇦 Ukraine'],
+                goods: ['Oil', 'Wheat'],
+                rates: { c1g1: 20, c1g2: 2, c2g1: 3, c2g2: 12 }
+            },
+            'tech-textile': {
+                countries: ['🇰🇷 South Korea', '🇧🇩 Bangladesh'],
+                goods: ['Electronics', 'Textiles'],
+                rates: { c1g1: 15, c1g2: 3, c2g1: 2, c2g2: 10 }
+            },
+            'cars-food': {
+                countries: ['🇩🇪 Germany', '🇦🇷 Argentina'],
+                goods: ['Cars', 'Food'],
+                rates: { c1g1: 12, c1g2: 4, c2g1: 3, c2g2: 8 }
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            updateProduction();
+        });
+
+        function setupEventListeners() {
+            // Slider events
+            document.getElementById('c1-slider1').addEventListener('input', function() {
+                updateWorkerAllocation('c1', 1, this.value);
+            });
+            document.getElementById('c1-slider2').addEventListener('input', function() {
+                updateWorkerAllocation('c1', 2, this.value);
+            });
+            document.getElementById('c2-slider1').addEventListener('input', function() {
+                updateWorkerAllocation('c2', 1, this.value);
+            });
+            document.getElementById('c2-slider2').addEventListener('input', function() {
+                updateWorkerAllocation('c2', 2, this.value);
+            });
+        }
+
+        function updateWorkerAllocation(country, good, value) {
+            const otherGood = good === 1 ? 2 : 1;
+            const otherValue = 100 - value;
+            
+            // Update other slider
+            document.getElementById(`${country}-slider${otherGood}`).value = otherValue;
+            
+            // Update displays
+            document.getElementById(`${country}-workers${good}`).textContent = value;
+            document.getElementById(`${country}-workers${otherGood}`).textContent = otherValue;
+            
+            updateProduction();
+        }
+
+        function updateProduction() {
+            // Get worker allocations
+            const c1w1 = parseInt(document.getElementById('c1-slider1').value);
+            const c1w2 = 100 - c1w1;
+            const c2w1 = parseInt(document.getElementById('c2-slider1').value);
+            const c2w2 = 100 - c2w1;
+
+            // Calculate production
+            const c1p1 = c1w1 * gameState.rates.c1g1;
+            const c1p2 = c1w2 * gameState.rates.c1g2;
+            const c2p1 = c2w1 * gameState.rates.c2g1;
+            const c2p2 = c2w2 * gameState.rates.c2g2;
+
+            // Update displays
+            document.getElementById('c1-output1').textContent = c1p1;
+            document.getElementById('c1-output2').textContent = c1p2;
+            document.getElementById('c2-output1').textContent = c2p1;
+            document.getElementById('c2-output2').textContent = c2p2;
+
+            // Update totals
+            document.getElementById('total-good1').textContent = c1p1 + c2p1;
+            document.getElementById('total-good2').textContent = c1p2 + c2p2;
+
+            // Calculate opportunity costs
+            const c1oc1 = (gameState.rates.c1g2 / gameState.rates.c1g1).toFixed(2);
+            const c1oc2 = (gameState.rates.c1g1 / gameState.rates.c1g2).toFixed(2);
+            const c2oc1 = (gameState.rates.c2g2 / gameState.rates.c2g1).toFixed(2);
+            const c2oc2 = (gameState.rates.c2g1 / gameState.rates.c2g2).toFixed(2);
+
+            document.getElementById('c1-cost1').textContent = c1oc1;
+            document.getElementById('c1-cost2').textContent = c1oc2;
+            document.getElementById('c2-cost1').textContent = c2oc1;
+            document.getElementById('c2-cost2').textContent = c2oc2;
+
+            // Calculate efficiency
+            const maxTotal = (gameState.rates.c1g1 + gameState.rates.c1g2 + gameState.rates.c2g1 + gameState.rates.c2g2) * 100;
+            const currentTotal = c1p1 + c1p2 + c2p1 + c2p2;
+            const efficiency = Math.round((currentTotal / maxTotal) * 100);
+            document.getElementById('efficiency').textContent = efficiency + '%';
+
+            updateInsights(c1w1, c2w1);
+        }
+
+        function updateInsights(c1w1, c2w1) {
+            const insights = [];
+            
+            // Calculate comparative advantage
+            const c1oc1 = gameState.rates.c1g2 / gameState.rates.c1g1;
+            const c2oc1 = gameState.rates.c2g2 / gameState.rates.c2g1;
+            
+            const c1HasAdvantageInG1 = c1oc1 < c2oc1;
+            
+            // Analyze allocation
+            if (c1HasAdvantageInG1 && c1w1 > 70) {
+                insights.push(`${gameState.countries[0]} is specializing in ${gameState.goods[0]} (comparative advantage)`);
+            } else if (c1HasAdvantageInG1 && c1w1 < 30) {
+                insights.push(`${gameState.countries[0]} should focus more on ${gameState.goods[0]}`);
+            }
+
+            if (!c1HasAdvantageInG1 && c2w1 < 30) {
+                insights.push(`${gameState.countries[1]} is specializing in ${gameState.goods[1]} (comparative advantage)`);
+            } else if (!c1HasAdvantageInG1 && c2w1 > 70) {
+                insights.push(`${gameState.countries[1]} should focus more on ${gameState.goods[1]}`);
+            }
+
+            if (c1w1 === 50 && c2w1 === 50) {
+                insights.push("Current allocation is balanced but may not be optimal");
+            }
+
+            // Add principles
+            insights.push("Comparative advantage is about relative efficiency, not absolute");
+            insights.push("Specialization can increase total world production");
+
+            // Show comparative advantages
+            if (c1HasAdvantageInG1) {
+                insights.push(`${gameState.countries[0]} has comparative advantage in ${gameState.goods[0]}`);
+                insights.push(`${gameState.countries[1]} has comparative advantage in ${gameState.goods[1]}`);
+            } else {
+                insights.push(`${gameState.countries[0]} has comparative advantage in ${gameState.goods[1]}`);
+                insights.push(`${gameState.countries[1]} has comparative advantage in ${gameState.goods[0]}`);
+            }
+
+            document.getElementById('insights-content').innerHTML = insights.map(insight => 
+                `<div class="insight-item">${insight}</div>`
+            ).join('');
+        }
+
+        function applySettings() {
+            // Get values
+            gameState.countries[0] = document.getElementById('country1').value || '🇺🇸 USA';
+            gameState.countries[1] = document.getElementById('country2').value || '🇧🇷 Brazil';
+            gameState.goods[0] = document.getElementById('good1').value || 'Computers';
+            gameState.goods[1] = document.getElementById('good2').value || 'Shoes';
+            
+            gameState.rates.c1g1 = parseInt(document.getElementById('c1g1-rate').value) || 10;
+            gameState.rates.c1g2 = parseInt(document.getElementById('c1g2-rate').value) || 5;
+            gameState.rates.c2g1 = parseInt(document.getElementById('c2g1-rate').value) || 4;
+            gameState.rates.c2g2 = parseInt(document.getElementById('c2g2-rate').value) || 4;
+
+            updateLabels();
+            updateProduction();
+            showNotification('Settings applied successfully!');
+        }
+
+        function updateLabels() {
+            // Update all labels with new values
+            document.getElementById('country1-title').textContent = gameState.countries[0];
+            document.getElementById('country2-title').textContent = gameState.countries[1];
+            
+            document.getElementById('table-c1').textContent = gameState.countries[0];
+            document.getElementById('table-c2').textContent = gameState.countries[1];
+            
+            document.getElementById('th-good1').textContent = gameState.goods[0] + '/Hr';
+            document.getElementById('th-good2').textContent = gameState.goods[1] + '/Hr';
+            
+            document.getElementById('table-c1g1').textContent = gameState.rates.c1g1;
+            document.getElementById('table-c1g2').textContent = gameState.rates.c1g2;
+            document.getElementById('table-c2g1').textContent = gameState.rates.c2g1;
+            document.getElementById('table-c2g2').textContent = gameState.rates.c2g2;
+            
+            // Update input labels
+            document.getElementById('c1g1-label').textContent = gameState.goods[0] + '/Hr';
+            document.getElementById('c1g2-label').textContent = gameState.goods[1] + '/Hr';
+            document.getElementById('c2g1-label').textContent = gameState.goods[0] + '/Hr';
+            document.getElementById('c2g2-label').textContent = gameState.goods[1] + '/Hr';
+            
+            // Update worker labels
+            document.getElementById('c1-g1-label').textContent = `Workers producing ${gameState.goods[0]}`;
+            document.getElementById('c1-g2-label').textContent = `Workers producing ${gameState.goods[1]}`;
+            document.getElementById('c2-g1-label').textContent = `Workers producing ${gameState.goods[0]}`;
+            document.getElementById('c2-g2-label').textContent = `Workers producing ${gameState.goods[1]}`;
+            
+            // Update output labels
+            document.getElementById('c1-output1-label').textContent = gameState.goods[0] + ':';
+            document.getElementById('c1-output2-label').textContent = gameState.goods[1] + ':';
+            document.getElementById('c2-output1-label').textContent = gameState.goods[0] + ':';
+            document.getElementById('c2-output2-label').textContent = gameState.goods[1] + ':';
+            
+            // Update cost labels
+            document.getElementById('c1-cost1-good').textContent = gameState.goods[0];
+            document.getElementById('c1-cost1-for').textContent = gameState.goods[1];
+            document.getElementById('c1-cost2-good').textContent = gameState.goods[1].slice(0, -1); // Remove 's'
+            document.getElementById('c1-cost2-for').textContent = gameState.goods[0];
+            
+            document.getElementById('c2-cost1-good').textContent = gameState.goods[0];
+            document.getElementById('c2-cost1-for').textContent = gameState.goods[1];
+            document.getElementById('c2-cost2-good').textContent = gameState.goods[1].slice(0, -1);
+            document.getElementById('c2-cost2-for').textContent = gameState.goods[0];
+            
+            // Update metric labels
+            document.getElementById('metric-good1').textContent = gameState.goods[0];
+            document.getElementById('metric-good2').textContent = gameState.goods[1];
+        }
+
+        function loadScenario(scenarioKey) {
+            const scenario = scenarios[scenarioKey];
+            if (!scenario) return;
+
+            // Update inputs
+            document.getElementById('country1').value = scenario.countries[0];
+            document.getElementById('country2').value = scenario.countries[1];
+            document.getElementById('good1').value = scenario.goods[0];
+            document.getElementById('good2').value = scenario.goods[1];
+            document.getElementById('c1g1-rate').value = scenario.rates.c1g1;
+            document.getElementById('c1g2-rate').value = scenario.rates.c1g2;
+            document.getElementById('c2g1-rate').value = scenario.rates.c2g1;
+            document.getElementById('c2g2-rate').value = scenario.rates.c2g2;
+
+            // Apply settings
+            applySettings();
+            reset();
+            showNotification(`${scenarioKey.replace('-', ' vs ')} scenario loaded!`);
+        }
+
+        function optimize() {
+            // Calculate comparative advantage
+            const c1oc1 = gameState.rates.c1g2 / gameState.rates.c1g1;
+            const c2oc1 = gameState.rates.c2g2 / gameState.rates.c2g1;
+            
+            const c1HasAdvantageInG1 = c1oc1 < c2oc1;
+            
+            if (c1HasAdvantageInG1) {
+                // Country 1 specializes in Good 1
+                document.getElementById('c1-slider1').value = 80;
+                document.getElementById('c1-slider2').value = 20;
+                document.getElementById('c2-slider1').value = 20;
+                document.getElementById('c2-slider2').value = 80;
+            } else {
+                // Country 1 specializes in Good 2
+                document.getElementById('c1-slider1').value = 20;
+                document.getElementById('c1-slider2').value = 80;
+                document.getElementById('c2-slider1').value = 80;
+                document.getElementById('c2-slider2').value = 20;
+            }
+            
+            // Update worker displays
+            updateWorkerAllocation('c1', 1, document.getElementById('c1-slider1').value);
+            updateWorkerAllocation('c2', 1, document.getElementById('c2-slider1').value);
+            
+            showNotification('Optimized for comparative advantage!');
+        }
+
+        function reset() {
+            // Reset all sliders to 50/50
+            document.getElementById('c1-slider1').value = 50;
+            document.getElementById('c1-slider2').value = 50;
+            document.getElementById('c2-slider1').value = 50;
+            document.getElementById('c2-slider2').value = 50;
+            
+            // Update displays
+            document.getElementById('c1-workers1').textContent = '50';
+            document.getElementById('c1-workers2').textContent = '50';
+            document.getElementById('c2-workers1').textContent = '50';
+            document.getElementById('c2-workers2').textContent = '50';
+            
+            updateProduction();
+            showNotification('Reset to balanced allocation');
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Additional utility functions
+        function calculateTradeGains() {
+            // Get current production
+            const c1w1 = parseInt(document.getElementById('c1-slider1').value);
+            const c1w2 = 100 - c1w1;
+            const c2w1 = parseInt(document.getElementById('c2-slider1').value);
+            const c2w2 = 100 - c2w1;
+
+            const currentTotal = (c1w1 * gameState.rates.c1g1) + (c1w2 * gameState.rates.c1g2) + 
+                               (c2w1 * gameState.rates.c2g1) + (c2w2 * gameState.rates.c2g2);
+
+            // Calculate optimal production
+            const c1oc1 = gameState.rates.c1g2 / gameState.rates.c1g1;
+            const c2oc1 = gameState.rates.c2g2 / gameState.rates.c2g1;
+            const c1HasAdvantageInG1 = c1oc1 < c2oc1;
+            
+            let optimalTotal;
+            if (c1HasAdvantageInG1) {
+                optimalTotal = (80 * gameState.rates.c1g1) + (20 * gameState.rates.c1g2) + 
+                              (20 * gameState.rates.c2g1) + (80 * gameState.rates.c2g2);
+            } else {
+                optimalTotal = (20 * gameState.rates.c1g1) + (80 * gameState.rates.c1g2) + 
+                              (80 * gameState.rates.c2g1) + (20 * gameState.rates.c2g2);
+            }
+
+            return {
+                current: currentTotal,
+                optimal: optimalTotal,
+                gain: optimalTotal - currentTotal
+            };
+        }
+
+        function getComparativeAdvantage() {
+            const c1oc1 = gameState.rates.c1g2 / gameState.rates.c1g1;
+            const c2oc1 = gameState.rates.c2g2 / gameState.rates.c2g1;
+            const c1oc2 = gameState.rates.c1g1 / gameState.rates.c1g2;
+            const c2oc2 = gameState.rates.c2g1 / gameState.rates.c2g2;
+            
+            return {
+                country1Good1: c1oc1 < c2oc1,
+                country1Good2: c1oc2 < c2oc2,
+                country2Good1: c2oc1 < c1oc1,
+                country2Good2: c2oc2 < c1oc2
+            };
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            updateProduction();
+        };
+    </script>
+</body>
+</html>
