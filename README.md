@@ -1,2 +1,2 @@
 # economics-games
-I few minigames about economics
+A few minigames about economics
